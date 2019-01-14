@@ -2,6 +2,7 @@ package com.monetique.batch.item;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionLi
 
 	public LineReaderMultiFiles(String file) {
 		super();
-		System.out.println("nom "+file);
+		System.out.println("Integration du clearing "+file);
 		this.filename=file;
 	}
 
@@ -35,26 +36,29 @@ public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionLi
 	ClearingFileRepository clearingFileRepository;
 	
 	private final Logger logger = LoggerFactory.getLogger(LineReaderMultiFiles.class);
-    
-    int i=0;
-    int size=0;
+
     Optional<ClearingFile>  clearingFile;
     String filename;
+    boolean isExist=false;
   		
   	        
   	   
     
-    List<String> list= new ArrayList<>();
+    Iterator<String> list= null;
     
     @Override
     public void beforeStep(StepExecution stepExecution) {
+    	
         logger.debug("Line Reader initialized.");
-        System.out.println("hhhhhhhhhhhhhhhhhh");
         this.clearingFile=clearingFileRepository.findById(filename);
 
+     	if(clearingFile.isPresent()) {
+    		System.out.println("file deja integré "+filename);
+    		this.isExist=true;
+    	}
+        
         try {
         	list=   ClearingHelper.getList(filename);
-        	size=list.size();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,22 +71,15 @@ public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionLi
     public String read() throws Exception {
     	
     	
-    	if(clearingFile.isPresent()) {
-    		System.out.println("file deja integré "+filename);
-    		return null;
-    	}
+     if(isExist)
+    	 return null;
     		
     	
-    	String line;
-    	
-    	if(size>i) {
-    		line=list.get(i);
-    		i++;
-    		return line;
+     	if(list.hasNext()) {
+    		return list.next();
     	}else {
     		return null;
     	}
-
     	
         
     }
@@ -90,14 +87,15 @@ public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionLi
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
 
+    	if(!isExist)
     	clearingFileRepository.save(new ClearingFile(filename));
         logger.debug("Line Reader ended.");
-     /*   try {
+        try {
 			ClearingHelper.moveFile(filename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
         return ExitStatus.COMPLETED;
     }
 }

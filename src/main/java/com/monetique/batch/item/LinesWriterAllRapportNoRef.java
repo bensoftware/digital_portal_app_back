@@ -19,13 +19,13 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemWriter;
 
-import com.monetique.entities.Clearing;
+import com.monetique.entities.ClearingRejeter;
 
 
 
-public class LinesWriterAllRapport implements ItemWriter<Clearing>, StepExecutionListener {
+public class LinesWriterAllRapportNoRef implements ItemWriter<ClearingRejeter>, StepExecutionListener {
 
-    private final Logger logger = LoggerFactory.getLogger(LinesWriterAllRapport.class);
+    private final Logger logger = LoggerFactory.getLogger(LinesWriterAllRapportNoRef.class);
     
     int i=0;
     int ligne =1;
@@ -37,7 +37,7 @@ public class LinesWriterAllRapport implements ItemWriter<Clearing>, StepExecutio
     public void beforeStep(StepExecution stepExecution) {
         logger.debug("Line Writer initialized.");
       
-        this.sheet = (Sheet) workbook.createSheet("Relever Clearing");
+        this.sheet = (Sheet) workbook.createSheet("Relever Clearing rejeté");
         
   		Row header = sheet.createRow(0);
 		  
@@ -95,7 +95,7 @@ public class LinesWriterAllRapport implements ItemWriter<Clearing>, StepExecutio
     public ExitStatus afterStep(StepExecution stepExecution) {
         logger.debug("Line Writer ended.");
         
-        Path pn = Paths.get("C://Clearing/rapport/releve_clearing_"+getDate(new Date())+".xlsx");
+        Path pn = Paths.get("C://Clearing/rapport/releve_clearing_rejete_"+getDate(new Date())+".xlsx");
 
 			
 			try {
@@ -110,11 +110,11 @@ public class LinesWriterAllRapport implements ItemWriter<Clearing>, StepExecutio
     }
 
     @Override
-    public void write(List<? extends Clearing> lines) throws Exception {
+    public void write(List<? extends ClearingRejeter> lines) throws Exception {
        
     	System.out.println("tranche "+i);
     	
-    	for (Clearing c : lines) {
+    	for (ClearingRejeter c : lines) {
         	Row header = sheet.createRow(ligne);
   		  
     		Cell c1=header.createCell(0);
@@ -167,9 +167,8 @@ public class LinesWriterAllRapport implements ItemWriter<Clearing>, StepExecutio
     		
     		ligne++;
         }
-    	
-    	i++;
 
+    	i++;
     }
     
     

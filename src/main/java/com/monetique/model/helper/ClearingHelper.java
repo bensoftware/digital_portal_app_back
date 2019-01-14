@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -16,6 +17,8 @@ import com.monetique.entities.ClearingRejeter;
 
 public class ClearingHelper {
 
+	
+	static Stream<String> line;
 	
 	public static List<Path> getAllFilesNames() throws IOException {
 		
@@ -152,24 +155,25 @@ public class ClearingHelper {
 		return c;
 	}
 	
-	
-	public static List<String> getList(String file) throws IOException{
+	public static void closingStram() throws IOException{
+	 
+		line.close();
+
+     }
+
+	public static Iterator<String> getList(String file) throws IOException{
 		
-		 List<String> list= new ArrayList<>();
 		 
 		 Path path =Paths.get("C:\\Clearing\\in\\"+file);;
-		Stream<String> line = Files.lines(path,StandardCharsets.ISO_8859_1);
+		 line = Files.lines(path,StandardCharsets.ISO_8859_1);
 		
+		Iterator<String> it= null;
+
 		try {
-			line.forEach(e -> {
-				list.add(e);
-			});
-			line.close();
+			it= line.iterator();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		System.out.println("size "+list.size());
-		//System.out.println(" last "+list.get(list.size()-1));
-			return list;
+			return it;
 	}
 }

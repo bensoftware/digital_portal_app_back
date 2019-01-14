@@ -9,15 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.monetique.batch.item.LineReader;
-import com.monetique.batch.item.LineReaderAllRapport;
-import com.monetique.batch.item.LinesWriter;
-import com.monetique.batch.item.LinesWriterAllRapport;
-import com.monetique.entities.Clearing;
+import com.monetique.batch.item.LineReaderAllRapportNoRef;
+import com.monetique.batch.item.LinesWriterAllRapportNoRef;
+import com.monetique.entities.ClearingRejeter;
 
 @Configuration
 @EnableBatchProcessing
-public class BatchGenerationAllRapportConfig {
+public class BatchGenerationAllRapportClearingNoRefConfig {
 
       @Autowired 
     private StepBuilderFactory steps;
@@ -32,23 +30,26 @@ public class BatchGenerationAllRapportConfig {
     }
 */
     @Bean
-    protected Step StepAllRapport() {
-        return steps.get("StepAllRapport").<Clearing, Clearing> chunk(1000)
-          .reader(ItemReaderAllRapport())
-          .writer(itemWriterAllRapport())
+    protected Step StepAllRapportNoRef() {
+        return steps.get("StepAllRapportNoRef").<ClearingRejeter, ClearingRejeter> chunk(1000)
+          .reader(ItemReaderAllRapportNoRef())
+          .writer(itemWriterAllRapportNoRef())
           .build();
     }
     
-     @Bean
-    public ItemReader<Clearing> ItemReaderAllRapport() {
-    	return new LineReaderAllRapport();
+  
+
+ 
+    @Bean
+    public ItemReader<ClearingRejeter> ItemReaderAllRapportNoRef() {
+    	return new LineReaderAllRapportNoRef();
     }
 
   
 
     @Bean
-    public ItemWriter<Clearing> itemWriterAllRapport() {
-        return new LinesWriterAllRapport();
+    public ItemWriter<ClearingRejeter> itemWriterAllRapportNoRef() {
+        return new LinesWriterAllRapportNoRef();
     }
 
 

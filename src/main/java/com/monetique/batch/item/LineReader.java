@@ -2,6 +2,7 @@ package com.monetique.batch.item;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -28,8 +29,6 @@ public class LineReader implements ItemReader<String>, StepExecutionListener {
     
     String file;
     Stream<String> lines;
-    int i=0;
-    int size=0;
     Optional<ClearingFile>  clearingFile=null;
 
     
@@ -37,7 +36,7 @@ public class LineReader implements ItemReader<String>, StepExecutionListener {
   	        
   	   
     
-    List<String> list= new ArrayList<>();
+    Iterator<String> list=null;
     
     @Override
     public void beforeStep(StepExecution stepExecution) {
@@ -49,7 +48,6 @@ public class LineReader implements ItemReader<String>, StepExecutionListener {
         
         try {
         	list=   ClearingHelper.getList(this.file);
-        	size=list.size();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,15 +65,13 @@ public class LineReader implements ItemReader<String>, StepExecutionListener {
     	}
     		
     	
-    	String line;
     	
-    	if(size>i) {
-    		line=list.get(i);
-    		i++;
-    		return line;
+    	if(list.hasNext()) {
+    		return list.next();
     	}else {
     		return null;
     	}
+
 
     	
         

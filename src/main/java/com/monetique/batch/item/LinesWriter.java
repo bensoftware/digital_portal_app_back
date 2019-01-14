@@ -42,20 +42,18 @@ public class LinesWriter implements ItemWriter<Clearing>, StepExecutionListener 
     public void write(List<? extends Clearing> lines) throws Exception {
         for (Clearing line : lines) {
         	String ref=line.getReferenceTransaction();
-        	System.out.println(line.getReferenceTransaction());
+        	//System.out.println(line.getReferenceTransaction());
         	try {
         		
         		if(ref.matches("\\s+")) {
-        			System.out.println("rejeter");
         			clearingRejeterRepository.save(ClearingHelper.getClearingRejeterByCl(line));
         		}else {
-        			System.out.println("accepter");
         			clearingRepository.save(line);	
         		}
         		
         		//System.out.println("accepter");
 			} catch (Exception e) {
-				System.out.println("rejeter");
+			//	System.out.println("rejeter");
 				clearingRejeterRepository.save(ClearingHelper.getClearingRejeterByCl(line));
 				
 			}

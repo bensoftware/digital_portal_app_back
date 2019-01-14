@@ -82,9 +82,9 @@ public class BatchIntegrationAllFileConfig {
     @Bean
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setMaxPoolSize(5);
+        taskExecutor.setMaxPoolSize(1000);
         taskExecutor.setCorePoolSize(5);
-        taskExecutor.setQueueCapacity(5);
+        taskExecutor.setQueueCapacity(1000);
         taskExecutor.afterPropertiesSet();
         return taskExecutor;
     }

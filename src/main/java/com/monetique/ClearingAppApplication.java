@@ -49,11 +49,16 @@ public class ClearingAppApplication implements CommandLineRunner{
 	
 	@Autowired
     @Qualifier(value="partitionStep")
-	Step step ; 
+	Step partitionStep ; 
 	
 	@Autowired
     @Qualifier(value="StepAllRapport")
 	Step StepAllRapport ; 
+	
+	@Autowired
+    @Qualifier(value="StepAllRapportNoRef")
+	Step StepAllRapportNoRef ; 
+	
 	
 	
 	 @Autowired 
@@ -69,7 +74,9 @@ public class ClearingAppApplication implements CommandLineRunner{
 			          .start(step)
 			          .build();*/
 			  Job job = jobs.get("allRapportJob")
-			          .start(StepAllRapport)
+			          .start(partitionStep)
+			        //  .next(StepAllRapport)
+			        //  .next(StepAllRapportNoRef)
 			          .build();
 			  
 			  JobExecution execution = jobLauncher.run(job, new JobParameters());

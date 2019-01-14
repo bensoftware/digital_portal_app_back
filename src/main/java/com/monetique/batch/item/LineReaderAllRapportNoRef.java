@@ -1,9 +1,6 @@
 package com.monetique.batch.item;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -15,19 +12,17 @@ import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.monetique.entities.Clearing;
 import com.monetique.entities.ClearingFile;
-import com.monetique.model.helper.ClearingHelper;
-import com.monetique.repositories.ClearingFileRepository;
-import com.monetique.repositories.ClearingRepository;
+import com.monetique.entities.ClearingRejeter;
+import com.monetique.repositories.ClearingRejeterRepository;
 
-public class LineReaderAllRapport implements ItemReader<Clearing>, StepExecutionListener {
+public class LineReaderAllRapportNoRef implements ItemReader<ClearingRejeter>, StepExecutionListener {
 	
 
 	@Autowired
-	ClearingRepository clearingRepository;
+	ClearingRejeterRepository clearingRejeterRepository;
 	
-	private final Logger logger = LoggerFactory.getLogger(LineReaderAllRapport.class);
+	private final Logger logger = LoggerFactory.getLogger(LineReaderAllRapportNoRef.class);
     
     String file;
     Stream<String> lines;
@@ -35,18 +30,18 @@ public class LineReaderAllRapport implements ItemReader<Clearing>, StepExecution
     int size=0;
     Optional<ClearingFile>  clearingFile=null;
 
-    Iterator<Clearing> iterator;
+    Iterator<ClearingRejeter> iterator;
 
     
     @Override
     public void beforeStep(StepExecution stepExecution) {
         logger.debug("Line Reader initialized.");
-        System.out.println("Generation du rapport clearing");
-        iterator=   clearingRepository.findAll().iterator();
+        System.out.println("Generation du rapport clearing Rejeté");
+        iterator=   clearingRejeterRepository.findAll().iterator();
      }
 
     @Override
-    public Clearing read() throws Exception {
+    public ClearingRejeter read() throws Exception {
     	
     	if(iterator.hasNext()) {
     		return iterator.next();
