@@ -37,6 +37,42 @@ public class ClearingHelper {
 			 return list;
 		 }
 	}
+	
+	public static List<Path> getAllFilesNamesGIMTEL() throws IOException {
+		
+		List<Path> list=new ArrayList<>();
+		
+		 Path path = Paths.get("C:\\ClearingApp\\Gimtel\\in");
+		 try(DirectoryStream<Path> listing = Files.newDirectoryStream(path)){
+			 
+           for(Path file : listing){
+        	   if(Files.isRegularFile(file)) {
+        		   list.add(file);
+        	   }
+				 
+			 }
+			
+			 return list;
+		 }
+	}
+	
+	public static List<Path> getAllFilesNamesSS() throws IOException {
+		
+		List<Path> list=new ArrayList<>();
+		
+		 Path path = Paths.get("C:\\ClearingApp\\SS\\in");
+		 try(DirectoryStream<Path> listing = Files.newDirectoryStream(path)){
+			 
+           for(Path file : listing){
+        	   if(Files.isRegularFile(file)) {
+        		   list.add(file);
+        	   }
+				 
+			 }
+			
+			 return list;
+		 }
+	}
 /*	public static DirectoryStream<Path> getAllFilesNames() throws IOException {
 		 Path path = Paths.get("C:\\Clearing\\in");
 		 DirectoryStream<Path> listing = Files.newDirectoryStream(path);
@@ -46,8 +82,52 @@ public class ClearingHelper {
 	
 	public static void moveFile(String name) throws IOException {
 		
-		Path file = Paths.get("C:\\Clearing\\in\\"+name);
-		 Path path = Paths.get("C:\\Clearing\\out\\"+name);
+		Path file = Paths.get("C:\\ClearingApp\\in\\"+name);
+		 Path path = Paths.get("C:\\ClearingApp\\out\\"+name);
+		 
+		 if(Files.isRegularFile(file)) {
+			 // deplacer vers exception
+			 Files.move(file, path, StandardCopyOption.REPLACE_EXISTING);
+		  }	
+	}
+	
+  public static void moveFileGiMTEL(String name) throws IOException {
+		
+		Path file = Paths.get("C:\\ClearingApp\\Gimtel\\in\\"+name);
+		 Path path = Paths.get("C:\\ClearingApp\\Gimtel\\archive\\"+name);
+		 
+		 if(Files.isRegularFile(file)) {
+			 // deplacer vers exception
+			 Files.move(file, path, StandardCopyOption.REPLACE_EXISTING);
+		  }	
+	}
+  
+  public static void moveFileGiMTELException(String name) throws IOException {
+		
+		Path file = Paths.get("C:\\ClearingApp\\Gimtel\\in\\"+name);
+		 Path path = Paths.get("C:\\ClearingApp\\Gimtel\\exception\\"+name);
+		 
+		 if(Files.isRegularFile(file)) {
+			 // deplacer vers exception
+			 Files.move(file, path, StandardCopyOption.REPLACE_EXISTING);
+		  }	
+	}
+  
+  public static void moveFileSS(String name) throws IOException {
+		
+		Path file = Paths.get("C:\\ClearingApp\\SS\\in\\"+name);
+		 Path path = Paths.get("C:\\ClearingApp\\SS\\archive\\"+name);
+		 
+		 if(Files.isRegularFile(file)) {
+			 // deplacer vers exception
+			 Files.move(file, path, StandardCopyOption.REPLACE_EXISTING);
+		  }	
+	}
+  
+  public static void moveFileSSException(String name) throws IOException {
+		
+		Path file = Paths.get("C:\\ClearingApp\\SS\\in\\"+name);
+		 Path path = Paths.get("C:\\ClearingApp\\SS\\exception\\"+name);
 		 
 		 if(Files.isRegularFile(file)) {
 			 // deplacer vers exception
@@ -165,6 +245,38 @@ public class ClearingHelper {
 		
 		 
 		 Path path =Paths.get("C:\\Clearing\\in\\"+file);;
+		 line = Files.lines(path,StandardCharsets.ISO_8859_1);
+		
+		Iterator<String> it= null;
+
+		try {
+			it= line.iterator();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+			return it;
+	}
+	
+	public static Iterator<String> getListTransactionGiMTELFile(String file) throws IOException{
+		
+		 
+		 Path path =Paths.get("C:\\ClearingApp\\Gimtel\\in\\"+file);;
+		 line = Files.lines(path,StandardCharsets.ISO_8859_1);
+		
+		Iterator<String> it= null;
+
+		try {
+			it= line.iterator();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+			return it;
+	}
+	
+	public static Iterator<String> getListTransactionSSFile(String file) throws IOException{
+		
+		 
+		 Path path =Paths.get("C:\\ClearingApp\\SS\\in\\"+file);;
 		 line = Files.lines(path,StandardCharsets.ISO_8859_1);
 		
 		Iterator<String> it= null;

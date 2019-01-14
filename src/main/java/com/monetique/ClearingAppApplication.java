@@ -1,17 +1,24 @@
 package com.monetique;
 
+import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.job.SimpleJob;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import com.monetique.model.helper.CustomJobExecutorListener;
+import com.monetique.service.IntegrationBatchService;
 
 @SpringBootApplication
 public class ClearingAppApplication implements CommandLineRunner{
@@ -23,77 +30,33 @@ public class ClearingAppApplication implements CommandLineRunner{
        
 	
 	}
-	
-/*	@Autowired
-     JobLauncherTestUtils jobLauncherTestUtils;
-	
-	
-	@Autowired
-	@Qualifier(value="allFilesJob")
-    private JobLauncherTestUtils jobLauncherTestUtilsMulti;
-	
-	@Autowired
-	ClearingRepository clearingRepository ; 
 
-	@Autowired
-    @Qualifier(value="fileJob")
-	Job job ; 
-	*/
+	@Bean
+	CustomJobExecutorListener getExecListner() {
+		return new CustomJobExecutorListener((ThreadPoolTaskExecutor) taskExecutor());
+	}
+	
 
 	
+	@Bean
+	public TaskExecutor taskExecutor() {
+	        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+	        taskExecutor.setMaxPoolSize(1000);
+	        taskExecutor.setCorePoolSize(5);
+	        taskExecutor.setQueueCapacity(1000);
+	        taskExecutor.afterPropertiesSet();
+	        return taskExecutor;
+	    }
 	
-	@Autowired
-	SimpleJobLauncher jobLauncher ;
 
-
-	
 	@Autowired
-    @Qualifier(value="partitionStep")
-	Step partitionStep ; 
-	
-	@Autowired
-    @Qualifier(value="StepAllRapport")
-	Step StepAllRapport ; 
-	
-	@Autowired
-    @Qualifier(value="StepAllRapportNoRef")
-	Step StepAllRapportNoRef ; 
-	
-	
-	
-	 @Autowired 
-	 private JobBuilderFactory jobs;
+	IntegrationBatchService batchService;
 	
 	
 	@Override
 	public void run(String... args) throws Exception {
-	
-		  try {
-			  
-			 /* Job job = jobs.get("allFilesJob")
-			          .start(step)
-			          .build();*/
-			  Job job = jobs.get("allRapportJob")
-			          .start(partitionStep)
-			        //  .next(StepAllRapport)
-			        //  .next(StepAllRapportNoRef)
-			          .build();
-			  
-			  JobExecution execution = jobLauncher.run(job, new JobParameters());
-			  
-	    
-	            System.out.println("Job Status : " + execution.getStatus());
-	            System.out.println("Job completed");
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            System.out.println("Job failed");
-	        }
-		
-	//	jobLauncherTestUtils.setJob(jobFiles);
-//		JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-		//jobExecution.stop();
-		//jobExecution.
-	//	System.out.println(jobExecution.getExitStatus());
+
+	//	batchService.integrationCleationGIMTELBatch();
 		
 	}
 

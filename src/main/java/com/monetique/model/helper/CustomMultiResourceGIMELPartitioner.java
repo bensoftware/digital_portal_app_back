@@ -25,7 +25,7 @@ import java.util.Map;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
 
-public class CustomMultiResourcePartitioner implements Partitioner {
+public class CustomMultiResourceGIMELPartitioner implements Partitioner {
 
     private static final String DEFAULT_KEY_NAME = "fileName";
 
@@ -38,11 +38,11 @@ public class CustomMultiResourcePartitioner implements Partitioner {
     
     
 
-    public CustomMultiResourcePartitioner(List<Path> resources) {
+    public CustomMultiResourceGIMELPartitioner(List<Path> resources) {
 		super();
 		this.resources = resources;
 	}
-	public CustomMultiResourcePartitioner() {
+	public CustomMultiResourceGIMELPartitioner() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

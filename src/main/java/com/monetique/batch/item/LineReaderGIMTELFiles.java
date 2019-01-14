@@ -1,9 +1,7 @@
 package com.monetique.batch.item;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -18,33 +16,38 @@ import com.monetique.entities.ClearingFile;
 import com.monetique.model.helper.ClearingHelper;
 import com.monetique.repositories.ClearingFileRepository;
 
-public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionListener {
+public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionListener {
 	
+	@Autowired
+	ClearingFileRepository clearingFileRepository;
+	
+    Optional<ClearingFile>  clearingFile;
+    String filename;
+    boolean isExist=false;
+    
+    Iterator<String> list= null;
 
-	public LineReaderMultiFiles() {
+	public LineReaderGIMTELFiles() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public LineReaderMultiFiles(String file) {
+	public LineReaderGIMTELFiles(String file) {
 		super();
 		System.out.println("Integration du clearing "+file);
 		this.filename=file;
 	}
 
-	@Autowired
-	ClearingFileRepository clearingFileRepository;
-	
-	private final Logger logger = LoggerFactory.getLogger(LineReaderMultiFiles.class);
 
-    Optional<ClearingFile>  clearingFile;
-    String filename;
-    boolean isExist=false;
+	
+	private final Logger logger = LoggerFactory.getLogger(LineReaderGIMTELFiles.class);
+
+
   		
   	        
   	   
     
-    Iterator<String> list= null;
+ 
     
     @Override
     public void beforeStep(StepExecution stepExecution) {
@@ -58,10 +61,15 @@ public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionLi
     	}
         
         try {
-        	list=   ClearingHelper.getList(filename);
+        	list=   ClearingHelper.getListTransactionGiMTELFile(filename);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				ClearingHelper.moveFileGiMTELException(filename);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		}
 		
     
@@ -91,7 +99,7 @@ public class LineReaderMultiFiles implements ItemReader<String>, StepExecutionLi
     	clearingFileRepository.save(new ClearingFile(filename));
         logger.debug("Line Reader ended.");
         try {
-			ClearingHelper.moveFile(filename);
+			ClearingHelper.moveFileGiMTEL(filename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

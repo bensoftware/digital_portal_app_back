@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
@@ -18,24 +18,26 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.monetique.batch.item.LineProcessor;
-import com.monetique.batch.item.LineReaderMultiFiles;
+import com.monetique.batch.item.LineReaderGIMTELFiles;
 import com.monetique.batch.item.LinesWriter;
 import com.monetique.entities.Clearing;
 import com.monetique.model.helper.ClearingHelper;
-import com.monetique.model.helper.CustomMultiResourcePartitioner;
+import com.monetique.model.helper.CustomMultiResourceGIMELPartitioner;
 
 @Configuration
 @EnableBatchProcessing
-public class BatchIntegrationAllFileConfig {
+public class BatchIntegrationClearingGIMTELConfig {
 
-    @Autowired 
-    private JobBuilderFactory jobs;
+
     
     @Autowired 
     private StepBuilderFactory steps;
+
+    @Autowired
+    TaskExecutor taskExecutor;
+
 
 
 
@@ -47,65 +49,48 @@ public class BatchIntegrationAllFileConfig {
           .build();
     }*/
     
-    @Bean(name="partitionStep")
+    @Bean(name="integrationGIMTELStep")
     public Step partitionStep() throws UnexpectedInputException, ParseException, IOException {
-        return steps.get("partitionStep")
-          .partitioner("slaveStep", partitioner())
+    	return steps.get("integrationGIMTELStep")
+          .partitioner("GIMELStep", partitioner())
           .step(slaveStep())
-          .taskExecutor(taskExecutor())
+          .taskExecutor(taskExecutor)
           .build();
     }
     
     @Bean
-    public CustomMultiResourcePartitioner partitioner() throws IOException {
+    public CustomMultiResourceGIMELPartitioner partitioner() throws IOException {
         
-        List<Path> resources=  ClearingHelper.getAllFilesNames();
-        CustomMultiResourcePartitioner partitioner = new CustomMultiResourcePartitioner(resources);
+        List<Path> resources=  ClearingHelper.getAllFilesNamesGIMTEL();
+        CustomMultiResourceGIMELPartitioner partitioner = new CustomMultiResourceGIMELPartitioner(resources);
         partitioner.setResources(resources);
         return partitioner;
     }
 
 
-    @Bean
+    @Bean(name="GIMELStep")
     protected Step slaveStep() {
-        return steps.get("slaveStep").<String, Clearing> chunk(50)
+        return steps.get("GIMELStep").<String, Clearing> chunk(50)
           .reader(itemReaderMulti(null))
           .processor(itemProcessorMulti())
           .writer(itemWriterMulti())
-          .listener(itemReaderMulti(null))
           .build();
     }
     
-  
-
-    
-    @Bean
-    public TaskExecutor taskExecutor() {
-        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setMaxPoolSize(1000);
-        taskExecutor.setCorePoolSize(5);
-        taskExecutor.setQueueCapacity(1000);
-        taskExecutor.afterPropertiesSet();
-        return taskExecutor;
-    }
-
-
- 
-    @Bean
+      @Bean(name="itemReaderGIMTEL")
     @StepScope
-    public LineReaderMultiFiles itemReaderMulti(@Value("#{stepExecutionContext[fileName]}") String filename) {
-    	LineReaderMultiFiles itemReader=new LineReaderMultiFiles(filename);
+    public LineReaderGIMTELFiles itemReaderMulti(@Value("#{stepExecutionContext[fileName]}") String filename) {
+    	LineReaderGIMTELFiles itemReader=new LineReaderGIMTELFiles(filename);
     	return itemReader;
     }
     
 
-    @Bean
-    @StepScope
+    @Bean(name="itemProcessorGIMTEL")
     public ItemProcessor<String, Clearing> itemProcessorMulti() {
         return new LineProcessor();
     }	
 
-    @Bean
+    @Bean(name="itemWriterGIMTEL")
     public ItemWriter<Clearing> itemWriterMulti() {
         return new LinesWriter();
     }
