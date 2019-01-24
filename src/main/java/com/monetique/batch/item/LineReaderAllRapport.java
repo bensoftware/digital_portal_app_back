@@ -1,9 +1,6 @@
 package com.monetique.batch.item;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -17,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.monetique.entities.Clearing;
 import com.monetique.entities.ClearingFile;
-import com.monetique.model.helper.ClearingHelper;
-import com.monetique.repositories.ClearingFileRepository;
 import com.monetique.repositories.ClearingRepository;
 
 public class LineReaderAllRapport implements ItemReader<Clearing>, StepExecutionListener {

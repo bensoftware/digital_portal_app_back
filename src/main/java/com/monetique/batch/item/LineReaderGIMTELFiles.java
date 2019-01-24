@@ -14,9 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.monetique.entities.ClearingFile;
 import com.monetique.model.helper.ClearingHelper;
+import com.monetique.model.helper.LineClearing;
 import com.monetique.repositories.ClearingFileRepository;
 
-public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionListener {
+public class LineReaderGIMTELFiles implements ItemReader<LineClearing>, StepExecutionListener {
 	
 	@Autowired
 	ClearingFileRepository clearingFileRepository;
@@ -24,6 +25,8 @@ public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionL
     Optional<ClearingFile>  clearingFile;
     String filename;
     boolean isExist=false;
+    
+    int index=1;
     
     Iterator<String> list= null;
 
@@ -58,6 +61,9 @@ public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionL
      	if(clearingFile.isPresent()) {
     		System.out.println("file deja integré "+filename);
     		this.isExist=true;
+    	}else {
+    		index=1;
+    		clearingFileRepository.save(new ClearingFile(filename));
     	}
         
         try {
@@ -76,7 +82,7 @@ public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionL
     }
 
     @Override
-    public String read() throws Exception {
+    public LineClearing read() throws Exception {
     	
     	
      if(isExist)
@@ -84,7 +90,9 @@ public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionL
     		
     	
      	if(list.hasNext()) {
-    		return list.next();
+     		LineClearing clearing= new LineClearing(list.next(), index);
+    		index++;
+    		return clearing;
     	}else {
     		return null;
     	}
@@ -95,8 +103,6 @@ public class LineReaderGIMTELFiles implements ItemReader<String>, StepExecutionL
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
 
-    	if(!isExist)
-    	clearingFileRepository.save(new ClearingFile(filename));
         logger.debug("Line Reader ended.");
         try {
 			ClearingHelper.moveFileGiMTEL(filename);

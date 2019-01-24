@@ -1,4 +1,4 @@
-package com.monetique.batch;
+/*package com.monetique.batch;
 
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -24,13 +24,13 @@ public class BatchConfig {
 
 
     
-/*    @Bean(name="fileJob")
+    @Bean(name="fileJob")
     public Job fileJob() throws UnexpectedInputException, ParseException, MalformedURLException {
     	return jobs.get("fileJob")
     	          .start(slaveStepFile())
     	          .build();
     }
-*/
+
     @Bean
     protected Step slaveStepFile() {
         return steps.get("slaveStepFile").<String, Clearing> chunk(50)
@@ -61,3 +61,4 @@ public class BatchConfig {
 
 
 }
+*/

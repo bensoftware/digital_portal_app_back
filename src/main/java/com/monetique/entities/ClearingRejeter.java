@@ -2,10 +2,14 @@ package com.monetique.entities;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -18,10 +22,11 @@ public class ClearingRejeter implements Serializable{
 	@GeneratedValue
 	long id;
 	
+	int index;
 	String typeEnregistrement;
 	String numeroDeSerie; 
 	String codeOperation;
-	String dateDeProcessing;
+	Date dateDeProcessing;
 	String numeroDeCommercant;
 	String numeroDuTerminal;
 	String compteCommercant;
@@ -61,7 +66,31 @@ public class ClearingRejeter implements Serializable{
 	String notUsed;
 	String referenceAutorisation; // pour auth 
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idCl")
+	ClearingFile clearingFile;
 	
+	
+	
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public ClearingFile getClearingFile() {
+		return clearingFile;
+	}
+	public void setClearingFile(ClearingFile clearingFile) {
+		this.clearingFile = clearingFile;
+	}
 	
 	public String getMontantNetCreditCommercant() {
 		return montantNetCreditCommercant;
@@ -93,10 +122,10 @@ public class ClearingRejeter implements Serializable{
 	public void setCodeOperation(String codeOperation) {
 		this.codeOperation = codeOperation;
 	}
-	public String getDateDeProcessing() {
+	public Date getDateDeProcessing() {
 		return dateDeProcessing;
 	}
-	public void setDateDeProcessing(String dateDeProcessing) {
+	public void setDateDeProcessing(Date dateDeProcessing) {
 		this.dateDeProcessing = dateDeProcessing;
 	}
 	public String getNumeroDeCommercant() {

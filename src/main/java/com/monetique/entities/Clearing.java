@@ -2,9 +2,14 @@ package com.monetique.entities;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -12,11 +17,13 @@ public class Clearing implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	 @EmbeddedId
+	 Reference reference;
 	
 	String typeEnregistrement;
 	String numeroDeSerie; 
 	String codeOperation;
-	String dateDeProcessing;
+	Date dateDeProcessing;
 	String numeroDeCommercant;
 	String numeroDuTerminal;
 	String compteCommercant;
@@ -27,8 +34,8 @@ public class Clearing implements Serializable{
 	String numeroComptePorteur;
 	String dateDexpiration;
 	String flagDopposition;
+	int index;
 
-	@Id
 	String referenceTransaction; // ref unique
 	
 	String numeroDeRemise;
@@ -58,8 +65,31 @@ public class Clearing implements Serializable{
 	String referenceAutorisation; // pour auth 
 	
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idCl")
+	ClearingFile clearingFile;
+	
+	
 	
 
+	public Reference getReference() {
+		return reference;
+	}
+	public void setReference(Reference reference) {
+		this.reference = reference;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public ClearingFile getClearingFile() {
+		return clearingFile;
+	}
+	public void setClearingFile(ClearingFile clearingFile) {
+		this.clearingFile = clearingFile;
+	}
 	public String getMontantNetCreditCommercant() {
 		return montantNetCreditCommercant;
 	}
@@ -90,10 +120,10 @@ public class Clearing implements Serializable{
 	public void setCodeOperation(String codeOperation) {
 		this.codeOperation = codeOperation;
 	}
-	public String getDateDeProcessing() {
+	public Date getDateDeProcessing() {
 		return dateDeProcessing;
 	}
-	public void setDateDeProcessing(String dateDeProcessing) {
+	public void setDateDeProcessing(Date dateDeProcessing) {
 		this.dateDeProcessing = dateDeProcessing;
 	}
 	public String getNumeroDeCommercant() {

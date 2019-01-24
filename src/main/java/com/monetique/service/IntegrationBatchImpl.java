@@ -22,8 +22,6 @@ public class IntegrationBatchImpl implements IntegrationBatchService {
 	
 	@Autowired
 	CustomJobExecutorListener customJobExecutorListener;
-
-
 	
 	@Autowired
     @Qualifier(value="integrationGIMTELStep")
@@ -44,7 +42,10 @@ public class IntegrationBatchImpl implements IntegrationBatchService {
 				  JobExecution execution = jobLauncher.run(job, new JobParameters());
 				  
 				  BatchStatus batchStatus=execution.getStatus();
-		          System.out.println("Job completed");
+		          
+		        
+		          
+		          System.out.println("Job completed "+batchStatus.toString());
 		          
 		        } catch (Exception e) {
 		            e.printStackTrace();

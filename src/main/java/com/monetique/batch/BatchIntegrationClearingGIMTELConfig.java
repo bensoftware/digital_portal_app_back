@@ -4,13 +4,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,7 @@ import com.monetique.batch.item.LinesWriter;
 import com.monetique.entities.Clearing;
 import com.monetique.model.helper.ClearingHelper;
 import com.monetique.model.helper.CustomMultiResourceGIMELPartitioner;
+import com.monetique.model.helper.LineClearing;
 
 @Configuration
 @EnableBatchProcessing
@@ -70,10 +68,10 @@ public class BatchIntegrationClearingGIMTELConfig {
 
     @Bean(name="GIMELStep")
     protected Step slaveStep() {
-        return steps.get("GIMELStep").<String, Clearing> chunk(50)
+        return steps.get("GIMELStep").<LineClearing, Clearing> chunk(50)
           .reader(itemReaderMulti(null))
-          .processor(itemProcessorMulti())
-          .writer(itemWriterMulti())
+          .processor(itemProcessorMulti(null))
+          .writer(itemWriterMulti(null))
           .build();
     }
     
@@ -86,13 +84,15 @@ public class BatchIntegrationClearingGIMTELConfig {
     
 
     @Bean(name="itemProcessorGIMTEL")
-    public ItemProcessor<String, Clearing> itemProcessorMulti() {
-        return new LineProcessor();
+    @StepScope
+    public LineProcessor itemProcessorMulti(@Value("#{stepExecutionContext[fileName]}") String filename) {
+        return new LineProcessor(filename);
     }	
 
     @Bean(name="itemWriterGIMTEL")
-    public ItemWriter<Clearing> itemWriterMulti() {
-        return new LinesWriter();
+    @StepScope
+    public LinesWriter itemWriterMulti(@Value("#{stepExecutionContext[fileName]}") String filename) {
+        return new LinesWriter(filename);
     }
 
 
