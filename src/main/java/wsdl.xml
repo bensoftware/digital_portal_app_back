@@ -1,73 +1,26 @@
-<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.mbanking.bpm.mr/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ws.mbanking.bpm.mr/" name="MonetiqueWSService">
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.mbanking.bpm.mr/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ws.mbanking.bpm.mr/" name="ImalWSService">
 <types>
 <xsd:schema>
 <xsd:import namespace="http://ws.mbanking.bpm.mr/" schemaLocation="xsd.xml"/>
 </xsd:schema>
 </types>
-<message name="getAuth">
-<part name="pan" type="xsd:double"/>
+<message name="ImalOUt"/>
+<message name="ImalOUtResponse">
+<part name="ImalOUt" type="tns:listImal"/>
 </message>
-<message name="getAuthResponse">
-<part name="AuthOut" type="tns:listMonetiqueCarte"/>
+<message name="ParseException">
+<part name="fault" element="tns:ParseException"/>
 </message>
-<message name="getCl">
-<part name="pan" type="xsd:double"/>
-</message>
-<message name="getClResponse">
-<part name="ClearingOut" type="tns:listMonetiqueCarte"/>
-</message>
-<message name="getHist">
-<part name="pan" type="xsd:double"/>
-</message>
-<message name="getHistResponse">
-<part name="HistoriqueOut" type="tns:listHistorique"/>
-</message>
-<message name="getPans"/>
-<message name="getPansResponse">
-<part name="PanOut" type="tns:listPan"/>
-</message>
-<message name="SoldeOut">
-<part name="pan" type="xsd:double"/>
-</message>
-<message name="SoldeOutResponse">
-<part name="SoldeOut" type="tns:soldeCarte"/>
-</message>
-<message name="SoldeSSOut">
-<part name="du" type="xsd:dateTime"/>
-<part name="au" type="xsd:dateTime"/>
-</message>
-<message name="SoldeSSOutResponse">
-<part name="SlSSOut" type="tns:listMonetiqueCarte"/>
-</message>
-<portType name="MonetiqueWS">
-<operation name="getAuth">
-<input wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getAuthRequest" message="tns:getAuth"/>
-<output wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getAuthResponse" message="tns:getAuthResponse"/>
-</operation>
-<operation name="getCl">
-<input wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getClRequest" message="tns:getCl"/>
-<output wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getClResponse" message="tns:getClResponse"/>
-</operation>
-<operation name="getHist">
-<input wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getHistRequest" message="tns:getHist"/>
-<output wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getHistResponse" message="tns:getHistResponse"/>
-</operation>
-<operation name="getPans">
-<input wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getPansRequest" message="tns:getPans"/>
-<output wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/getPansResponse" message="tns:getPansResponse"/>
-</operation>
-<operation name="SoldeOut">
-<input wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/SoldeOutRequest" message="tns:SoldeOut"/>
-<output wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/SoldeOutResponse" message="tns:SoldeOutResponse"/>
-</operation>
-<operation name="SoldeSSOut" parameterOrder="du au">
-<input wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/SoldeSSOutRequest" message="tns:SoldeSSOut"/>
-<output wsam:Action="http://ws.mbanking.bpm.mr/MonetiqueWS/SoldeSSOutResponse" message="tns:SoldeSSOutResponse"/>
+<portType name="ImalWS">
+<operation name="ImalOUt">
+<input wsam:Action="http://ws.mbanking.bpm.mr/ImalWS/ImalOUtRequest" message="tns:ImalOUt"/>
+<output wsam:Action="http://ws.mbanking.bpm.mr/ImalWS/ImalOUtResponse" message="tns:ImalOUtResponse"/>
+<fault message="tns:ParseException" name="ParseException" wsam:Action="http://ws.mbanking.bpm.mr/ImalWS/ImalOUt/Fault/ParseException"/>
 </operation>
 </portType>
-<binding name="MonetiqueWSPortBinding" type="tns:MonetiqueWS">
+<binding name="ImalWSPortBinding" type="tns:ImalWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
-<operation name="getAuth">
+<operation name="ImalOUt">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
@@ -75,56 +28,14 @@
 <output>
 <soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
 </output>
-</operation>
-<operation name="getCl">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</output>
-</operation>
-<operation name="getHist">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</output>
-</operation>
-<operation name="getPans">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</output>
-</operation>
-<operation name="SoldeOut">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</output>
-</operation>
-<operation name="SoldeSSOut">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://ws.mbanking.bpm.mr/"/>
-</output>
+<fault name="ParseException">
+<soap:fault name="ParseException" use="literal"/>
+</fault>
 </operation>
 </binding>
-<service name="MonetiqueWSService">
-<port name="MonetiqueWSPort" binding="tns:MonetiqueWSPortBinding">
-<soap:address location="http://192.168.0.50:8802/ws/monetique/service"/>
+<service name="ImalWSService">
+<port name="ImalWSPort" binding="tns:ImalWSPortBinding">
+<soap:address location="http://192.168.0.50:8802/ws/imal/service"/>
 </port>
 </service>
 </definitions>

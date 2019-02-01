@@ -4,10 +4,8 @@ package com.monetique.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -17,8 +15,7 @@ public class Clearing implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	 @EmbeddedId
-	 Reference reference;
+	
 	
 	String typeEnregistrement;
 	String numeroDeSerie; 
@@ -72,12 +69,7 @@ public class Clearing implements Serializable{
 	
 	
 
-	public Reference getReference() {
-		return reference;
-	}
-	public void setReference(Reference reference) {
-		this.reference = reference;
-	}
+
 	public int getIndex() {
 		return index;
 	}

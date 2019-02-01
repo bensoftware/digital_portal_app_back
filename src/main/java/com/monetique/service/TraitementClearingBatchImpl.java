@@ -42,7 +42,7 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		List<ClearingRejeter> listClR= clearingRejeterRepository.getClearingByDateIntervall(du, au);
 		
 		
-		
+		// recuperation des données dans SS (Daily)
 		MonetiqueWSService b =new MonetiqueWSService();
 		MonetiqueWS service =b.getMonetiqueWSPort();
 		

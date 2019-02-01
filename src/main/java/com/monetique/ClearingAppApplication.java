@@ -13,6 +13,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.monetique.model.helper.CustomJobExecutorListener;
+import com.monetique.service.ImalService;
 import com.monetique.service.IntegrationBatchService;
 import com.monetique.service.TraitementClearingBatchService;
 
@@ -49,13 +50,16 @@ public class ClearingAppApplication implements CommandLineRunner{
 	IntegrationBatchService batchService;
 	
 	@Autowired
+	ImalService imalService;
+	
+	@Autowired
 	TraitementClearingBatchService traitementClearingBatchService;
 	
 	
 	@Override
 	public void run(String... args) throws Exception {
 
-		batchService.integrationCleationGIMTELBatch();
+		//batchService.integrationCleationGIMTELBatch();
 		
 String fdu="21012019";
 String fau="21012019";		
@@ -64,7 +68,9 @@ String fau="21012019";
 	 Date du=df.parse(fdu);
 	 Date au =df.parse(fau);	
 	 
-		//traitementClearingBatchService.verificationClGIMTELDate(du, au);
+		traitementClearingBatchService.verificationClGIMTELDate(du, au);
+	 
+	 //imalService.integration();
 	}
 
 }

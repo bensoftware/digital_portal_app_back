@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.monetique.entities.Clearing;
 import com.monetique.entities.ClearingFile;
 import com.monetique.entities.ClearingRejeter;
-import com.monetique.entities.Reference;
 import com.monetique.model.helper.ClearingHelper;
 import com.monetique.repositories.ClearingFileRepository;
 import com.monetique.repositories.ClearingRejeterRepository;

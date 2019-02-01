@@ -1,7 +1,10 @@
 
 package mr.bpm.mbanking.ws;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -21,6 +24,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _ParseException_QNAME = new QName("http://ws.mbanking.bpm.mr/", "ParseException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: mr.bpm.mbanking.ws
@@ -30,51 +34,36 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link MonetiqueClass }
+     * Create an instance of {@link ParseException }
      * 
      */
-    public MonetiqueClass createMonetiqueClass() {
-        return new MonetiqueClass();
+    public ParseException createParseException() {
+        return new ParseException();
     }
 
     /**
-     * Create an instance of {@link ListPan }
+     * Create an instance of {@link ListImal }
      * 
      */
-    public ListPan createListPan() {
-        return new ListPan();
+    public ListImal createListImal() {
+        return new ListImal();
     }
 
     /**
-     * Create an instance of {@link ListHistorique }
+     * Create an instance of {@link Imal }
      * 
      */
-    public ListHistorique createListHistorique() {
-        return new ListHistorique();
+    public Imal createImal() {
+        return new Imal();
     }
 
     /**
-     * Create an instance of {@link SoldeCarte }
+     * Create an instance of {@link JAXBElement }{@code <}{@link ParseException }{@code >}}
      * 
      */
-    public SoldeCarte createSoldeCarte() {
-        return new SoldeCarte();
-    }
-
-    /**
-     * Create an instance of {@link ListMonetiqueCarte }
-     * 
-     */
-    public ListMonetiqueCarte createListMonetiqueCarte() {
-        return new ListMonetiqueCarte();
-    }
-
-    /**
-     * Create an instance of {@link Historique }
-     * 
-     */
-    public Historique createHistorique() {
-        return new Historique();
+    @XmlElementDecl(namespace = "http://ws.mbanking.bpm.mr/", name = "ParseException")
+    public JAXBElement<ParseException> createParseException(ParseException value) {
+        return new JAXBElement<ParseException>(_ParseException_QNAME, ParseException.class, null, value);
     }
 
 }

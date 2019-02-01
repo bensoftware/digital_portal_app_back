@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 
 import com.monetique.entities.Clearing;
 import com.monetique.entities.ClearingRejeter;
-import com.monetique.entities.Reference;
 
 public class ClearingHelper {
 
@@ -246,7 +245,7 @@ public class ClearingHelper {
 		c.setNotUsed(mySubString(item,360,41));
 		c.setReferenceAutorisation(mySubString(item,401,12));
 		
-		Reference ref = new Reference(c.getReferenceTransaction(), c.getCodeOperation());
+//	Reference ref = new Reference(c.getReferenceTransaction(), c.getCodeOperation());
 		
 		
 
