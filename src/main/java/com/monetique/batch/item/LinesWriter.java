@@ -77,10 +77,7 @@ public class LinesWriter implements ItemWriter<Clearing>, StepExecutionListener 
         	String ref=line.getReferenceTransaction();
         	//System.out.println(line.getReferenceTransaction())
         	
-        	if(line.getCodeOperation().equals("27000"))
-        		System.out.println("27000");
-        	
-        	;
+      
         	try {
         		
         		if(ref.matches("\\s+")) {
@@ -90,7 +87,7 @@ public class LinesWriter implements ItemWriter<Clearing>, StepExecutionListener 
         		}else {
         			line.setClearingFile(clearingFile);
         		Clearing c=	clearingRepository.save(line);	
-        		System.out.println(c.getPan());
+        	//	System.out.println(c.getPan());
         		}
         		
         		//System.out.println("accepter");

@@ -55,16 +55,16 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-		batchService.integrationCleationGIMTELBatch();
+	//	batchService.integrationCleationGIMTELBatch();
 		
-String fdu="21012019";
-String fau="21012019";		
+String fdu="24012019";
+String fau="24012019";		
 	    DateFormat df=new SimpleDateFormat("ddMMyyyy");
 
 	 Date du=df.parse(fdu);
 	 Date au =df.parse(fau);	
 	 
-		//traitementClearingBatchService.verificationClGIMTELDate(du, au);
+	//	traitementClearingBatchService.verificationClGIMTELDate(du, au);
 	}
 
 }

@@ -14,10 +14,10 @@ public class Reference implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "referenceTransaction", nullable = false)
+	@Column(name = "refTransaction", nullable = false)
 	String referenceTransaction;
 	
-	@Column(name = "code_operation", nullable = false)
+	@Column(name = "code_opp", nullable = false)
 	String code_operation;
 
 	public String getReferenceTransaction() {

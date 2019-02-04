@@ -191,10 +191,67 @@ public class ClearingHelper {
 		c.setNotUsed(i.getNotUsed());
 		c.setReferenceAutorisation(i.getReferenceAutorisation());
 		
+		c.setMontantSetllment(i.getMontantSetllment());
+		c.setDeviseSellment(i.getDeviseSellment());
+		c.setReste(i.getReste());
+		
 		return c;
 	}
 	
 
+
+	
+	public static String getItemByClearing(Clearing i) throws ParseException {
+		String res="";
+		res+=i.getTypeEnregistrement();
+		res+=i.getNumeroDeSerie();
+		res+=i.getCodeOperation();
+		String time = new SimpleDateFormat("ddMMyy").format(i.getDateDeProcessing());
+		res+=time;
+		res+=i.getNumeroDeCommercant();
+		res+=i.getNumeroDuTerminal();
+		res+=i.getCompteCommercant();
+		res+=i.getNomCommercant();
+		res+=i.getLocationCommercant();
+		res+=i.getTerritoire();
+		res+=i.getPan();
+		res+=i.getNumeroComptePorteur();
+		res+=i.getDateDexpiration();
+		res+=i.getFlagDopposition();
+		res+=i.getReferenceTransaction();
+		res+=i.getNumeroDeRemise();
+		res+=i.getDateRemise();
+		res+=i.getNumeroTransaction();	
+		res+=i.getDateDeTransaction();
+		res+=i.getNumeroAutorisation();
+		res+=i.getMontantDautorisation();
+		res+=i.getMontantTransactionGross();
+		res+=i.getMonnaie();
+		res+=i.getExposantMonnaie();
+		res+=i.getFraisInterchange();
+		res+=i.getSigneFraisInterchange();
+		res+=i.getCommissionFraisPorteur();
+		res+=i.getMontantNetCreditCommercant();
+		res+=i.getCommissionCommercantCredit();
+		res+=i.getCodeBanqueEmettrice();
+		res+=i.getCodeBanqueAcquereur();
+		res+=i.getFraisConversion();
+		res+=i.getCodeCategirieCommercant();
+		res+=i.getCodeSysteme();
+		res+=i.getFraisCentre();
+		res+=i.getStatusTransaction();
+		res+=i.getNotUsed();
+		res+=i.getReferenceAutorisation();
+		
+		if(i.getMontantSetllment()!=null)
+		res+=i.getMontantSetllment();
+		if(i.getDeviseSellment()!=null )
+		res+=i.getDeviseSellment();
+		if(i.getReste()!=null)
+		res+=i.getReste();
+
+		return res;
+	}
 	
 	public static Clearing getClearingItem(String item) throws ParseException {
 		Clearing c= new Clearing();
@@ -202,6 +259,7 @@ public class ClearingHelper {
 		c.setTypeEnregistrement(mySubString(item,1,2));
 		c.setNumeroDeSerie(mySubString(item,3,6));
 		c.setCodeOperation(mySubString(item,9,5));
+		
 		
 		String dateP=mySubString(item,14,6);
 		try {
@@ -246,14 +304,28 @@ public class ClearingHelper {
 		c.setNotUsed(mySubString(item,360,41));
 		c.setReferenceAutorisation(mySubString(item,401,12));
 		
+		String montantSellment=null;
+		String deviseSellment=null;
+		String reste=null;
+		
+		
+		try {
+			 montantSellment=mySubString(item,413,15);
+			 deviseSellment=mySubString(item,428,3);
+			 reste =mySubString(item,431,item.length()-430);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			 reste =mySubString(item,413,item.length()-412);
+		}
+	
+		c.setMontantSetllment(montantSellment);
+		c.setDeviseSellment(deviseSellment);
+		c.setReste(reste);
+		
 		Reference ref = new Reference(c.getReferenceTransaction(), c.getCodeOperation());
 		
-		
-
-
-	//	CompositeKey key=new CompositeKey(c.getReferenceTransaction(), c.getNumeroAutorisation());
-
-	//	c.setKey(key);
+		c.setReference(ref);
 		return c;
 	}
 	
@@ -298,6 +370,9 @@ public class ClearingHelper {
 		c.setStatusTransaction(i.getStatusTransaction());
 		c.setNotUsed(i.getNotUsed());
 		c.setReferenceAutorisation(i.getReferenceAutorisation());
+		c.setMontantSetllment(i.getMontantSetllment());
+		c.setDeviseSellment(i.getDeviseSellment());
+		c.setReste(i.getReste());
 		
 		return c;
 	}

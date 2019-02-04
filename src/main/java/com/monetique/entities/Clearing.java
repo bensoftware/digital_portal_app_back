@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -64,6 +63,10 @@ public class Clearing implements Serializable{
 	String notUsed;
 	String referenceAutorisation; // pour auth 
 	
+	String montantSetllment ;
+	String deviseSellment;
+	String reste;
+	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idCl")
@@ -72,6 +75,24 @@ public class Clearing implements Serializable{
 	
 	
 
+	public String getMontantSetllment() {
+		return montantSetllment;
+	}
+	public void setMontantSetllment(String montantSetllment) {
+		this.montantSetllment = montantSetllment;
+	}
+	public String getDeviseSellment() {
+		return deviseSellment;
+	}
+	public void setDeviseSellment(String deviseSellment) {
+		this.deviseSellment = deviseSellment;
+	}
+	public String getReste() {
+		return reste;
+	}
+	public void setReste(String reste) {
+		this.reste = reste;
+	}
 	public Reference getReference() {
 		return reference;
 	}

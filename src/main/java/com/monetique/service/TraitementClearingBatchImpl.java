@@ -1,6 +1,10 @@
 package com.monetique.service;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -55,7 +59,7 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		ListMonetiqueCarte lmAut= service.soldeSSOut( DatatypeFactory.newInstance().newXMLGregorianCalendar(gdu), DatatypeFactory.newInstance().newXMLGregorianCalendar(gau));
 		List<MonetiqueClass> listClSS= lmAut.getList();
 		
-		System.out.println("----------------Treaitement ----------- ");
+		System.out.println("----------------Traitement ----------- ");
 		System.out.println("");
 		System.out.println("date du "+du.toGMTString());
 		System.out.println("date au "+au.toGMTString());
@@ -369,6 +373,32 @@ listClSS=listClSS2;
 						// TODO: handle exception
 						 pan=0.0;
 					}
+					Double montant=null;
+					int devise=0;
+					try {
+						devise=Integer.parseInt(c.getMonnaie());	
+					} catch (Exception e) {
+						devise=0;
+					}
+					try {
+						String re=c.getMontantTransactionGross();
+						int size= re.length();
+						if(devise==478) {
+							devise=929;
+							String mk1= re.substring(0, size-3);
+							String mk2= re.substring(size-3, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}else {
+							String mk1= re.substring(0, size-2);
+							String mk2= re.substring(size-2, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}
+						
+						
+					} catch (Exception e) {
+					}
 					
                     List<MonetiqueClass> lss= mapDailySS.get(5000);
                     if(lss!=null && lss.size()!=0) {
@@ -397,7 +427,7 @@ listClSS=listClSS2;
 					 
 					 if(res==null) {
 						 try {
-							 System.out.println("Num ligne "+c.getIndex()+" du fichier  "+c.getClearingFile().getNom());
+							 System.out.println("Num ligne "+c.getIndex()+" du fichier "+c.getClearingFile().getNom()+" Ref aut "+c.getReferenceAutorisation()+" num Auth "+c.getNumeroAutorisation()+" montant "+montant+" devise "+devise);
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
@@ -419,6 +449,32 @@ listClSS=listClSS2;
 					Double	pan=null;
 					Double refAut=null;
 					Double codeAuth=null;
+					Double montant=null;
+					int devise=0;
+					try {
+						devise=Integer.parseInt(c.getMonnaie());	
+					} catch (Exception e) {
+						devise=0;
+					}
+					try {
+						String re=c.getMontantTransactionGross();
+						int size= re.length();
+						if(devise==478) {
+							devise=929;
+							String mk1= re.substring(0, size-3);
+							String mk2= re.substring(size-3, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}else {
+							String mk1= re.substring(0, size-2);
+							String mk2= re.substring(size-2, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}
+						
+						
+					} catch (Exception e) {
+					}
 					try {
 						refAut=Double.parseDouble(c.getReferenceAutorisation());	
 					} catch (Exception e) {
@@ -461,7 +517,7 @@ listClSS=listClSS2;
 					 
                     if(res==null) {
 						 try {
-							 System.out.println("Num ligne "+c.getIndex()+" du fichier  "+c.getClearingFile().getNom());
+							 System.out.println("Num ligne "+c.getIndex()+" du fichier "+c.getClearingFile().getNom()+" Ref aut "+c.getReferenceAutorisation()+" num Auth "+c.getNumeroAutorisation()+" montant "+montant+" devise "+devise);
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
@@ -480,6 +536,32 @@ listClSS=listClSS2;
 					Double	pan=null;
 					Double refAut=null;
 					Double codeAuth=null;
+					Double montant=null;
+					int devise=0;
+					try {
+						devise=Integer.parseInt(c.getMonnaie());	
+					} catch (Exception e) {
+						devise=0;
+					}
+					try {
+						String re=c.getMontantTransactionGross();
+						int size= re.length();
+						if(devise==478) {
+							devise=929;
+							String mk1= re.substring(0, size-3);
+							String mk2= re.substring(size-3, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}else {
+							String mk1= re.substring(0, size-2);
+							String mk2= re.substring(size-2, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}
+						
+						
+					} catch (Exception e) {
+					}
 					try {
 						refAut=Double.parseDouble(c.getReferenceAutorisation());	
 					} catch (Exception e) {
@@ -521,7 +603,7 @@ listClSS=listClSS2;
 					
                     if(res==null) {
 						 try {
-							 System.out.println("Num ligne "+c.getIndex()+" du fichier  "+c.getClearingFile().getNom());
+							 System.out.println("Num ligne "+c.getIndex()+" du fichier "+c.getClearingFile().getNom()+" Ref aut "+c.getReferenceAutorisation()+" num Auth "+c.getNumeroAutorisation()+" montant "+montant+" devise "+devise);
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
@@ -592,7 +674,149 @@ listClSS=listClSS2;
                     }
                     if(res==null) {
 						 try {
-							 System.out.println("Num ligne "+c.getIndex()+" du fichier  "+c.getClearingFile().getNom());
+							 System.out.println("Num ligne "+c.getIndex()+" du fichier "+c.getClearingFile().getNom()+" Ref aut "+c.getReferenceAutorisation()+" num Auth "+c.getNumeroAutorisation()+" montant "+montant+" devise "+devise);
+							 
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					
+					 }
+				}
+			}
+			// frais recalcul PIN
+			else if(code==10102) { 
+				System.out.println("Frais recalcul PIN non integrer");
+				List<Clearing> lCl=mapClGimtel.get(code);
+				
+				for(Clearing c : lCl) {
+					Clearing res=null;
+					Double	pan=null;
+					Double montant=null;
+					int devise=0;
+					try {
+						devise=Integer.parseInt(c.getMonnaie());	
+					} catch (Exception e) {
+						devise=0;
+					}
+					try {
+						String re=c.getMontantTransactionGross();
+						int size= re.length();
+						if(devise==478) {
+							devise=929;
+							String mk1= re.substring(0, size-3);
+							String mk2= re.substring(size-3, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}else {
+							String mk1= re.substring(0, size-2);
+							String mk2= re.substring(size-2, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}
+						
+						
+					} catch (Exception e) {
+					}
+				
+					try {
+					 pan = Double.parseDouble(c.getPan());	
+					} catch (Exception e) {
+						// TODO: handle exception
+						 pan=0.0;
+					}
+					
+                    List<MonetiqueClass> lss= mapDailySS.get(code);
+                    if(lss!=null && lss.size()!=0) {
+                   	 for(MonetiqueClass m :lss) {
+						 // meme carte
+						 if(pan.equals(Double.parseDouble(m.getLieu()) )) {
+							// les ref auth ne sont pas null
+							 double mOrigine=m.getMontantOrigine();
+							 int deviseO=m.getDeviseOrigine();
+							 
+							 if(devise==deviseO && montant.equals(mOrigine)) {
+								 res=c;
+								 break; 
+							 }
+						
+							 
+						 }
+					 }
+                    }
+                    if(res==null) {
+						 try {
+							 System.out.println("Num ligne "+c.getIndex()+" du fichier "+c.getClearingFile().getNom()+" Ref aut "+c.getReferenceAutorisation()+" num Auth "+c.getNumeroAutorisation()+" montant "+montant+" devise "+devise);
+							 
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					
+					 }
+				}
+			}
+			// frais de personalisation
+			else if(code==10100) { 
+				System.out.println("Frais recalcul PIN non integrer");
+				List<Clearing> lCl=mapClGimtel.get(code);
+				
+				for(Clearing c : lCl) {
+					Clearing res=null;
+					Double	pan=null;
+					Double montant=null;
+					int devise=0;
+					try {
+						devise=Integer.parseInt(c.getMonnaie());	
+					} catch (Exception e) {
+						devise=0;
+					}
+					try {
+						String re=c.getMontantTransactionGross();
+						int size= re.length();
+						if(devise==478) {
+							devise=929;
+							String mk1= re.substring(0, size-3);
+							String mk2= re.substring(size-3, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}else {
+							String mk1= re.substring(0, size-2);
+							String mk2= re.substring(size-2, size); 
+							String mk3 = mk1+"."+mk2;
+							montant= Double.parseDouble(mk3);
+						}
+						
+						
+					} catch (Exception e) {
+					}
+				
+					try {
+					 pan = Double.parseDouble(c.getPan());	
+					} catch (Exception e) {
+						// TODO: handle exception
+						 pan=0.0;
+					}
+					
+                    List<MonetiqueClass> lss= mapDailySS.get(10900);
+                    if(lss!=null && lss.size()!=0) {
+                   	 for(MonetiqueClass m :lss) {
+						 // meme carte
+						 if(pan.equals(Double.parseDouble(m.getLieu()) )) {
+							// les ref auth ne sont pas null
+							 double mOrigine=m.getMontantOrigine();
+							 int deviseO=m.getDeviseOrigine();
+							 
+							 if(devise==deviseO && montant.equals(mOrigine)) {
+								 res=c;
+								 break; 
+							 }
+						
+							 
+						 }
+					 }
+                    }
+                    if(res==null) {
+						 try {
+							 System.out.println("Num ligne "+c.getIndex()+" du fichier "+c.getClearingFile().getNom()+" Ref aut "+c.getReferenceAutorisation()+" num Auth "+c.getNumeroAutorisation()+" montant "+montant+" devise "+devise);
 							 
 						} catch (Exception e) {
 							// TODO: handle exception
@@ -602,8 +826,45 @@ listClSS=listClSS2;
 				}
 			}
 			
+			
 		}
 		
+		
+	}
+
+
+
+	@Override
+	public void generationClearingFileByCl(List<Clearing> list) throws Exception {
+		// TODO Auto-generated method stub
+		
+		String str="";
+	//	int size= list.size();
+		
+		for(Clearing x : list) {
+			String item= ClearingHelper.getItemByClearing(x);
+			
+			str+=item+"\n";
+		}
+		
+	    File file = new File("C:\\\\Monetique\\\\test2.txt");
+	    FileWriter fw;
+			
+	    try {
+	      //Création de l'objet
+	      fw = new FileWriter(file);
+	      //On écrit la chaîne
+	      fw.write(str);
+	      //On ferme le flux
+	      fw.close();
+	
+
+
+	    } catch (FileNotFoundException e) {
+	      e.printStackTrace();
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
 		
 	}
 	

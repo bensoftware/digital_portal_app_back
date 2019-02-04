@@ -66,6 +66,10 @@ public class ClearingRejeter implements Serializable{
 	String notUsed;
 	String referenceAutorisation; // pour auth 
 	
+	String montantSetllment ;
+	String deviseSellment;
+	String reste;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idCl")
 	ClearingFile clearingFile;
@@ -73,6 +77,24 @@ public class ClearingRejeter implements Serializable{
 	
 	
 
+	public String getMontantSetllment() {
+		return montantSetllment;
+	}
+	public void setMontantSetllment(String montantSetllment) {
+		this.montantSetllment = montantSetllment;
+	}
+	public String getDeviseSellment() {
+		return deviseSellment;
+	}
+	public void setDeviseSellment(String deviseSellment) {
+		this.deviseSellment = deviseSellment;
+	}
+	public String getReste() {
+		return reste;
+	}
+	public void setReste(String reste) {
+		this.reste = reste;
+	}
 	public long getId() {
 		return id;
 	}
