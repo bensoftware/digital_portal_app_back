@@ -1,22 +1,25 @@
-/*package com.monetique.controller;
+package com.monetique.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.monetique.service.IntegrationBatchService;
-
+@CrossOrigin("*")
 @RestController
 public class IntegrationBatch {
 	
-	@Autowired
-	IntegrationBatchService batchService;
+
+	
+	/*
+	
+	@RequestMapping(value="/getInfoClearing",method=RequestMethod.GET)
+	public ResponseDto getInfoClearing() throws Exception {
+		return  clearingBatchService.getClearingByFile();
+	}
+	
 	
 	@RequestMapping(value="/integrationGimtelBatch",method=RequestMethod.GET)
 	public void integrationGIMTELBatch() throws Exception {
 		batchService.integrationCleationGIMTELBatch();
-	}
+	}*/
 
 }
-*/

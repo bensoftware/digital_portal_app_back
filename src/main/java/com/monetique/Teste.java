@@ -1,35 +1,67 @@
 package com.monetique;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.monetique.entities.Clearing;
-import com.monetique.entities.Reference;
-import com.monetique.model.helper.ClearingHelper;
-import com.monetique.repositories.ClearingRepository;
-import com.monetique.service.TraitementClearingBatchService;
 
 @Component
 public class Teste implements CommandLineRunner {
 
 	
-	@Autowired
-	ClearingRepository clearingRepository;
 	
-	@Autowired
-	TraitementClearingBatchService batchService ;
+	
 	
 	public static void main(String[] args) throws ParseException, IOException  {
+		
+		
+		
+/*		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+		
+		String messageClair = "secret-data";
+		
+		String secret="passe12345@2145@ssQQAAzzdhhgfbbnhkkk,nhgb";
+		
+		textEncryptor.setPasswordCharArray(secret.toCharArray());
+		
+		String myEncryptedText = textEncryptor.encrypt(messageClair);
+		
+		System.out.println(myEncryptedText);
+		
+		String plainText = textEncryptor.decrypt(myEncryptedText);
+		
+		System.out.println(plainText);*/
+		
+		
+	/*	PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+		encryptor.setPoolSize(4);
+		encryptor.setPassword("some-random-data");
+		encryptor.setAlgorithm("PBEWithMD5AndTripleDES");
+		String privateData = "secret-data";
+		encryptor.setPassword("some-random-passwprd");
+		encryptor.setAlgorithm("PBEWithMD5AndTripleDES");
+		
+		String encryptedText = encryptor.encrypt(privateData);
+		System.out.println(encryptedText);
+		
+		String plainText = encryptor.decrypt(encryptedText);
+		System.out.println(plainText);*/
+		
+	/*	String res= "1902	00070000001	0000 0000 0000 000	31.12.2021 23:59:00	200";
+		
+		double d=0;
+		
+		try {
+			d=Double.parseDouble(res);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("error");
+		}
+		System.out.println(d);*/
 		
 	/*	String dd="010617";
 		
@@ -106,6 +138,7 @@ public class Teste implements CommandLineRunner {
 	      e.printStackTrace();
 	    }*/
 		
+
 		
 	}
 
@@ -117,7 +150,7 @@ public class Teste implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-	Reference ref= new Reference("15505519022080014657954", "05000");
+/*	Reference ref= new Reference("15505519022080014657954", "05000");
 		
 	 Clearing cl= clearingRepository.findById(ref).get();
 
@@ -125,7 +158,7 @@ public class Teste implements CommandLineRunner {
 		List<Clearing>
 		 list= new ArrayList<>();
 		
-		list.add(cl);
+		list.add(cl);*/
 	//	list.add(clearingRepository.findById(new Reference("35442949031003000057122", "05000")).get());
 	//	list.add(clearingRepository.findById(new Reference("25481049023031023070956", "05000")).get());
 
