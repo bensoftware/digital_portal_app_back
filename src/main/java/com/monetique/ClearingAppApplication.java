@@ -1,9 +1,5 @@
 package com.monetique;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +11,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import com.monetique.model.helper.CustomJobExecutorListener;
 import com.monetique.service.ImalService;
 import com.monetique.service.IntegrationBatchService;
-import com.monetique.service.TraitementClearingBatchService;
 
 @SpringBootApplication
 public class ClearingAppApplication implements CommandLineRunner{
@@ -48,29 +43,16 @@ public class ClearingAppApplication implements CommandLineRunner{
 
 	@Autowired
 	IntegrationBatchService batchService;
-	
+
 	@Autowired
 	ImalService imalService;
 	
-	@Autowired
-	TraitementClearingBatchService traitementClearingBatchService;
 	
 	
 	@Override
 	public void run(String... args) throws Exception {
 
-		//batchService.integrationCleationGIMTELBatch();
-		
-String fdu="21012019";
-String fau="21012019";		
-	    DateFormat df=new SimpleDateFormat("ddMMyyyy");
 
-	 Date du=df.parse(fdu);
-	 Date au =df.parse(fau);	
-	 
-		traitementClearingBatchService.verificationClGIMTELDate(du, au);
-	 
-	 //imalService.integration();
 	}
 
 }

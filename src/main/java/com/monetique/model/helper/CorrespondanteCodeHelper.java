@@ -71,7 +71,7 @@ switch (code) {
 			res="refound (rembourssement)";
 			break;	
 			default :
-			res="code"+code+"inconnu";
+			res="code "+code+" inconnu";
 			break;		
 		}
 		
