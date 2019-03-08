@@ -1,16 +1,15 @@
 package com.monetique;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import com.monetique.model.helper.CustomJobExecutorListener;
-import com.monetique.service.ImalService;
-import com.monetique.service.IntegrationBatchService;
+import com.monetique.entities.CarteStock;
+import com.monetique.service.IntegrationService;
+import com.monetique.service.SecuriteService;
 
 @SpringBootApplication
 public class ClearingAppApplication implements CommandLineRunner{
@@ -19,41 +18,47 @@ public class ClearingAppApplication implements CommandLineRunner{
 	
 		SpringApplication.run(ClearingAppApplication.class, args);
 
-       
-	
 	}
 
-	@Bean
-	CustomJobExecutorListener getExecListner() {
-		return new CustomJobExecutorListener((ThreadPoolTaskExecutor) taskExecutor());
-	}
-	
 
 	
-	@Bean
-	public TaskExecutor taskExecutor() {
-	        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-	        taskExecutor.setMaxPoolSize(1000);
-	        taskExecutor.setCorePoolSize(5);
-	        taskExecutor.setQueueCapacity(1000);
-	        taskExecutor.afterPropertiesSet();
-	        return taskExecutor;
-	    }
-	
-
 	@Autowired
-	IntegrationBatchService batchService;
-
+	IntegrationService integrationService;
+	
 	@Autowired
-	ImalService imalService;
+	SecuriteService securiteService;
 	
 	
 	
 	@Override
 	public void run(String... args) throws Exception {
 
+		/*List<Operateur> list =operateurService.getAllOperator();
+		
+		Operateur p = operateurService.getOperatorByCode(1);
+		Operateur p2 = operateurService.getOperatorByCode(3);
+		
+		System.out.println("fin");*/
+//	List<CarteStock> list=	integrationService.integrationVoucher(2, "voucher1.txt");
+		
+//	System.out.println(list.size());
 
+	/*	Path path1 = Paths.get("C:\\CarteApp\\Chinguitel\\archive\\voucher1.txt");
+		
+		Stream<String> line = Files.lines(path1,StandardCharsets.ISO_8859_1);
+		
+		Path path = Paths.get("C:\\CarteApp\\Chinguitel\\archive\\voucher2.txt");
+		
+
+		List<String> list= line.filter(e -> e.length()>0).map(e->securiteService.setCryptageLigne(e)).collect(Collectors.toList());
+		
+		Files.write(path, list);
+		
+		line.close();*/
+		
 	}
+	
+	
 
 }
 

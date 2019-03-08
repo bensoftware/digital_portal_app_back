@@ -2,9 +2,9 @@ package com.monetique.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.monetique.entities.EmailNotification;
+import com.monetique.entities.CarteUtilise;
 
-public interface CarteUtiliseRepository extends CrudRepository<EmailNotification, Long>{
+public interface CarteUtiliseRepository extends CrudRepository<CarteUtilise, String>{
 
 
 }

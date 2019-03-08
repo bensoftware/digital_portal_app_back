@@ -22,6 +22,17 @@ public class Status implements Serializable{
 	public void setCodeerror(int codeerror) {
 		this.codeerror = codeerror;
 	}
+	public Status() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Status(int codestatus, int codeerror) {
+		super();
+		this.codestatus = codestatus;
+		this.codeerror = codeerror;
+	}
+	
+	
 	
 	
 }

@@ -28,6 +28,8 @@ public class TypeMontant implements Serializable{
 	
 	
 	
+	
+	
 	/*@OneToMany(mappedBy="typeMontant",cascade=CascadeType.ALL)
 	List<CarteStock> carteStocks=new ArrayList<>();
 
@@ -65,6 +67,17 @@ public class TypeMontant implements Serializable{
 		this.carteUtilises = carteUtilises;
 	}*/
 	
+	public TypeMontant(double montant, Operateur operateur) {
+		super();
+		this.montant = montant;
+		this.operateur = operateur;
+	}
+
+	public TypeMontant() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Operateur getOperateur() {
 		return operateur;
 	}
