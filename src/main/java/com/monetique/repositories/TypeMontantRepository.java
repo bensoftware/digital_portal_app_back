@@ -14,5 +14,6 @@ public interface TypeMontantRepository extends CrudRepository<TypeMontant, Long>
 	
 	@Query("select u.montant from TypeMontant u where u.operateur.code=?1")
 	public List<Double> getAllMontantByOperateur(int operator);
-
+	
+	
 }

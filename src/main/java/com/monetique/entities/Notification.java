@@ -2,14 +2,15 @@ package com.monetique.entities;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -25,9 +26,9 @@ public class Notification implements Serializable{
 	int status;
 	Date date;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_montant")
-	TypeMontant typeMontant;
+	@OneToMany(mappedBy="notification",cascade=CascadeType.ALL)
+	List<MontantNotification> montants=new ArrayList<>();
+
 
 	public Long getId() {
 		return id;
@@ -61,15 +62,15 @@ public class Notification implements Serializable{
 		this.date = date;
 	}
 
-	public TypeMontant getTypeMontant() {
-		return typeMontant;
+	public List<MontantNotification> getMontants() {
+		return montants;
 	}
 
-	public void setTypeMontant(TypeMontant typeMontant) {
-		this.typeMontant = typeMontant;
+	public void setMontants(List<MontantNotification> montants) {
+		this.montants = montants;
 	}
-	
-	
+
+
 	
 	
 	
