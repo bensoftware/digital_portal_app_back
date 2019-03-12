@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class CarteUtilise implements Serializable{
@@ -79,6 +81,7 @@ public class CarteUtilise implements Serializable{
 	public void setNumeroCarte(String numeroCarte) {
 		this.numeroCarte = numeroCarte;
 	}
+	@JsonIgnore
 	public String getCodeSecret() {
 		return codeSecret;
 	}

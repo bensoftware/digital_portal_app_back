@@ -1,5 +1,6 @@
 package com.monetique.repositories;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.monetique.entities.CarteStock;
@@ -12,4 +13,7 @@ public interface CarteStockRepository extends CrudRepository<CarteStock, String>
 	
 	CarteStock findFirstByTypeMontant(TypeMontant typeMontant);
 
+	@Query("select count(u) from CarteStock u where u.typeMontant.montant=?1")
+	public double getTotalRecharge(double montant);
+	
 }

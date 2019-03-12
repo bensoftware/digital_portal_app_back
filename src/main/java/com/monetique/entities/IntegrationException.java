@@ -5,8 +5,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -22,7 +25,21 @@ public class IntegrationException implements Serializable{
 	int code;
 	String description;
 	String codeSerie;
-	Date dateIntegration;
+
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_integ_file")
+	IntegrationFile integrationFile;
+	
+	
+	
+	
+	public IntegrationFile getIntegrationFile() {
+		return integrationFile;
+	}
+	public void setIntegrationFile(IntegrationFile integrationFile) {
+		this.integrationFile = integrationFile;
+	}
 	public long getId() {
 		return id;
 	}
@@ -47,12 +64,7 @@ public class IntegrationException implements Serializable{
 	public void setCodeSerie(String codeSerie) {
 		this.codeSerie = codeSerie;
 	}
-	public Date getDateIntegration() {
-		return dateIntegration;
-	}
-	public void setDateIntegration(Date dateIntegration) {
-		this.dateIntegration = dateIntegration;
-	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -60,12 +72,19 @@ public class IntegrationException implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public IntegrationException(int code, String description, String codeSerie, Date dateIntegration) {
+	public IntegrationException(int code, String description, String codeSerie) {
 		super();
 		this.code = code;
 		this.description = description;
 		this.codeSerie = codeSerie;
-		this.dateIntegration = dateIntegration;
+	}
+	public IntegrationException( int code, String description, String codeSerie,
+			IntegrationFile integrationFile) {
+		super();
+		this.code = code;
+		this.description = description;
+		this.codeSerie = codeSerie;
+		this.integrationFile = integrationFile;
 	}
 	
 	

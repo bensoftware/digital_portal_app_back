@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.monetique.dto.IntegrationExcpItem;
 import com.monetique.dto.ItemInfo;
 import com.monetique.entities.IntegrationFile;
 import com.monetique.entities.Operateur;
@@ -53,6 +54,19 @@ public class IntegrationController {
 		return  integrationService.getHistoriqueIntegration(operator);
 	}
 	
+	@RequestMapping(value="/getHistoriqueExceptionVouchers/{operator}",method=RequestMethod.GET)
+	public @ResponseBody List<IntegrationFile> getHistoriqueExceptionVouchers(@PathVariable int operator) throws Exception {
+		return  integrationService.getHistoriqueIntegrationException(operator);
+	}
 
-
+	@RequestMapping(value="/getExceptionVouchersByHisp/{id}",method=RequestMethod.GET)
+	public @ResponseBody List<IntegrationExcpItem> getExceptionVouchersByHisp(@PathVariable long id) throws Exception {
+		return  integrationService.getExceptionIntegByHisto(id);
+	}
+	
+	
+	@RequestMapping(value="/getExceptionByOp/{operator}",method=RequestMethod.GET)
+	public @ResponseBody List<IntegrationExcpItem> getExceptionByOp(@PathVariable int operator) throws Exception {
+		return  integrationService.getExceptionByOp(operator);
+	}
 }

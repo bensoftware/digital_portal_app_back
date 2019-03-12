@@ -9,27 +9,26 @@ import javax.jws.soap.SOAPBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.monetique.dto.InputSendPhoneCardDto;
-import com.monetique.dto.OutputSendPhoneCardDto;
+import com.monetique.dto.InputGetAllAmountCardDto;
+import com.monetique.dto.OutputGetAllAmountCardDto;
 import com.monetique.service.SoapService;
 
 
 @Component
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public class CardMbankingWS {
+public class CardAllAmountMbankingWS {
 
 	@Autowired
 	SoapService soapService;
 	
 	
 	@WebMethod
-	@WebResult(name = "sendrecharge")
-	public OutputSendPhoneCardDto sendrecharge(@WebParam(name="inputrecharge") InputSendPhoneCardDto in) throws Exception {
+	@WebResult(name = "getallamount")
+	public OutputGetAllAmountCardDto getallamount(@WebParam(name="inputgetamounts") InputGetAllAmountCardDto in) throws Exception {
 
-		return soapService.sendPhoneCard(in);
+		return soapService.getAllAmount(in);
 	}
-
 	
 	
 } 

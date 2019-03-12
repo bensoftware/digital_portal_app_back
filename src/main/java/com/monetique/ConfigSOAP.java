@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.monetique.ws.CardAllAmountMbankingWS;
 import com.monetique.ws.CardMbankingWS;
 
 
@@ -24,6 +25,8 @@ public class ConfigSOAP {
 	@Autowired
 	CardMbankingWS cardMbankingWS;
 	
+	@Autowired
+	CardAllAmountMbankingWS allAmountMbankingWS;
 
 	
 	@Bean
@@ -34,6 +37,12 @@ public class ConfigSOAP {
 	
 	}
 	
+	@Bean
+	public Endpoint apiAllAmount() {
+		
+	 Endpoint endpoint=	Endpoint.publish("http://"+url+":"+port+"/ws/mbanking/allamount",allAmountMbankingWS);
+	 return endpoint;
 	
+	}
 
 }

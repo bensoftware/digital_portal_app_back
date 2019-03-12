@@ -1,15 +1,20 @@
 package com.monetique.service.impl;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.monetique.dto.ConsultationRecharge;
 import com.monetique.entities.CarteStock;
 import com.monetique.entities.TypeMontant;
 import com.monetique.repositories.CarteStockRepository;
+import com.monetique.repositories.TypeMontantRepository;
 import com.monetique.service.CarteStockService;
 import com.monetique.service.MontantService;
 import com.monetique.service.SecuriteService;
@@ -25,6 +30,9 @@ public class CarteStockServiceImpl implements CarteStockService {
 	
 	@Autowired
 	MontantService montantService;
+	
+	@Autowired
+	TypeMontantRepository typeMontantRepository;
 
 	@Override
 	public int saveCarteStock(CarteStock c,Date date) throws Exception {
@@ -82,6 +90,24 @@ public class CarteStockServiceImpl implements CarteStockService {
 			// TODO: handle exception
 		}
 		
+		
+		return res;
+	}
+
+	@Override
+	public List<ConsultationRecharge> getConsultationRechargeStock() throws Exception {
+
+		List<ConsultationRecharge> res= new ArrayList<>();
+		
+		Iterator<TypeMontant> it= typeMontantRepository.findAll().iterator();
+		
+		while (it.hasNext()) {
+			
+			TypeMontant item= it.next();
+			double total= carteStockRepository.getTotalRecharge(item.getMontant());
+			res.add(new ConsultationRecharge(item.getOperateur().getLibelle(), item.getMontant(), total));
+			
+		} 
 		
 		return res;
 	}

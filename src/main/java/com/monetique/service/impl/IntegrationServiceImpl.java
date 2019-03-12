@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.monetique.dto.IntegrationExcpItem;
 import com.monetique.dto.ItemInfo;
 import com.monetique.entities.CarteStock;
 import com.monetique.entities.IntegrationException;
@@ -160,23 +161,24 @@ public class IntegrationServiceImpl implements IntegrationService {
 		int nonIntegrer= 0;
 		
 		Date dateAc= new Date();
+		// logger l'integration
+		IntegrationFile integrationFile=new IntegrationFile(filename,dateAc, nonIntegrer, cartes.size(), operateur);
+		integrationFile=integrationFileRepository.save(integrationFile);
+		
 		
 		for(CarteStock x : cartes) {
 			int rep= carteStockService.saveCarteStock(x,dateAc);
-			if(rep==1) {
-				// ajouter l'exception
-				integrationExceptionRepository.save(new IntegrationException(1, "code de serie deja existant", x.getCleNumeroSerie()+x.getNumeroCarte() , dateAc));
-				nonIntegrer++;		
-			}
-			else if(rep==2) {
-				// ajouter l'exception
-				integrationExceptionRepository.save(new IntegrationException(2, "recharge expirée", x.getCleNumeroSerie()+x.getNumeroCarte() , dateAc));
-				nonIntegrer++;		
+			
+			IntegrationException integrationException= CarteHelper.getIntegrationExcepByCode(rep, x.getCleNumeroSerie()+x.getNumeroCarte(), integrationFile);
+			
+			if(integrationException!=null) {
+				integrationExceptionRepository.save(integrationException);
+				nonIntegrer++;	
 			}
 		}
 		
-		// logger l'integration
-		IntegrationFile integrationFile=new IntegrationFile(filename, new Date(), nonIntegrer, cartes.size(), operateur);
+	
+		integrationFile.setCarteNonIntegrer(nonIntegrer);
 		integrationFileRepository.save(integrationFile);
 		
 		// deplacer vers le out
@@ -254,6 +256,32 @@ public class IntegrationServiceImpl implements IntegrationService {
 	return integrationFileRepository.getAllIntegrationFileByOperator(operateur);
 		
 	}
+	
+	@Override
+	public List<IntegrationFile> getHistoriqueIntegrationException(int operateur) throws Exception {
+		
+	return integrationFileRepository.getAllIntegrationFileByOperatorExcep(operateur);
+		
+	}
+	
+	
+	@Override
+	public List<IntegrationExcpItem> getExceptionByOp(int operateur) throws Exception {
+		
+		List<IntegrationExcpItem>  res= new ArrayList<>();
+		
+		List<IntegrationException> list= integrationExceptionRepository.getAllIntegrationExcepByOperator(operateur);
+
+		if(list!=null && list.size()!=0) {
+			for(IntegrationException x : list) {
+				res.add(new IntegrationExcpItem(x.getCodeSerie(), x.getDescription(), x.getIntegrationFile().getDate()));
+			}
+		}
+		
+		
+		
+		return res;		
+	}
 
 	@Override
 	public List<ItemInfo> getInfoVoucher(int operator,String filename) throws Exception {
@@ -323,6 +351,22 @@ public class IntegrationServiceImpl implements IntegrationService {
 		stream.close();
 				
 		return itemInfos;
+	}
+
+	@Override
+	public List<IntegrationExcpItem> getExceptionIntegByHisto(long id) throws Exception {
+		
+		List<IntegrationExcpItem> excpItems= new ArrayList<>();
+		
+		List<IntegrationException> list=integrationExceptionRepository.getAllIntegrationExcepByHist(id);
+		
+		for(IntegrationException x : list) {
+			excpItems.add(new IntegrationExcpItem(x.getCodeSerie(), x.getDescription()));
+		}
+		
+		return excpItems;
+				
+				
 	}
 
 	

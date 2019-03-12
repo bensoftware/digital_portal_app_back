@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 
 import com.monetique.entities.CarteStock;
 import com.monetique.entities.CarteUtilise;
+import com.monetique.entities.IntegrationException;
+import com.monetique.entities.IntegrationFile;
 import com.monetique.entities.TypeMontant;
 
 public class CarteHelper {
@@ -122,6 +124,29 @@ public class CarteHelper {
 		 
 		 Path path =Paths.get(url+"\\"+filename);;
 		 return Files.lines(path,StandardCharsets.ISO_8859_1);
+		
+	
+	}
+	
+	
+	public static IntegrationException getIntegrationExcepByCode(int code,String identifiant,IntegrationFile dateInteg) throws IOException{
+		
+		IntegrationException integrationException=null;
+		
+		switch (code) {
+		case 1:
+			integrationException=new IntegrationException(code, "code de serie deja existant", identifiant, dateInteg);
+
+			break;
+	   case 2:
+			integrationException=new IntegrationException(code, "recharge expirée", identifiant, dateInteg);
+
+			break;
+		default:
+			break;
+		}
+		 
+	return integrationException;
 		
 	
 	}

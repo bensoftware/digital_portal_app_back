@@ -15,4 +15,7 @@ public interface IntegrationFileRepository extends CrudRepository<IntegrationFil
 	
 	@Query("select u from IntegrationFile u where u.operateur.code=?1 order by u.date desc")
 	public List<IntegrationFile> getAllIntegrationFileByOperator(int operator);
+	
+	@Query("select u from IntegrationFile u where u.operateur.code=?1 and u.carteNonIntegrer>0 order by u.date desc")
+	public List<IntegrationFile> getAllIntegrationFileByOperatorExcep(int operator);
 }
