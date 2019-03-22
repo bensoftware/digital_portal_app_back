@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.monetique.dto.CarteExport;
 import com.monetique.dto.CarteItem;
 import com.monetique.dto.ConsultationRecharge;
 import com.monetique.service.CarteStockService;
@@ -52,6 +53,10 @@ public class ConsultationRechargeController {
 		return carteUtiliserService.getRechercheRecharge(type, recherche);
 	}
 	
-
+	@RequestMapping(value="/getAllExpiration",method=RequestMethod.GET)
+	public @ResponseBody List<CarteExport> getAllExpiration() throws Exception {
+	
+		return carteStockService.getAllExpiration();
+	}
 
 }

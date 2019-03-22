@@ -23,7 +23,7 @@ public class Notification implements Serializable{
 	Long id;
 	
 	int typeNotification;
-	int status;
+	int status;//0 : à l’initiation, 1: à visualisation du message par l’Admin, 2: à la clôture
 	Date date;
 	
 	@OneToMany(mappedBy="notification",cascade=CascadeType.ALL)

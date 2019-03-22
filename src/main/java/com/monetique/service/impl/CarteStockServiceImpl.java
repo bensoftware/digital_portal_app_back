@@ -2,21 +2,27 @@ package com.monetique.service.impl;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.monetique.dto.CarteExport;
 import com.monetique.dto.ConsultationRecharge;
 import com.monetique.entities.CarteStock;
 import com.monetique.entities.TypeMontant;
+import com.monetique.model.helper.CarteHelper;
 import com.monetique.repositories.CarteStockRepository;
 import com.monetique.repositories.TypeMontantRepository;
 import com.monetique.service.CarteStockService;
 import com.monetique.service.MontantService;
+import com.monetique.service.ParametreService;
 import com.monetique.service.SecuriteService;
 
 @Service
@@ -33,7 +39,11 @@ public class CarteStockServiceImpl implements CarteStockService {
 	
 	@Autowired
 	TypeMontantRepository typeMontantRepository;
-
+	
+	@Autowired
+	ParametreService parametreService;
+	
+	
 	@Override
 	public int saveCarteStock(CarteStock c,Date date) throws Exception {
 		
@@ -104,10 +114,80 @@ public class CarteStockServiceImpl implements CarteStockService {
 		while (it.hasNext()) {
 			
 			TypeMontant item= it.next();
-			double total= carteStockRepository.getTotalRecharge(item.getMontant());
-			res.add(new ConsultationRecharge(item.getOperateur().getLibelle(), item.getMontant(), total));
+			double total= carteStockRepository.getTotalRecharge(item.getId());
+			
+			Date dateEx= carteStockRepository.findFirstByTypeMontantOrderByDateExpirationAsc(item).getDateExpiration();
+
+			// stock 
+			boolean epuisement= montantService.checkEpuisementMontantItem(item.getId());
+			
+			// expiration
+			boolean expiration=checkExpirationDate(dateEx);
+			
+			res.add(new ConsultationRecharge(item.getOperateur().getLibelle(), item.getMontant(), total,dateEx,epuisement,expiration));
 			
 		} 
+		
+		return res;
+	}
+	
+	@Override
+	public Map<TypeMontant, Integer> getExpiration(int expiration) throws Exception {
+		// TODO Auto-generated method stub
+		Map<TypeMontant, Integer> res= new HashMap<>();
+		
+		Calendar ac= Calendar.getInstance();
+		ac.setTime(new Date());
+		// incrementation par mois
+		ac.add(Calendar.MONTH, expiration); 
+		
+		Date dateEx=ac.getTime();
+		
+		List<CarteStock> carteExpires= carteStockRepository.getAllStockExpiration(dateEx);
+		
+		for(CarteStock x : carteExpires) {
+			TypeMontant t= x.getTypeMontant();
+			if(res.containsKey(t)) {
+				Integer cpt=res.get(t);
+				cpt++;
+				res.replace(t, cpt);
+				
+			}else {
+				res.put(t, 1);
+			}
+		}
+		
+		return res;
+	}
+
+	@Override
+	public boolean checkExpirationDate(Date dateEx) throws Exception {
+		// TODO Auto-generated method stub
+
+		int expiration = parametreService.getExpiration();
+		
+		return CarteHelper.getExpirationyCarteStock(dateEx, expiration);
+	}
+
+	@Override
+	public List<CarteExport> getAllExpiration() throws Exception {
+		
+		List<CarteExport> res= new ArrayList<>();
+		
+		int expiration= parametreService.getExpiration();
+		
+		Calendar ac= Calendar.getInstance();
+		ac.setTime(new Date());
+		// incrementation par mois
+		ac.add(Calendar.MONTH, expiration); 
+		
+		Date dateEx=ac.getTime();
+		
+		List<CarteStock> carteExpires= carteStockRepository.getAllStockExpiration(dateEx);
+	
+		for(CarteStock x : carteExpires) {
+			res.add(new CarteExport(x.getId(), x.getTypeMontant().getMontant(), x.getDateExpiration()));
+		}
 		
 		return res;
 	}

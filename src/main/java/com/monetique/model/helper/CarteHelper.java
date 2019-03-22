@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -23,7 +24,38 @@ public class CarteHelper {
 	
 	static Stream<String> line;
 	static DateFormat df=new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+	public static boolean getExpirationyCarteStock(Date exp,int expiration) {
+
+		
+		Calendar ac= Calendar.getInstance();
+		ac.setTime(new Date());
+		// incrementation par mois
+		ac.add(Calendar.MONTH, expiration); 		
+		
+		Calendar acSt= Calendar.getInstance();
+		acSt.setTime(exp);
+		
+		if(ac.after(acSt)) {
+			return true;
+		}
+		return false;
+	}
 	
+public static String getTitreNotification(int typeNotification,int montant) {
+		
+		String res=null;
+		
+		if(typeNotification==1) {
+			res="Alert du seuil du stock de la recharge de "+montant+" MRU";
+		}
+		else if(typeNotification==2) {
+			res="Alert du seuil du date d'expiration de la recharge de "+montant+" MRU";
+		}
+		
+		return res;
+		
+	}
 	
 	public static CarteUtilise getCarteUtiliserByCarteStock(CarteStock c) {
 		

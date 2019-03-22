@@ -1,5 +1,8 @@
 package com.monetique.repositories;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,7 +16,15 @@ public interface CarteStockRepository extends CrudRepository<CarteStock, String>
 	
 	CarteStock findFirstByTypeMontant(TypeMontant typeMontant);
 
-	@Query("select count(u) from CarteStock u where u.typeMontant.montant=?1")
-	public double getTotalRecharge(double montant);
+	CarteStock findFirstByTypeMontantOrderByDateExpirationAsc(TypeMontant typeMontant);
+
+	CarteStock findFirstByTypeMontantOrderByDateExpiration(TypeMontant typeMontant);
+
+	
+	@Query("select count(u) from CarteStock u where u.typeMontant.id=?1")
+	public double getTotalRecharge(long id);
+	
+	@Query("select u from CarteStock u where u.dateExpiration<?1")
+	public List<CarteStock> getAllStockExpiration(Date exp);
 	
 }

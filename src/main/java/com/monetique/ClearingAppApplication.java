@@ -1,14 +1,17 @@
 package com.monetique;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.monetique.entities.CarteStock;
+import com.monetique.entities.TypeMontant;
+import com.monetique.repositories.CarteStockRepository;
+import com.monetique.repositories.TypeMontantRepository;
+import com.monetique.service.CarteStockService;
 import com.monetique.service.IntegrationService;
+import com.monetique.service.NotificationService;
 import com.monetique.service.SecuriteService;
 
 @SpringBootApplication
@@ -28,7 +31,14 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	SecuriteService securiteService;
 	
+	@Autowired
+	NotificationService notificationService;
 	
+	@Autowired
+	CarteStockRepository carteStockRepository;
+	
+	@Autowired
+	TypeMontantRepository typeMontantRepository ;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -55,6 +65,12 @@ public class ClearingAppApplication implements CommandLineRunner{
 		Files.write(path, list);
 		
 		line.close();*/
+		
+	//	notificationService.checkEpuisement();
+		///notificationService.checkExpiration();
+		
+		
+	
 		
 	}
 	

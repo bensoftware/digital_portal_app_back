@@ -1,4 +1,4 @@
-package com.monetique;
+/*package com.monetique;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -26,3 +26,4 @@ public class Teste {
 	
 	
 }
+*/

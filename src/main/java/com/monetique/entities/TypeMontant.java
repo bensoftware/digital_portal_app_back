@@ -21,7 +21,10 @@ public class TypeMontant implements Serializable{
 	long id;
 	
 	double montant;
-	
+    boolean active=true;
+	boolean activeStock=false;
+	int stock;
+    
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_operateur")
 	Operateur operateur;
@@ -67,6 +70,30 @@ public class TypeMontant implements Serializable{
 		this.carteUtilises = carteUtilises;
 	}*/
 	
+	public boolean isActiveStock() {
+		return activeStock;
+	}
+
+	public void setActiveStock(boolean activeStock) {
+		this.activeStock = activeStock;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	public TypeMontant(double montant, Operateur operateur) {
 		super();
 		this.montant = montant;

@@ -4,6 +4,7 @@ package com.monetique.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.monetique.entities.TypeMontant;
 import com.monetique.repositories.CarteStockRepository;
 import com.monetique.repositories.TypeMontantRepository;
 import com.monetique.service.MontantService;
+import com.monetique.service.ParametreService;
 
 @Service
 public class MontantServiceImpl implements MontantService {
@@ -22,6 +24,9 @@ public class MontantServiceImpl implements MontantService {
 	
 	@Autowired
 	CarteStockRepository carteStockRepository;
+	
+	@Autowired
+	ParametreService parametreService;
 	
 	@Override
 	public List<Double> getListByOperator(int operator) throws Exception {
@@ -52,11 +57,15 @@ public class MontantServiceImpl implements MontantService {
 		
 		List<MontantNotification> res= new ArrayList<>();
 		
-		Iterator<TypeMontant> allMontant= montantRepository.findAll().iterator();
+		List<TypeMontant> allMontant= montantRepository.getAllMontant();
 		
-		while (allMontant.hasNext()) {
-			TypeMontant item=allMontant.next();
-			double stock= carteStockRepository.getTotalRecharge(item.getMontant());
+		if(allMontant!=null && allMontant.size()!=0)
+		for (TypeMontant item : allMontant) {
+			double stock= carteStockRepository.getTotalRecharge(item.getId());
+			
+			if(item.isActiveStock()) {
+				epuisement=item.getStock();
+			}
 			
 			if(stock<=epuisement) {
 				res.add(new MontantNotification((int) stock, item,null));
@@ -64,6 +73,34 @@ public class MontantServiceImpl implements MontantService {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public boolean checkEpuisementMontantItem( long id) throws Exception {
+
+		Optional<TypeMontant> opt= montantRepository.findById(id);
+		
+		if(opt.isPresent()) {
+			
+			int epuisement=parametreService.getEpuisement();
+			
+			TypeMontant typeMontant=opt.get();
+			
+			double stock= carteStockRepository.getTotalRecharge(typeMontant.getId());
+
+			if(typeMontant.isActiveStock()) {
+				epuisement=typeMontant.getStock();
+			}
+			
+			if(stock<=epuisement) {
+				return true;
+			}
+
+			
+		}
+		
+		return false;
+
 	}
 
 
