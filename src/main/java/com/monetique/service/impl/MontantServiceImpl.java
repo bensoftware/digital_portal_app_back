@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.monetique.dto.ItemTypeRecharge;
 import com.monetique.entities.MontantNotification;
 import com.monetique.entities.TypeMontant;
 import com.monetique.repositories.CarteStockRepository;
@@ -101,6 +102,47 @@ public class MontantServiceImpl implements MontantService {
 		
 		return false;
 
+	}
+
+	@Override
+	public List<ItemTypeRecharge> getAllRecharge() throws Exception {
+
+		List<ItemTypeRecharge> res= new ArrayList<>();
+		
+		List<TypeMontant> list= montantRepository.getAllMontantTri();
+		
+		if(list!=null && list.size()!=0)
+		for(TypeMontant m :list) {
+			res.add(new ItemTypeRecharge(m.getId(),m.getOperateur().getLibelle(), m.getMontant(), m.isActiveStock(), m.isActive(), m.getStock()));
+
+		}
+		
+		return res;
+	}
+
+	@Override
+	public TypeMontant getTypeRecharge(long id) throws Exception {
+		// TODO Auto-generated method stub
+		return montantRepository.findById(id).get();
+	}
+
+	@Override
+	public TypeMontant setTypeRecharge(ItemTypeRecharge c) throws Exception {
+		// TODO Auto-generated method stub
+		TypeMontant montant=null;
+		
+		Optional<TypeMontant> opt= montantRepository.findById(c.getId());
+		
+		if(!opt.isPresent()) 
+			throw new Exception("montant inexistant");
+		
+		montant=opt.get();
+		
+		montant.setActive(c.isActive());
+		montant.setActiveStock(c.isStockPerso());
+		montant.setStock(c.getSeuil());
+		
+		return montantRepository.save(montant);
 	}
 
 

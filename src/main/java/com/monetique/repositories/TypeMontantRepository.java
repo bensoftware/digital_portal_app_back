@@ -17,4 +17,7 @@ public interface TypeMontantRepository extends CrudRepository<TypeMontant, Long>
 	
 	@Query("select u from TypeMontant u where u.active=true")
 	public List<TypeMontant> getAllMontant();
+	
+	@Query("select u from TypeMontant u order by u.montant asc")
+	public List<TypeMontant> getAllMontantTri();
 }
