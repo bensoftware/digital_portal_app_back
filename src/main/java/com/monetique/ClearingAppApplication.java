@@ -4,15 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.monetique.entities.CarteStock;
-import com.monetique.entities.TypeMontant;
 import com.monetique.repositories.CarteStockRepository;
 import com.monetique.repositories.TypeMontantRepository;
-import com.monetique.service.CarteStockService;
+import com.monetique.security.service.AppUserData;
 import com.monetique.service.IntegrationService;
 import com.monetique.service.NotificationService;
 import com.monetique.service.SecuriteService;
+import com.monetique.service.SessionApiService;
+import com.monetique.um.service.IActionService;
+import com.monetique.um.service.IUserService;
 
 @SpringBootApplication
 public class ClearingAppApplication implements CommandLineRunner{
@@ -40,9 +43,37 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	TypeMontantRepository typeMontantRepository ;
 	
+	@Autowired
+	IUserService iuserService ;
+	
+	@Autowired
+	SessionApiService sessionApiService;
+
+	
+	@Autowired
+    AppUserData appUserData;
+	
+	@Autowired
+	IActionService actionService;
+	
+	@Bean
+	public BCryptPasswordEncoder getBCE() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
+		
+	//	sessionApiService.saveSessionApi("mbanking", "mbanking123@");
+		
+		
+//		List<Action> acs=actionService.getListeAction();
+		
 
+//ruleService.addActionsToRule(acs, 1);
+		
 		/*List<Operateur> list =operateurService.getAllOperator();
 		
 		Operateur p = operateurService.getOperatorByCode(1);

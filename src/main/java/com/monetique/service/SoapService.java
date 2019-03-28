@@ -7,6 +7,7 @@ import com.monetique.dto.OutputSendPhoneCardDto;
 
 public interface SoapService {
 
+		
 	public OutputSendPhoneCardDto sendPhoneCard(InputSendPhoneCardDto in) throws Exception;
 	public OutputGetAllAmountCardDto getAllAmount(InputGetAllAmountCardDto in) throws Exception;
 }

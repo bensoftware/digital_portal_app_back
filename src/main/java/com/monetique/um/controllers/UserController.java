@@ -1,0 +1,146 @@
+package com.monetique.um.controllers;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.monetique.security.securityDispatcher.SecurityConstants;
+import com.monetique.service.SessionApiService;
+import com.monetique.um.dao.entities.User;
+import com.monetique.um.dto.ResponseDto;
+import com.monetique.um.dto.UserDto;
+import com.monetique.um.service.IUserService;
+
+@RestController
+@Transactional
+@CrossOrigin("*")
+public class UserController {
+
+	@Autowired
+	IUserService userService;
+	
+	@Autowired
+	SessionApiService sessionApiService;
+	
+	@Autowired
+	HttpServletResponse  httpServletResponse;
+	
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/addUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto addUser(@RequestBody User user) throws Exception{
+		userService.addNewUser(user);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+	}
+
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/updateUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto updateUser(@RequestBody User user) throws Exception{
+		userService.updateUser(user);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+		
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/getAllUser",method= RequestMethod.GET)
+	public @ResponseBody ResponseDto getAllUser() throws Exception{
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),userService.getAllUser());
+
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/getUser",method= RequestMethod.GET)
+	public @ResponseBody ResponseDto getUser(@RequestParam long id) throws Exception{
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),userService.getUser(id));
+
+	}
+	
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/deleteUser",method= RequestMethod.DELETE)
+	public @ResponseBody void deleteUser(@RequestParam long id) throws Exception {
+		userService.deleteUser(id);
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/addRulesToUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto addRulesToUser(@RequestBody UserDto UserDto) throws Exception {
+		userService.addRulesToUser(UserDto.getRules(),UserDto.getIdUser());
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
+
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/removeRulesToUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto removeRulesToUser(@RequestBody UserDto UserDto) throws Exception {
+		userService.removeRulesToUser(UserDto.getRules(),UserDto.getIdUser());
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
+
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/addRuleToUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto addRuleToUser(@RequestBody UserDto UserDto) throws Exception {
+		userService.addRuleToUser(UserDto.getRule(),UserDto.getIdUser());
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/removeRuleToUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto removeRuleToUser(@RequestBody UserDto UserDto) throws Exception {
+		userService.removeRuleToUser(UserDto.getRule(),UserDto.getIdUser());
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/changeStatutUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto changeStatusUser(@RequestBody User user) throws Exception {	
+		userService.changeStatusUser(user);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+		
+	}
+	
+	/*
+	 * méthode Rest qui permet de réinitialiser le mot de passe oublié d'un utilisateur
+	 */
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/resetPassword",method=RequestMethod.POST)
+	public @ResponseBody ResponseDto resetPasswordRestService(@RequestBody User user) throws Exception{
+		userService.resetPassword(user);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+		
+	}
+	
+	/*
+	 * méthode Rest qui permet de change le mot de passe  d'un utilisateur
+	 */
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/changePassword/{userName}/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
+	public @ResponseBody ResponseDto changePasswordRestService(@PathVariable String userName, @PathVariable String actuelPwd
+			, @PathVariable String newPwd) throws Exception{
+		userService.updatePassword(userName,actuelPwd,newPwd);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+		
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/changePasswordApi/{userName}/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
+	public @ResponseBody ResponseDto changePasswordApi(@PathVariable String userName, @PathVariable String actuelPwd
+			, @PathVariable String newPwd) throws Exception{
+		sessionApiService.updatePassword(userName,actuelPwd,newPwd);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+		
+	}
+	
+}
