@@ -71,6 +71,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{
 				authorities.add(new SimpleGrantedAuthority(r.get("authority")));
 			});
 			
+			authorities.add(new SimpleGrantedAuthority("user"));
+			
 			UsernamePasswordAuthenticationToken authenticationUser=new UsernamePasswordAuthenticationToken(username,null,authorities);
 			
 			// update de context spring: l'utilisateur est authentifié

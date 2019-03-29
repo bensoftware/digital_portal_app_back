@@ -1,8 +1,10 @@
 package com.monetique.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.monetique.dto.ItemTypeRecharge;
 import com.monetique.entities.Parametrage;
-import com.monetique.entities.TypeMontant;
+import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.MontantService;
 import com.monetique.service.ParametreService;
+import com.monetique.um.dto.ResponseDto;
 
-@CrossOrigin("*")
 @RestController
+@Transactional
+@CrossOrigin("*")
 public class ParametrageController {
 	
 
@@ -29,29 +33,51 @@ public class ParametrageController {
 	@Autowired
 	MontantService  montantService ;
 	
+	@Autowired
+	HttpServletResponse  httpServletResponse;
+	
+	
+	
+	
+	@PreAuthorize("hasAuthority('parglo')")
 	@RequestMapping(value="/getParameter",method=RequestMethod.GET)
-	public @ResponseBody Parametrage getParameter() throws Exception {
-		return  parametreService.getParameter();
+	public @ResponseBody ResponseDto getParameter() throws Exception {
+		
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), parametreService.getParameter());
+
 	}
+	
+	@PreAuthorize("hasAuthority('parglo')")
 	@RequestMapping(value="/setParameter",method=RequestMethod.POST)
-	public @ResponseBody Parametrage setParameter(@RequestBody Parametrage p) throws Exception {
-		return  parametreService.setParameter(p);
+	public @ResponseBody  ResponseDto setParameter(@RequestBody Parametrage p) throws Exception {
+		
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), parametreService.setParameter(p));
+
 	}
 	
 	
+	@PreAuthorize("hasAuthority('parrech')")
 	@RequestMapping(value="/getAllRecharge",method=RequestMethod.GET)
-	public @ResponseBody List<ItemTypeRecharge> getAllRecharge() throws Exception {
-		return  montantService.getAllRecharge();
+	public @ResponseBody ResponseDto getAllRecharge() throws Exception {
+		
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), montantService.getAllRecharge());
+
 	}
 	
+	@PreAuthorize("hasAuthority('parrech')")
 	@RequestMapping(value="/getTypeRecharge/{id}",method=RequestMethod.GET)
-	public @ResponseBody TypeMontant getTypeRecharge(@PathVariable long id) throws Exception {
-		return  montantService.getTypeRecharge(id);
+	public @ResponseBody ResponseDto getTypeRecharge(@PathVariable long id) throws Exception {
+
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), montantService.getTypeRecharge(id));
+
 	}
 	
+	@PreAuthorize("hasAuthority('parrech')")
 	@RequestMapping(value="/setTypeRecharge",method=RequestMethod.POST)
-	public @ResponseBody TypeMontant setTypeRecharge(@RequestBody ItemTypeRecharge c) throws Exception {
-		return  montantService.setTypeRecharge(c);
+	public @ResponseBody ResponseDto setTypeRecharge(@RequestBody ItemTypeRecharge c) throws Exception {
+
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), montantService.setTypeRecharge(c));
+
 	}
 	
 	

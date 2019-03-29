@@ -22,6 +22,7 @@ import com.monetique.service.CarteStockService;
 import com.monetique.service.MontantService;
 import com.monetique.service.NotificationService;
 import com.monetique.service.ParametreService;
+import com.monetique.um.service.IMailService;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -43,6 +44,8 @@ public class NotificationServiceImpl implements NotificationService {
 	CarteStockService carteStockService ;
 	
 
+	@Autowired
+	IMailService mailService;
 
 	@Override
 	public boolean setNotificationEpuisement(List<MontantNotification> montants) throws Exception {
@@ -71,6 +74,7 @@ public class NotificationServiceImpl implements NotificationService {
 				// creer une notif
 				montantNotifs.add(montNot);
 				// notifier par autre API
+				mailService.envoyerMailAlertEpuisement(montNot, 1);
 			}else {
 				MontantNotification mm= checkNotif(x,notifActive);
 				mm.setNombre(montNot.getNombre());
@@ -162,7 +166,12 @@ public class NotificationServiceImpl implements NotificationService {
 		for(TypeMontant x : maps.keySet()) {
 			if(checkNotif(x,notifActive)==null) {
 				// creer une notif
-				montantNotifs.add(new MontantNotification(maps.get(x), x, null));
+				MontantNotification montNot=new MontantNotification(maps.get(x), x, null);
+				montantNotifs.add(montNot);
+				// notif API
+				mailService.envoyerMailAlertEpuisement(montNot, 2);
+
+				
 			}else {
 				MontantNotification mm= checkNotif(x,notifActive);
 				mm.setNombre(maps.get(x));
@@ -213,7 +222,7 @@ public class NotificationServiceImpl implements NotificationService {
 	
 		List<NotificationItem> res= new ArrayList<>();
 		
-		List<Notification> notifs= notificationRepository.getAllNotificationUsed();
+		List<Notification> notifs= notificationRepository.getAllNewNotification();
 		
 		for(Notification n : notifs) {
 			List<MontantNotification> listN= montantNotificationRepository.getMontantNotificationByNotifId(n.getId());

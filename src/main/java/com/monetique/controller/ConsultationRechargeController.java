@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.monetique.dto.CarteItem;
 import com.monetique.dto.ConsultationRecharge;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.CarteStockService;

@@ -20,6 +20,9 @@ public interface NotificationRepository extends CrudRepository<Notification, Lon
 	@Query("select u from Notification u where u.status!=2")
 	public List<Notification> getAllNotificationUsed();
 	
+	@Query("select u from Notification u where u.status=0")
+	public List<Notification> getAllNewNotification();
+	
 	@Query("select u from Notification u where u.status!=2 and u.typeNotification=?1")
 	public List<Notification> getAllNotificationUsedByType(int typeNotification);
 

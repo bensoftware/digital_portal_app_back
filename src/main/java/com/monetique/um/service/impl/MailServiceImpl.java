@@ -2,6 +2,7 @@ package com.monetique.um.service.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import com.monetique.entities.MontantNotification;
+import com.monetique.service.MailNotificationService;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.service.IMailService;
 
@@ -30,8 +33,11 @@ public class MailServiceImpl implements IMailService{
     
     @Autowired
     private Configuration freemarkerConfig;
+    
+    @Autowired
+    private MailNotificationService mailNotificationService;
 	
-	private String urlApp="30.30.1.60:2780/appClaim";
+	private String urlApp="http://127.0.0.1:4200";
 
 	@Override
 	public void envoyerMailCreationUtilisateur(User user, String pwdOriginal) throws Exception {
@@ -111,7 +117,7 @@ public class MailServiceImpl implements IMailService{
 			e.printStackTrace();
 		}		
         try {
-			helper.setFrom(new InternetAddress("cheiknarim@esp.sn", "no-reply@gmail.com"));
+			helper.setFrom(new InternetAddress("bankily@bpm.mr", "no-reply@bpm.mr"));
 		} catch (UnsupportedEncodingException | MessagingException e) {
 			e.printStackTrace();
 		}
@@ -177,5 +183,117 @@ public class MailServiceImpl implements IMailService{
         sender.send(message);
 	}
 
+	@Override
+	public void envoyerMailAlertExpiration(MontantNotification m,int type) throws Exception {
+		
+		MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        Map<String, Object> model = new HashMap();
+        model.put("recharge", convertDoubleToString(m.getTypeMontant().getMontant()));
+        model.put("operateur", m.getTypeMontant().getOperateur().getLibelle());
+        model.put("total", m.getNombre());
+
+        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/");
+        Template t;
+		try {
+			t = freemarkerConfig.getTemplate("velocity/seuil_expiration.ftl");
+			 String text;
+			try {
+				text = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+				try {
+					helper.setText(text, true);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				} // set to html
+			} catch (IOException | TemplateException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+        try {
+			helper.setFrom(new InternetAddress("bankily@bpm.mr", "no-reply@gmail.com"));
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			e.printStackTrace();
+		}
+        try {
+        	
+        String[] list=mailNotificationService.getEmailNotification();
+			helper.setTo(list);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+        
+        try {
+			helper.setSubject("Alert Seuil d'expiration des cartes de recharge");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+        sender.send(message);
+		
+	}
+
+	@Override
+	public void envoyerMailAlertEpuisement(MontantNotification m,int type) throws Exception {
+
+		
+		MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        Map<String, Object> model = new HashMap();
+        model.put("url", urlApp);
+        model.put("recharge", convertDoubleToString(m.getTypeMontant().getMontant()));
+        model.put("operateur", m.getTypeMontant().getOperateur().getLibelle());
+        model.put("total", m.getNombre());
+        
+        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/");
+        Template t;
+		try {
+			t = freemarkerConfig.getTemplate("velocity/seuil_epuisement.ftl");
+			 String text;
+			try {
+				text = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+				try {
+					helper.setText(text, true);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				} // set to html
+			} catch (IOException | TemplateException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+        try {
+			helper.setFrom(new InternetAddress("bankily@bpm.mr", "no-reply@gmail.com"));
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			e.printStackTrace();
+		}
+        try {
+
+        	  String[] list=	mailNotificationService.getEmailNotification();        	
+  			helper.setTo(list);
+        
+        } catch (MessagingException e) {
+			e.printStackTrace();
+		}
+        
+        try {
+			helper.setSubject("Alert Seuil d'epuisement des cartes de recharge");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+        sender.send(message);
+		
+	}
+
+	private String convertDoubleToString(Double d) {
+		NumberFormat fmt = NumberFormat.getInstance(); 
+		fmt.setGroupingUsed(false); 
+		fmt.setMaximumIntegerDigits(999); 
+		fmt.setMaximumFractionDigits(999);
+		return fmt.format(d);
+	}
 	
 }

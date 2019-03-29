@@ -85,7 +85,7 @@ public class UserServiceImpl implements IUserService{
 		if (u != null) {
 			if (u.getId() != null) {
 				//envoi mail		
-				mailService.envoyerMailCreationUtilisateur(u,pwdOriginal);
+			//	mailService.envoyerMailCreationUtilisateur(u,pwdOriginal);
 				//journalService.logJournal(this.getClass().getMethods(), "createUtilisateur", "Ajout Utilisateur " + user.getMatricule(), "Utilisateur", u.getId());
 			}
 			/*else {
@@ -269,7 +269,7 @@ public class UserServiceImpl implements IUserService{
 			userRepository.saveAndFlush(user);
 
 			// Envoi du mail de rÃ©initialisation du mot de passe
-			mailService.envoyerMailResetPassword(user, newPassword);
+			//mailService.envoyerMailResetPassword(user, newPassword);
 		
 	}
 

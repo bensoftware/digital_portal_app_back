@@ -125,7 +125,7 @@ public class UserController {
 	/*
 	 * méthode Rest qui permet de change le mot de passe  d'un utilisateur
 	 */
-	@PreAuthorize("hasAuthority('users')")
+	@PreAuthorize("hasAuthority('user')")
 	@RequestMapping(value="/changePassword/{userName}/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto changePasswordRestService(@PathVariable String userName, @PathVariable String actuelPwd
 			, @PathVariable String newPwd) throws Exception{
@@ -134,11 +134,11 @@ public class UserController {
 		
 	}
 	
-	@PreAuthorize("hasAuthority('users')")
-	@RequestMapping(value="/changePasswordApi/{userName}/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
-	public @ResponseBody ResponseDto changePasswordApi(@PathVariable String userName, @PathVariable String actuelPwd
+	@PreAuthorize("hasAuthority('gsapi')")
+	@RequestMapping(value="/changePasswordApi/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
+	public @ResponseBody ResponseDto changePasswordApi( @PathVariable String actuelPwd
 			, @PathVariable String newPwd) throws Exception{
-		sessionApiService.updatePassword(userName,actuelPwd,newPwd);
+		sessionApiService.updatePassword(actuelPwd,newPwd);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
 		
 	}

@@ -23,11 +23,11 @@ public class SessionApiServiceImpl implements SessionApiService {
 	
 	
 	@Override
-	public void updatePassword(String userName,String actuelPwd, String newPwd) throws Exception {
+	public void updatePassword(String actuelPwd, String newPwd) throws Exception {
 		//recuperer l'userà partir de son login 
 		SessionApi user = null;
 		
-		Optional<SessionApi> optional= sessionApiRepository.findById(userName);
+		Optional<SessionApi> optional= sessionApiRepository.findById("mbanking");
 				
 		if(!optional.isPresent()) {
 			throw new Exception("session Api inexistante");
