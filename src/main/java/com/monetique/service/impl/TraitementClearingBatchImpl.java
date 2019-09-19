@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.monetique.dto.ClearingDto;
 import com.monetique.dto.ItemBatch;
 import com.monetique.dto.ItemInfo;
+import com.monetique.dto.Jour;
 import com.monetique.dto.ResponseCl;
 import com.monetique.dto.ResponseClDto;
 import com.monetique.entities.Clearing;
@@ -142,11 +144,12 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
        	    	date=df.parse(dd);
        	    	if(cl.getDateDeProcessing()==null) {
        	    		cl.setDateDeProcessing(date);
-       	    	}else {
+       	    	}
+/*       	    	else {
        	    		if(!cl.getDateDeProcessing().equals(date)) {
        	    			cl.setDateDeProcessing(date);
        	    		}
-       	    	}
+       	    	}*/
        		} catch (Exception e) {
        			// TODO: handle exception
        		}
@@ -202,17 +205,14 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 
 	
 
-
 	@Override
-	public ResponseClDto getConsultationCompense(Date date) throws Exception {
-		
-		
-		
+	public ResponseClDto getConsultationCompense(Jour jour) throws Exception {
+
 		List<ItemInfo> infrmationDebit=new ArrayList<>();
 		
 		List<ItemInfo> infrmationCredit=new ArrayList<>();
 		
-		String tdate=getDateString(date);
+		String tdate=getDateString(jour);
 	    DateFormat df=new SimpleDateFormat("ddMMyyyy");
 
 		Date du=df.parse(tdate);
@@ -385,6 +385,22 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		
 		String res=tjour+tmois+tannee;
 		
+		return res;
+	}
+	
+	
+	private String getDateString(Jour date) {
+		int jour =date.getJour();
+		int mois=date.getMois();
+		int annee=date.getAnnee();
+		String tjour=""+jour,tmois=""+mois,tannee=""+annee;
+		if(jour<10) {
+			tjour="0"+jour;
+		}
+		if(mois<10) {
+			tmois="0"+mois;
+		}
+		String res=tjour+tmois+tannee;
 		return res;
 	}
 	

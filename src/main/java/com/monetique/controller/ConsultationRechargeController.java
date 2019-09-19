@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.monetique.dto.Jour;
 import com.monetique.dto.RequestDto;
 import com.monetique.dto.ResponseClDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
@@ -35,9 +36,9 @@ public class ConsultationRechargeController {
 	
 	@PreAuthorize("hasAuthority('conscp')")
 	@RequestMapping(value="/getConsultationCompense",method=RequestMethod.POST)
-	public @ResponseBody ResponseDto getConsultationRechargeStock(@RequestBody RequestDto req) throws Exception {
+	public @ResponseBody ResponseDto getConsultationRechargeStock(@RequestBody Jour req) throws Exception {
 		
-		ResponseClDto dto=traitementClearingBatchService.getConsultationCompense(req.getDate());
+		ResponseClDto dto=traitementClearingBatchService.getConsultationCompense(req);
 					
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 

@@ -63,7 +63,7 @@ public class ClearingAppApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 
-	//	clearingBatchService.removeFile("BCLEAR.060619.73154.00018");
+		//clearingBatchService.removeFile("BCLEAR.180919.75279.00018");
 		//clearingBatchService.removeFile("BCLEAR.020519.72174.00018");
 
 		
