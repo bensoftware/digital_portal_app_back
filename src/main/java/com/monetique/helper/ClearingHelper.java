@@ -103,7 +103,7 @@ public class ClearingHelper {
 	public static Iterator<String> getListOprerationPreIntGiMTELFile(String file,String in) throws IOException{
 		
 		 
-		 Path path =Paths.get(in+"\\"+file);;
+		 Path path =Paths.get(in+"/"+file);;
 		 line = Files.lines(path,StandardCharsets.ISO_8859_1);
 		
 		Iterator<String> it= null;
@@ -290,7 +290,7 @@ private static String mySubString(String myString, int start, int length) {
 public static Iterator<String> getListTransactionGiMTELFile(String file,String in) throws IOException{
 	
 	 
-	 Path path =Paths.get(in+"\\"+file);;
+	 Path path =Paths.get(in+"/"+file);;
 	 line = Files.lines(path,StandardCharsets.ISO_8859_1);
 	
 	Iterator<String> it= null;
@@ -305,8 +305,8 @@ public static Iterator<String> getListTransactionGiMTELFile(String file,String i
 
 public static void moveFileGiMTELException(String name,String in, String out) throws IOException {
 	
-		Path file = Paths.get(in+"\\"+name);
-		 Path path = Paths.get(out+"\\"+name);
+		Path file = Paths.get(in+"/"+name);
+		 Path path = Paths.get(out+"/"+name);
 		 
 		 if(Files.isRegularFile(file)) {
 			 // deplacer vers exception
@@ -316,8 +316,8 @@ public static void moveFileGiMTELException(String name,String in, String out) th
 
 public static void moveFileGiMTEL(String name,String in,String out) throws IOException {
 	
-		Path file = Paths.get(in+"\\"+name);
-		 Path path = Paths.get(out+"\\"+name);
+		Path file = Paths.get(in+"/"+name);
+		 Path path = Paths.get(out+"/"+name);
 		 
 		 if(Files.isRegularFile(file)) {
 			 // deplacer vers exception
