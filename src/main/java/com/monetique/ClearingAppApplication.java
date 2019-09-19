@@ -6,15 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
-import com.monetique.repositories.CarteStockRepository;
-import com.monetique.repositories.TypeMontantRepository;
 import com.monetique.security.service.AppUserData;
-import com.monetique.service.IntegrationService;
-import com.monetique.service.NotificationService;
-import com.monetique.service.SecuriteService;
-import com.monetique.service.SessionApiService;
+import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.service.IActionService;
+import com.monetique.um.service.IRuleService;
 import com.monetique.um.service.IUserService;
 
 @SpringBootApplication
@@ -26,28 +23,18 @@ public class ClearingAppApplication implements CommandLineRunner{
 
 	}
 
+	
+	
 
-	
-	@Autowired
-	IntegrationService integrationService;
-	
-	@Autowired
-	SecuriteService securiteService;
-	
-	@Autowired
-	NotificationService notificationService;
-	
-	@Autowired
-	CarteStockRepository carteStockRepository;
-	
-	@Autowired
-	TypeMontantRepository typeMontantRepository ;
+
 	
 	@Autowired
 	IUserService iuserService ;
 	
 	@Autowired
-	SessionApiService sessionApiService;
+	IRuleService ruleService ;
+	
+
 
 	
 	@Autowired
@@ -56,23 +43,76 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	IActionService actionService;
 	
+
+
+	
 	@Bean
 	public BCryptPasswordEncoder getBCE() {
 		return new BCryptPasswordEncoder();
 	}
 	
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+	}
+
+	@Autowired
+	TraitementClearingBatchService clearingBatchService;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
+
+	//	clearingBatchService.removeFile("BCLEAR.060619.73154.00018");
+		//clearingBatchService.removeFile("BCLEAR.020519.72174.00018");
+
+		
+/*		Operateur operateur=operateurRepository.findById(1).get();
+		
+		TypeMontant t=null;
+		
+		t=new TypeMontant(10, operateur);
+		montantRepository.save(t);
+		t=new TypeMontant(20, operateur);
+		montantRepository.save(t);
+
+		t=new TypeMontant(30, operateur);
+		montantRepository.save(t);
+
+		t=new TypeMontant(50, operateur);
+		montantRepository.save(t);
+
+		t=new TypeMontant(100, operateur);
+		montantRepository.save(t);
+
+		t=new TypeMontant(200, operateur);
+		montantRepository.save(t);
+		t=new TypeMontant(300, operateur);
+		montantRepository.save(t);
+		t=new TypeMontant(500, operateur);
+		montantRepository.save(t);
+
+		t=new TypeMontant(1000, operateur);
+		montantRepository.save(t);*/
+
+		//	sessionApiService.saveSessionApi("mbanking", "mbanking123@");
 		
 		
-	//	sessionApiService.saveSessionApi("mbanking", "mbanking123@");
 		
+	//	ruleService.addActionsToRule(actionService.getListeAction(), 1);
+		
+//		User user=new User( "Admin", "12345", "Admin", "Admin", "s.moulaye@bpm.mr", new Date(),true);
+		
+  //  	iuserService.addNewUser(user);
+		
+
+		
+	//	iuserService.addRuleToUser(ruleService.getRule(1L), 1);
 		
 //		List<Action> acs=actionService.getListeAction();
 		
 
-//ruleService.addActionsToRule(acs, 1);
+  //ruleService.addActionToRule(actionService.findAction(14L), 1);
 		
 		/*List<Operateur> list =operateurService.getAllOperator();
 		

@@ -293,7 +293,7 @@ public class UserServiceImpl implements IUserService{
 			user = (User) appUserData.securityUserContext(user);
 			userRepository.saveAndFlush(user);
 			//envoi mail notification mdp modifié
-			mailService.envoyerMailModificationMdp(user,newPwd);
+			//mailService.envoyerMailModificationMdp(user,newPwd);
 	   }
 	   else {
 			throw new Exception("Le mot de passe  saisie n'est pas correcte. Veuillez réesayez svp");
@@ -370,6 +370,11 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public boolean addNewUser(User user) throws Exception {
 		// TODO Auto-generated method stub
+		
+		if(userRepository.findByEmail(user.getEmail())!=null) {
+			throw new Exception("L'adresse Email existe déja");
+		}
+		
 		String pwdOriginal = "monetique12345";
 		if (user.getId() == null) {
 			Date datec = new Date();

@@ -11,7 +11,6 @@ import com.monetique.um.dao.entities.User;
 
 
 public interface UserRepository extends JpaRepository<User, Long>{
-
 	
 	@Query("SELECT u FROM User u order by u.userName asc ")
     public List<User> getAllUser();

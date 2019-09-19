@@ -18,37 +18,7 @@ public class ParametreServiceImpl implements ParametreService {
 	ParametrageRepository parametrageRepository;
 	
 
-	@Override
-	public int getEpuisement() throws Exception {
-		
-	    Optional<Parametrage> opt= parametrageRepository.findById(1L);
-		
-	    if(opt.isPresent()) {
-	    	Parametrage parametrage=opt.get();
-	    	return parametrage.getSeuilStock();
-	    
-	    }
-	    
-		
-		return 0;
-	}
-
-
-	@Override
-	public int getExpiration() throws Exception {
-
-	    Optional<Parametrage> opt= parametrageRepository.findById(1L);
-		
-	    if(opt.isPresent()) {
-	    	Parametrage parametrage=opt.get();
-	    	return parametrage.getSeuilExpiration();
-	    
-	    }
-	    
-		
-		return 0;
-	}
-
+	
 
 	@Override
 	public Parametrage getParameter() throws Exception {

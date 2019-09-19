@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	AppUserData appUserData;
 	
-	
+
 	// le type de l'algo de hackage
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		// authorisation des URL sans authentification
-		http.authorizeRequests().antMatchers("/login/**").permitAll();
+		http.authorizeRequests().antMatchers("/login/**","/TELEPIN/**").permitAll();
 		
 	//	http.authorizeRequests().anyRequest().permitAll();
 

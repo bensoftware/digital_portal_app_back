@@ -1,8 +1,10 @@
 package com.monetique.um.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.tomcat.util.digester.Rules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,12 @@ public class RuleServiceImpl implements IRuleService{
 			}
 		}
 		
-		ruleRepository.save(rule);
+		//List<Action> actions= rule.getActions();		
+		//rule.setActions(null);
+		rule=ruleRepository.save(rule);
+
+		//addActionsToRule(actions, rule.getId());
+		
 	}
 
 	@Override
@@ -77,17 +84,14 @@ public class RuleServiceImpl implements IRuleService{
 	@Override
 	public void addActionsToRule(List<Action> actions, long idRule) throws Exception{
 		if(idRule==0 && actions==null ) throw new Exception("Id rôle ou liste des action non définit");
-	   	Optional<Rule> ruleOp=ruleRepository.findById(idRule);
 	   	
-	   	if(ruleOp.isPresent()) {
-	   		
-	   		Rule rule=ruleOp.get();
-	   		List<Action> listAction=rule.getActions();
-	   		listAction.addAll(actions);
-	   		
-	   		ruleRepository.saveAndFlush(rule);
-	   		
-	   	}
+		if(actions!=null && actions.size()!=0) {
+			for(Action x : actions) {
+				addActionToRule(x, idRule);
+
+			}
+		}
+		
 			
 	}
 

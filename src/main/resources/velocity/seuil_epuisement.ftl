@@ -3,9 +3,9 @@
 		<div> 
 			
 		</div>
-		<br/><br/><br/><br/><br/><br/>
+		<br/><br/>
 		<div style="margin-left: 3%;margin-right:3%;">
-			<h3 style="margin-left: 3%;">Bonjour,</h3><br/><br/>
+		
 			<p style="margin-left: 3%;">
 			Alert seuil d'epuisement de la recharge ${recharge} de l'opérateur ${operateur}<br/>
 			Total des recharges =  ${total}

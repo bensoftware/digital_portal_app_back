@@ -16,67 +16,31 @@ public class Parametrage implements Serializable{
 	@Id
 	@GeneratedValue
 	long id;
-	
-	int seuilStock;
-	int seuilExpiration;
-	String urlInMauritel;
-	String urlOutMauritel;
-	String urlInChinguitel;
-	String urlOutChinguitel;
-	String urlClePublique;
+
 	
 	
-	
-	public String getUrlClePublique() {
-		return urlClePublique;
-	}
-	public void setUrlClePublique(String urlClePublique) {
-		this.urlClePublique = urlClePublique;
-	}
-	public String getUrlInMauritel() {
-		return urlInMauritel;
-	}
-	public void setUrlInMauritel(String urlInMauritel) {
-		this.urlInMauritel = urlInMauritel;
-	}
-	public String getUrlOutMauritel() {
-		return urlOutMauritel;
-	}
-	public void setUrlOutMauritel(String urlOutMauritel) {
-		this.urlOutMauritel = urlOutMauritel;
-	}
-	public String getUrlInChinguitel() {
-		return urlInChinguitel;
-	}
-	public void setUrlInChinguitel(String urlInChinguitel) {
-		this.urlInChinguitel = urlInChinguitel;
-	}
-	public String getUrlOutChinguitel() {
-		return urlOutChinguitel;
-	}
-	public void setUrlOutChinguitel(String urlOutChinguitel) {
-		this.urlOutChinguitel = urlOutChinguitel;
-	}
+	String urlInGimtel;
+	String urlOutGimtel;
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public int getSeuilStock() {
-		return seuilStock;
+
+	public String getUrlInGimtel() {
+		return urlInGimtel;
 	}
-	public void setSeuilStock(int seuilStock) {
-		this.seuilStock = seuilStock;
+	public void setUrlInGimtel(String urlInGimtel) {
+		this.urlInGimtel = urlInGimtel;
 	}
-	public int getSeuilExpiration() {
-		return seuilExpiration;
+	public String getUrlOutGimtel() {
+		return urlOutGimtel;
 	}
-	public void setSeuilExpiration(int seuilExpiration) {
-		this.seuilExpiration = seuilExpiration;
+	public void setUrlOutGimtel(String urlOutGimtel) {
+		this.urlOutGimtel = urlOutGimtel;
 	}
 	
-   
 	
 	
 }

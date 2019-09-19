@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.monetique.dto.RequestDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
-import com.monetique.service.SessionApiService;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.dto.ResponseDto;
 import com.monetique.um.dto.UserDto;
@@ -25,12 +25,11 @@ import com.monetique.um.service.IUserService;
 @Transactional
 @CrossOrigin("*")
 public class UserController {
-
+    
 	@Autowired
 	IUserService userService;
 	
-	@Autowired
-	SessionApiService sessionApiService;
+
 	
 	@Autowired
 	HttpServletResponse  httpServletResponse;
@@ -42,7 +41,7 @@ public class UserController {
 		userService.addNewUser(user);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
 	}
-
+    
 	
 	@PreAuthorize("hasAuthority('users')")
 	@RequestMapping(value="/updateUser",method= RequestMethod.POST)
@@ -126,21 +125,13 @@ public class UserController {
 	 * méthode Rest qui permet de change le mot de passe  d'un utilisateur
 	 */
 	@PreAuthorize("hasAuthority('user')")
-	@RequestMapping(value="/changePassword/{userName}/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
-	public @ResponseBody ResponseDto changePasswordRestService(@PathVariable String userName, @PathVariable String actuelPwd
-			, @PathVariable String newPwd) throws Exception{
-		userService.updatePassword(userName,actuelPwd,newPwd);
+	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
+	public @ResponseBody ResponseDto changePasswordRestService(@RequestBody  RequestDto req) throws Exception{
+		userService.updatePassword(req.getUserName(),req.getActuelPwd(),req.getNewPwd());
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
 		
 	}
 	
-	@PreAuthorize("hasAuthority('gsapi')")
-	@RequestMapping(value="/changePasswordApi/{actuelPwd}/{newPwd}",method=RequestMethod.GET)
-	public @ResponseBody ResponseDto changePasswordApi( @PathVariable String actuelPwd
-			, @PathVariable String newPwd) throws Exception{
-		sessionApiService.updatePassword(actuelPwd,newPwd);
-		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
-		
-	}
+
 	
 }

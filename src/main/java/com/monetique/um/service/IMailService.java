@@ -2,7 +2,6 @@ package com.monetique.um.service;
 
 import org.springframework.stereotype.Service;
 
-import com.monetique.entities.MontantNotification;
 import com.monetique.um.dao.entities.User;
 
 /**
@@ -13,10 +12,6 @@ import com.monetique.um.dao.entities.User;
  */
 @Service
 public interface IMailService {
-
-    public void envoyerMailAlertExpiration(MontantNotification m,int type) throws Exception;
-
-    public void envoyerMailAlertEpuisement(MontantNotification m,int type) throws Exception;
 
     public void envoyerMailCreationUtilisateur(User user, String pwdOriginal) throws Exception;
 	

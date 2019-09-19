@@ -12,45 +12,55 @@
 	<artifactId>ClearingApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ClearingApp</name>
+	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
+		<start-class>com.monetique.ClearingAppApplication</start-class>
 	</properties>
-
 	<dependencies>
+        
 	    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-       <dependency>
+  <!--      <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
-         <dependency>
+   <!--       <dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-support</artifactId>
 		    <version>3.2.8.RELEASE</version>
+		</dependency> -->
+		  <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
 		</dependency>
 		<dependency>
 		   <groupId>javax.mail</groupId>
 		   <artifactId>mail</artifactId>
 		   <version>1.4.7</version>
 		   </dependency>
-        <dependency>
-            <groupId>org.springframework.batch</groupId>
-            <artifactId>spring-batch-core</artifactId>
-        </dependency>
+
          <dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -80,10 +90,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<dependency>
-    <groupId>org.springframework.batch</groupId>
-    <artifactId>spring-batch-test</artifactId>
-</dependency>
 
  <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -103,16 +109,39 @@
     <version>1.9.2</version>
 </dependency>
 		
-
+	 	<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		
 	</dependencies>
 
-	<build>
+
+		<dependencyManagement>
+		<dependencies>
+			 <dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency> 
+		</dependencies>
+	</dependencyManagement>
+	
+	
+	      <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+				<configuration>
+		             <executable>true</executable>
+	            </configuration>
+			</plugin>	
+			
 		</plugins>
+		 <finalName>compenseApp</finalName>
 	</build>
 
 </project>

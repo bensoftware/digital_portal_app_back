@@ -1,6 +1,6 @@
 package com.monetique.controller;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -8,16 +8,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.monetique.dto.ConsultationRecharge;
+import com.monetique.dto.RequestDto;
+import com.monetique.dto.ResponseClDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
-import com.monetique.service.CarteStockService;
-import com.monetique.service.CarteUtiliserService;
+import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.dto.ResponseDto;
 
 @RestController
@@ -25,26 +26,24 @@ import com.monetique.um.dto.ResponseDto;
 @CrossOrigin("*")
 public class ConsultationRechargeController {
 	
-	@Autowired
-	CarteStockService carteStockService ;
 	
 	@Autowired
-	CarteUtiliserService carteUtiliserService ;
-		
-	@Autowired
+	TraitementClearingBatchService traitementClearingBatchService;;
+
+		@Autowired
 	HttpServletResponse  httpServletResponse;
 	
-	@PreAuthorize("hasAuthority('irs')")
-	@RequestMapping(value="/getConsultationRechargeStock",method=RequestMethod.GET)
-	public @ResponseBody ResponseDto getConsultationRechargeStock() throws Exception {
+	@PreAuthorize("hasAuthority('conscp')")
+	@RequestMapping(value="/getConsultationCompense",method=RequestMethod.POST)
+	public @ResponseBody ResponseDto getConsultationRechargeStock(@RequestBody RequestDto req) throws Exception {
 		
-		List<ConsultationRecharge> res=null;
-
-	    res=carteStockService.getConsultationRechargeStock();
-			
-		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), res);
+		ResponseClDto dto=traitementClearingBatchService.getConsultationCompense(req.getDate());
+					
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 
 	}
+	
+	/*
 	
 	@PreAuthorize("hasAuthority('irc')")
 	@RequestMapping(value="/getConsultationRechargeUtilise",method=RequestMethod.GET)
@@ -56,7 +55,7 @@ public class ConsultationRechargeController {
 
 	}
 	
-	
+	@PreAuthorize("hasAuthority('rrc')")
 	@RequestMapping(value="/getRechercheRecharge",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto  getRechercheRecharge(@RequestParam int type,@RequestParam String recherche) throws Exception {
 		
@@ -70,6 +69,6 @@ public class ConsultationRechargeController {
 	
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), carteStockService.getAllExpiration());
 
-	}
+	}*/
 
 }

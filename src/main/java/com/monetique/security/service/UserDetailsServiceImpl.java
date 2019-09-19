@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.monetique.security.entities.AppUser;
+import com.monetique.um.dao.repositories.UserRepository;
 
 
 @Service
@@ -24,6 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Autowired
 	AppUserData appUserData;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,7 +42,22 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		}
 		if(user==null) {
 			throw new UsernameNotFoundException(username);
+		}else {
+			com.monetique.um.dao.entities.User users=userRepository.findByuserName(username);
+		
+		    if(!users.isActif()) {
+		    	try {
+					throw new Exception("utilisateur suspendu");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	
+				return null;
+
+		    }
 		}
+	
 		
 		if(actions==null || actions.size()==0) {
 			try {
