@@ -131,7 +131,8 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 
         
      	int index=1;
-    	if(list.hasNext()) {
+     	
+     	while(list.hasNext()) {
     		
         	Clearing cl=ClearingHelper.getClearingItem(list.next());
         	cl.setIndex(index);
