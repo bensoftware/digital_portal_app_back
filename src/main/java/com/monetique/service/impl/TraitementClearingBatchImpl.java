@@ -213,6 +213,9 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		
 		List<ItemInfo> infrmationCredit=new ArrayList<>();
 		
+		List<ItemInfo> infrmationItegImal=new ArrayList<>();
+		
+		
 		String tdate=getDateString(jour);
 	    DateFormat df=new SimpleDateFormat("ddMMyyyy");
 
@@ -263,6 +266,10 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		 double fraisInter=0;
 		 double fraisCentre=0;
 
+			Map<String, List<Clearing>> map = new HashMap<>();
+			String key=null;
+			boolean isAdd=false;
+			
 		for(Clearing cl: clearings) {
 			 if(cl.getTypeEnregistrement().equals("20")) {
 		
@@ -336,6 +343,79 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 
 				 }
 			 }
+			 
+			 
+			 
+			 // debut info integration IMAL
+			 isAdd=false;
+			 
+			// GIMTEL
+			if(cl.getTypeEnregistrement().equals("20")) {
+				
+				// retrait
+				if(cl.getCodeOperation().equals("07000")) {
+					
+					// Client BPM -> banque confrere
+					if(cl.getCodeBanqueEmettrice().equals("00018") && !cl.getCodeBanqueAcquereur().equals("00018")) {
+					
+						key="608";
+						isAdd=true;
+						
+					
+						
+						
+					}
+					// client confrere -> banque BPM
+					else if(!cl.getCodeBanqueEmettrice().equals("00018") && cl.getCodeBanqueAcquereur().equals("00018")) {
+					
+						key="614";
+						isAdd=true;						
+					}
+
+					
+				}
+				// achat PAN Client BPM
+				else if(cl.getCodeOperation().equals("05000") && cl.getPan().matches("637103.+")) {
+					key="625";
+					isAdd=true;	
+				}
+			}
+			
+			// frais recalcul PIN
+			if(cl.getCodeOperation().equals("10102")) {
+				key="603";
+				isAdd=true;	
+			}
+			// frais perso GIMTEL
+			else if(cl.getCodeOperation().equals("10100")) {
+				key="184";
+				isAdd=true;	
+			}
+			
+			// encaissement commercant
+			else if(cl.getCodeOperation().equals("05000")) {
+				
+				if(cl.getTypeEnregistrement().equals("10")) {
+					key="622";
+					isAdd=true;		
+				}
+				
+			}			
+			
+	//
+		if(isAdd) {
+			List<Clearing> list=map.get(key);
+			
+			if(list==null) {
+				list=new ArrayList<>();
+			}
+			
+			list.add(cl);
+			map.put(key, list);
+		}
+	//	
+			 
+			// Fin info integration IMAL
 		}
 		
 
@@ -364,7 +444,28 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		 infrmationCredit.add(new ItemInfo("Montant total Net commerçant", montantNetCommercant));
 		 infrmationCredit.add(new ItemInfo("Commission de la banque sur les achat TPE", commissionBank));
 
-		    ResponseClDto responseClDto = new ResponseClDto(infrmationDebit, infrmationCredit,diff, succes);
+		 
+		// debut info integration IMAL 
+			for(String k : map.keySet()) {
+				
+				if(k=="622")
+				 infrmationItegImal.add(new ItemInfo("Encaissement commerçant (622)",map.get(k).size()));
+				else if(k=="608")
+					 infrmationItegImal.add(new ItemInfo("Retrait Client BPM sur banque confrére (608)",map.get(k).size()));
+				else if(k=="614")
+					 infrmationItegImal.add(new ItemInfo("Retrait Client banque confrére sur nos GAB (614)",map.get(k).size()));
+				else if(k=="625")
+					 infrmationItegImal.add(new ItemInfo("Achat TPE client BPM (625)",map.get(k).size()));
+				else if(k=="603")
+					 infrmationItegImal.add(new ItemInfo("Frais de recalcul PIN (603)",map.get(k).size()));
+				else if(k=="184")
+					 infrmationItegImal.add(new ItemInfo("Frais de personnalisation GIMTEL (184)",map.get(k).size()));
+							
+				
+			}
+		// Fin info integration IMAL
+		 
+		    ResponseClDto responseClDto = new ResponseClDto(infrmationDebit, infrmationCredit,infrmationItegImal,diff, succes);
 
 		 return responseClDto;
 	}
@@ -499,6 +600,111 @@ public class TraitementClearingBatchImpl implements TraitementClearingBatchServi
 		
 		m=Double.parseDouble(res2);
 		return m; 
+	}
+
+	@Override
+	public ResponseClDto getConsultationIntegrationImal(Jour jour) throws Exception {
+		// TODO Auto-generated method stub
+		
+	List<ItemInfo> infrmationDebit=new ArrayList<>();
+				
+		String tdate=getDateString(jour);
+	    DateFormat df=new SimpleDateFormat("ddMMyyyy");
+
+		Date du=df.parse(tdate);
+		
+		List<Clearing> clearings= clearingRepository.getClearingPerso3(du);
+		
+		boolean succes=true;
+
+		if(clearings==null || clearings.size()==0) {
+			succes=false;
+			
+		 return new ResponseClDto(infrmationDebit, null,0, succes);
+
+		}
+		
+		Map<String, List<Clearing>> map = new HashMap<>();
+		
+		String key=null;
+		boolean isAdd=false;
+		for(Clearing x : clearings) {
+			
+			 isAdd=false;
+			 
+			// GIMTEL
+			if(x.getTypeEnregistrement().equals("20")) {
+				
+				// retrait
+				if(x.getCodeOperation().equals("07000")) {
+					
+					// Client BPM -> banque confrere
+					if(x.getCodeBanqueEmettrice().equals("00018") && !x.getCodeBanqueAcquereur().equals("00018")) {
+					
+						key="608";
+						isAdd=true;
+						
+					
+						
+						
+					}
+					// client confrere -> banque BPM
+					else if(!x.getCodeBanqueEmettrice().equals("00018") && x.getCodeBanqueAcquereur().equals("00018")) {
+					
+						key="614";
+						isAdd=true;						
+					}
+
+					
+				}
+				// achat PAN Client BPM
+				else if(x.getCodeOperation().equals("05000") && x.getPan().matches("637103.+")) {
+					key="625";
+					isAdd=true;	
+				}
+			}
+			
+			// frais recalcul PIN
+			if(x.getCodeOperation().equals("10102")) {
+				key="603";
+				isAdd=true;	
+			}
+			// frais perso GIMTEL
+			else if(x.getCodeOperation().equals("10100")) {
+				key="184";
+				isAdd=true;	
+			}
+			
+			// encaissement commercant
+			else if(x.getCodeOperation().equals("05000")) {
+				
+				if(x.getTypeEnregistrement().equals("10")) {
+					key="622";
+					isAdd=true;		
+				}
+				
+			}			
+			
+	//
+		if(isAdd) {
+			List<Clearing> list=map.get(key);
+			
+			if(list==null) {
+				list=new ArrayList<>();
+			}
+			
+			list.add(x);
+			map.put(key, list);
+		}
+	//		
+			
+		}
+		
+		ResponseClDto res= new ResponseClDto(infrmationDebit, 0, true);
+		for(String k : map.keySet()) {
+			System.out.println(k+" "+map.get(k).size());
+		}
+		return null;
 	}
 
 

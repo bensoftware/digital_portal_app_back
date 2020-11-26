@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
+import com.monetique.dto.Jour;
 import com.monetique.security.service.AppUserData;
 import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.service.IActionService;
@@ -62,7 +63,9 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-
+		Jour jour=new Jour(2, 5, 2019);
+	//	clearingBatchService.getConsultationCompense(jour);
+		
 		//clearingBatchService.removeFile("BCLEAR.180919.75279.00018");
 		//clearingBatchService.removeFile("BCLEAR.020519.72174.00018");
 

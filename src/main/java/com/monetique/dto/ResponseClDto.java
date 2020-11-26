@@ -2,7 +2,6 @@ package com.monetique.dto;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 public class ResponseClDto implements Serializable {
 
@@ -11,6 +10,8 @@ public class ResponseClDto implements Serializable {
 	List<ItemInfo> informationDebit;
 	List<ItemInfo> informationCredit;
 
+	List<ItemInfo> informationIntegImal;
+	
 	double balance;
 
 	boolean succes;
@@ -66,5 +67,25 @@ public class ResponseClDto implements Serializable {
 		this.informationDebit = informationDebit;
 		this.succes = succes;
 	}
+
+	public List<ItemInfo> getInformationIntegImal() {
+		return informationIntegImal;
+	}
+
+	public void setInformationIntegImal(List<ItemInfo> informationIntegImal) {
+		this.informationIntegImal = informationIntegImal;
+	}
+
+	public ResponseClDto(List<ItemInfo> informationDebit, List<ItemInfo> informationCredit,
+			List<ItemInfo> informationIntegImal, double balance, boolean succes) {
+		super();
+		this.informationDebit = informationDebit;
+		this.informationCredit = informationCredit;
+		this.informationIntegImal = informationIntegImal;
+		this.balance = balance;
+		this.succes = succes;
+	}
+	
+	
 
 }

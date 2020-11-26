@@ -1,6 +1,5 @@
 package com.monetique.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.monetique.dto.ItemBatch;
@@ -17,6 +16,9 @@ public interface TraitementClearingBatchService {
 	public ResponseCl preIntClearingByFileName(String filename) throws Exception;
 
 	public List<ItemBatch> getIntegClearingFiles(String filename) throws Exception;
+
+	
+	public ResponseClDto getConsultationIntegrationImal(Jour jour) throws Exception;
 
 	
 }

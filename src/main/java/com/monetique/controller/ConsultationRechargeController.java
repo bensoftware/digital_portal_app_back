@@ -1,7 +1,5 @@
 package com.monetique.controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
@@ -11,12 +9,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.monetique.dto.Jour;
-import com.monetique.dto.RequestDto;
 import com.monetique.dto.ResponseClDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.TraitementClearingBatchService;
