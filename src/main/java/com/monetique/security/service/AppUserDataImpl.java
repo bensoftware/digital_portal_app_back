@@ -2,6 +2,7 @@ package com.monetique.security.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -11,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.monetique.dto.AuthentificationOut;
 import com.monetique.security.entities.AppRole;
 import com.monetique.security.entities.AppUser;
 import com.monetique.um.dao.entities.Action;
 import com.monetique.um.dao.entities.Rule;
 import com.monetique.um.dao.entities.User;
+import com.monetique.um.dao.repositories.RuleRepository;
 import com.monetique.um.dao.repositories.UserRepository;
 
 @Service
@@ -26,6 +29,9 @@ public class AppUserDataImpl implements AppUserData{
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	RuleRepository ruleRepository;
 	
 	
 	@Override
@@ -80,21 +86,34 @@ public class AppUserDataImpl implements AppUserData{
 	}
 
 	@Override
-	public Set<String> getAllActions(String username) throws Exception {
+	public Set<String> getAllActions(String username,AuthentificationOut out) throws Exception {
 		//System.out.println("******************");
 
 		User user =userRepository.findByuserName(username);
-		
+		Set<Rule> rules=new HashSet<>();
 		
 		if(user==null) {
-			throw new Exception("user n'existe pas");
+			User newUser =new User();
+			newUser.setDateCreation(new Date());
+			newUser.setActif(true);
+			newUser.setEmail(out.data.getEmail());
+			newUser.setNom(out.data.getGivenName());
+			newUser.setPrenom(out.data.getSn());
+			newUser.setUserName(out.data.getsAMAccountName());
+			Rule rule=ruleRepository.findBylibelle("Commercial");
+			rules.add(rule);
+			newUser.setRules(rules);
+			user=userRepository.save(newUser);
+			
+			
 		}
 		
 		System.out.println(user.getUserName());
 		
-		Set<Rule> rules=user.getRules();
-		
+		 rules=user.getRules();
 		Set<String> actions=new HashSet<>();
+		
+		
 		
 		if(rules.isEmpty()) {
 			throw new Exception("user n'a pas de role");
@@ -117,6 +136,7 @@ public class AppUserDataImpl implements AppUserData{
 		
 		return actions;
 	}
+	
 
 	@Override
 	public Set<String> getAllRules(String username) throws Exception {
@@ -125,7 +145,8 @@ public class AppUserDataImpl implements AppUserData{
 		
 		
 		if(user==null) {
-			throw new Exception("user n'existe pas");
+			//throw new Exception("user n'existe pas");
+			return null;
 		}
 		
 		Set<String> rules=new HashSet<>();

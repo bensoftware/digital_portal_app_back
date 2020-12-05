@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.monetique.security.service.AppUserData;
+import com.monetique.security.service.CustomAuthenticationProvider;
+import com.monetique.service.LdapService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,14 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	AppUserData appUserData;
+	@Autowired
+	LdapService ldapService;
 	
 
 	// le type de l'algo de hackage
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-		auth.userDetailsService(userDetailsService)
-		.passwordEncoder(bCryptPasswordEncoder);
+		/*auth.userDetailsService(userDetailsService)
+		.passwordEncoder(bCryptPasswordEncoder);*/
+		auth.authenticationProvider(new CustomAuthenticationProvider(appUserData,ldapService));
 	}
 	
 	@Override

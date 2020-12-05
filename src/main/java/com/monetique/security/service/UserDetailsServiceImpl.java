@@ -13,7 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.monetique.dto.AuthentificationIn;
+import com.monetique.dto.AuthentificationOut;
 import com.monetique.security.entities.AppUser;
+import com.monetique.service.LdapService;
 import com.monetique.um.dao.repositories.UserRepository;
 
 
@@ -28,14 +31,41 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	LdapService ldapService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		AppUser user=null;
 		Set<String> actions=null;
+		
+		
+		String usrname=null;
+		String pwd=null;
+		
+		AuthentificationIn in= new AuthentificationIn();
+		in.login=usrname;
+		in.password=pwd;
+		
+		
+		// appel LDAB
+		try {
+			AuthentificationOut out= ldapService.login(in);
+			
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		
+		
 		try {
 			user = accountService.findUserByUsername(username);
-			actions= appUserData.getAllActions(username);
+			actions= appUserData.getAllActions(username,null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

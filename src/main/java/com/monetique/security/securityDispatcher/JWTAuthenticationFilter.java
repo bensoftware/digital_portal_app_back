@@ -62,15 +62,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		User springUser=(User) authResult.getPrincipal();
+	//	User springUser=(User) authResult.getPrincipal();
+		
+		String username = authResult.getPrincipal().toString();
+		
 		String jwt=null;
 		try {
 				
 			jwt = Jwts.builder()
-					.setSubject(springUser.getUsername())
+					.setSubject(username)
 					.setExpiration(new Date(System.currentTimeMillis()+SecurityConstants.EXPIRATION_TIME))
-					.claim("roles", appUserData.getAllRules(springUser.getUsername()))
-					.claim("actions",springUser.getAuthorities())
+					.claim("roles", appUserData.getAllRules(username))
+					.claim("actions",authResult.getAuthorities())
 					.signWith(SignatureAlgorithm.HS256,SecurityConstants.SECRET)
 					.compact();
 		} catch (Exception e) {

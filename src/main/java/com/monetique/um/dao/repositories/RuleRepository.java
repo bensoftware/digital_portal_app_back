@@ -11,4 +11,7 @@ public interface RuleRepository extends JpaRepository<Rule, Long>{
 
 	@Query("SELECT u FROM Rule u WHERE u.active=true ")
     public List<Rule> getAllRuleActive();
+	
+	@Query("SELECT u FROM Rule u WHERE u.libelle=?1 ")
+    public Rule findBylibelle(String lbl);
 }
