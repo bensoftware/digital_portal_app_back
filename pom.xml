@@ -141,7 +141,7 @@
 			</plugin>	
 			
 		</plugins>
-		 <finalName>compenseApp</finalName>
+		 <finalName>DigitalPortalService</finalName>
 	</build>
 
 </project>
