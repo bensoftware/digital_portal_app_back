@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.monetique.dto.AuthentificationIn;
 import com.monetique.dto.AuthentificationOut;
+import com.monetique.security.entities.AppUser;
 import com.monetique.service.LdapService;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider  {
@@ -33,7 +34,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
-        String name = authentication.getName();
+
+    	String name = authentication.getName();
         Set<String> actions=new HashSet<>();
         
         // You can get the password here
@@ -55,7 +57,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
         if(out.errorCode==1)
         	return null;
         	try {
-        		name=out.data.getsAMAccountName();
+        		//name=out.data.getsAMAccountName();
     			actions= appUserData.getAllActions(out.data.getsAMAccountName(),out);
     		} catch (Exception e) {
     			e.printStackTrace();
@@ -73,11 +75,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
         
         // Your custom authentication logic here
   //      if (name.equals("admin") && password.equals("pwd")) {
+		AppUser appUser=new AppUser();	
+		try {
+			 appUser= appUserData.findUserByUsername(name);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         	
-			
-        	System.out.println("OUII ");
-            Authentication auth = new UsernamePasswordAuthenticationToken(name,
-                    password,authorities);
+            Authentication auth = new UsernamePasswordAuthenticationToken(appUser.getUsername(),password,authorities);
             
 
             return auth;

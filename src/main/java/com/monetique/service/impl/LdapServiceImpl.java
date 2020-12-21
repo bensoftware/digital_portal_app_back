@@ -57,11 +57,11 @@ public class LdapServiceImpl implements LdapService {
                           
                    }
                    else {
-                          throw new Exception("Message non envoyer"); 
+                          throw new Exception("Message non envoyer ////login"); 
                    }
                    
             } catch (Exception e) {
-                   throw new Exception("Message non envoyer"); 
+                   throw new Exception("Message non envoyer ////login"); 
             }
  
 

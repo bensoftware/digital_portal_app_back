@@ -43,11 +43,11 @@ public class OtpServiceImpl implements OtpService {
                      
             }
             else {
-                   throw new Exception("Message non envoyer"); 
+                   throw new Exception("Message non envoyer  /////getOtpByTelephone"); 
             }
             
      } catch (Exception e) {
-            throw new Exception("Message non envoyer"); 
+            throw new Exception("Message non envoyer  /////getOtpByTelephone"); 
      }
 	}
 

@@ -4,6 +4,8 @@ package com.monetique.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,12 +28,13 @@ public class CommercialController {
 	OtpLogRepository otpLogRepository;
 	
 	@PostMapping("/getOtp")
-	public OtpDetails login(@RequestBody OtpRequest otpRequest)  {
+	public OtpDetails getOtp(@RequestBody OtpRequest otpRequest ,HttpServletRequest req)  {
 		OtpDetails otpDetails=new OtpDetails();
 		OtpLog otpLog=new OtpLog();
 		OtpIn otpIn=new OtpIn();
 		otpIn.telephone=otpRequest.getTelephone();
 		try {
+			
 			OtpOut otpOut=otpSrvice.getOtp(otpIn);
 			otpDetails.setDateCreationOtp(otpOut.response.dateCreationOtp);
 			otpDetails.setOtp(otpOut.response.otp);
@@ -43,10 +46,10 @@ public class CommercialController {
 			otpLog.setOtp(otpOut.response.otp);
 			otpLog.setPhone(otpRequest.getTelephone());
 			otpLog.setUserName(otpRequest.getUserName());
+			otpLog.setHost(req.getRemoteHost());
 			otpLogRepository.save(otpLog);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

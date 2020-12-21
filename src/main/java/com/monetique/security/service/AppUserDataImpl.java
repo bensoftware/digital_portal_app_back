@@ -37,7 +37,11 @@ public class AppUserDataImpl implements AppUserData{
 	@Override
 	public AppUser findUserByUsername(String username) throws Exception {
 		// TODO Auto-generated method stub
-		User user=userRepository.findByuserName(username);
+		User user=null;
+		user=userRepository.findByuserName(username.toLowerCase());
+		
+		if (user==null)
+			user=userRepository.findByuserName(username.toUpperCase());
 		
 		if(user!=null) {
 			// recuperer le context User et le mettre dans AppUser
@@ -89,7 +93,10 @@ public class AppUserDataImpl implements AppUserData{
 	public Set<String> getAllActions(String username,AuthentificationOut out) throws Exception {
 		//System.out.println("******************");
 
-		User user =userRepository.findByuserName(username);
+		User user =userRepository.findByuserName(username.toLowerCase());
+		if(user==null)
+		       user =userRepository.findByuserName(username.toUpperCase());
+		
 		Set<Rule> rules=new HashSet<>();
 		
 		if(user==null) {
@@ -116,7 +123,7 @@ public class AppUserDataImpl implements AppUserData{
 		
 		
 		if(rules.isEmpty()) {
-			throw new Exception("user n'a pas de role");
+			throw new Exception("user n a pas de role");
 		}
 		
 		for(Rule r: rules) {

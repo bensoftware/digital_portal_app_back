@@ -31,6 +31,8 @@ public class OtpLog  {
 	private String otp;
 	
 	private Date date;
+	
+	private String host;
 
 	public Long getId() {
 		return id;
@@ -74,6 +76,14 @@ public class OtpLog  {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 	
 	
