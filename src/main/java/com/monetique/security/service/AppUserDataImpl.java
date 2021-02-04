@@ -43,6 +43,9 @@ public class AppUserDataImpl implements AppUserData{
 		if (user==null)
 			user=userRepository.findByuserName(username.toUpperCase());
 		
+		if (user==null)
+			user=userRepository.findByuserName(username);
+		
 		if(user!=null) {
 			// recuperer le context User et le mettre dans AppUser
 			AppUser appUser=new AppUser(user.getUserName(), user.getPassword());
@@ -94,6 +97,9 @@ public class AppUserDataImpl implements AppUserData{
 		//System.out.println("******************");
 
 		User user =userRepository.findByuserName(username.toLowerCase());
+		
+		if(user==null)
+			user =userRepository.findByuserName(username);
 		if(user==null)
 		       user =userRepository.findByuserName(username.toUpperCase());
 		

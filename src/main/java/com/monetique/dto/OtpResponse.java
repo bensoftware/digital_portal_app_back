@@ -9,5 +9,7 @@ public class OtpResponse {
 	public	 String otp;
 	public	 Date dateCreationOtp;
 	public	 Date dateExpirationOtp;
+	public String token;
+	public String response;
 	 
 }
