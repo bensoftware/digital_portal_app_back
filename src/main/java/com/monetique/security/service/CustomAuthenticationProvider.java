@@ -49,7 +49,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider  {
 			 out=ldapService.login(in);
 			 System.out.println(out.errorCode);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

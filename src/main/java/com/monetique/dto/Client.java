@@ -3,6 +3,8 @@ package com.monetique.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,6 +15,13 @@ public class Client implements Serializable {
 	String nni;
 	Date date;
 	String cif;
+	String userId;
+	int nombreTentative;
+	Date dateExpirationBlocage;
+	
+
+	String temporaire;
+	Date sysDate;
 	
 	private String firstName;
 	private String lastName;
@@ -24,6 +33,38 @@ public class Client implements Serializable {
 	private String bearer ;
 	
 	
+	public Date getSysDate() {
+		return sysDate;
+	}
+	public void setSysDate(Date sysDate) {
+		this.sysDate = sysDate;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public int getNombreTentative() {
+		return nombreTentative;
+	}
+	public void setNombreTentative(int nombreTentative) {
+		this.nombreTentative = nombreTentative;
+	}
+	public Date getDateExpirationBlocage() {
+		return dateExpirationBlocage;
+	}
+	public void setDateExpirationBlocage(Date dateExpirationBlocage) {
+		this.dateExpirationBlocage = dateExpirationBlocage;
+	}
+	
+	
+	public String getTemporaire() {
+		return temporaire;
+	}
+	public void setTemporaire(String temporaire) {
+		this.temporaire = temporaire;
+	}
 	public String getBearer() {
 		return bearer;
 	}

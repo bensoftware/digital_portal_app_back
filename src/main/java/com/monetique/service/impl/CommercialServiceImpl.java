@@ -14,6 +14,7 @@ import com.monetique.dto.OtpIn;
 import com.monetique.dto.OtpOut;
 import com.monetique.dto.OtpResponse;
 import com.monetique.service.CommercialService;
+import com.monetique.service.SmsService;
 @Service
 public class CommercialServiceImpl implements CommercialService {
 	
@@ -30,6 +31,10 @@ public class CommercialServiceImpl implements CommercialService {
 	
     @Autowired
 	RestTemplate restTemplate;
+    
+    @Autowired
+    SmsService smsService;
+    
 	@Override
 	public OtpOut getOtp(OtpIn in) throws Exception {
 		
@@ -198,6 +203,56 @@ public class CommercialServiceImpl implements CommercialService {
 	}
 		return client;
 	}
-	
-	
+	@Override
+	public boolean deblockByPhone(String phone) throws Exception {
+		try {
+			String url= hostBankilyDb+"/debloquerClientBankily/"+phone;
+			ResponseEntity<String> response
+			  = restTemplate.getForEntity(url, String.class);
+			if(response.getStatusCode().equals(HttpStatus.OK)) {
+				return true;
+			}
+			
+		} catch (Exception e) {
+			return false;
+		}
+		return false;
+	}
+	@Override
+	public boolean resetAttempt(String phone) throws Exception {
+		try {
+			String url= hostBankilyDb+"/deblocageUserTel/"+phone;
+			ResponseEntity<String> response
+			  = restTemplate.getForEntity(url, String.class);
+			if(response.getStatusCode().equals(HttpStatus.OK)) {
+				return true;
+			}
+			
+		} catch (Exception e) {
+			return false;
+		}
+		return false;
+		
+	}
+	@Override
+	public String resendPinTemporaire(String phone ) throws Exception {
+		String pin =null;
+		Client client=getClientDetailsByPhone(phone);
+		
+		if(client !=null) {
+			String text="BIENVENUE CHEZ BANKILY, votre code PIN temporaire est de "+client.getTemporaire();
+			pin=client.getTemporaire();
+	        try {
+	                        smsService.sendSms(text, phone);
+	                        return pin;
+
+	        } catch (Exception e) {
+	                        throw new Exception("Erreur d'envoi");
+	                        
+	        } 
+		}else return pin;
+		
+		
+               
+	}	
 }

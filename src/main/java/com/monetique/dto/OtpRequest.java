@@ -5,8 +5,16 @@ String telephone;
 String userName;
 String searched;
 String type;
+String pinTemp ;
 
 
+
+public String getPinTemp() {
+	return pinTemp;
+}
+public void setPinTemp(String pinTemp) {
+	this.pinTemp = pinTemp;
+}
 public String getType() {
 	return type;
 }

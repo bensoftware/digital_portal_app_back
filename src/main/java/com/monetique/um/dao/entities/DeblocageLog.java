@@ -10,13 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "otplog")
-public class OtpLog  {
-	
-	
-
-	private static final long serialVersionUID = 4740612708609554436L;
-
+@Table(name = "deblocagelog")
+public class DeblocageLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -28,21 +23,11 @@ public class OtpLog  {
 	@Column(nullable = false)
 	private String phone;
 	
-	private String otp;
+	
 	
 	private Date date;
 	
 	private String host;
-	
-	private String type ;  //OTP TENATATIVE PIN Consultation-SUSPECT
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public Long getId() {
 		return id;
@@ -68,24 +53,12 @@ public class OtpLog  {
 		this.phone = phone;
 	}
 
-	public String getOtp() {
-		return otp;
-	}
-
-	public void setOtp(String otp) {
-		this.otp = otp;
-	}
-
 	public Date getDate() {
 		return date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public String getHost() {
@@ -95,7 +68,6 @@ public class OtpLog  {
 	public void setHost(String host) {
 		this.host = host;
 	}
-	
 	
 	
 

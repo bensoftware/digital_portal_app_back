@@ -18,5 +18,7 @@ public interface CommercialService {
 	public Client getClientDetailsByPhone(String phone) throws Exception;
 	
 	public Client getClientDetailsByCif(String cif) throws Exception;
-
+	public boolean deblockByPhone(String phone) throws Exception;
+	public boolean resetAttempt(String phone) throws Exception;
+	public String resendPinTemporaire(String phone) throws Exception;
 }
