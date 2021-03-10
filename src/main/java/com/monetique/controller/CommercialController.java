@@ -129,8 +129,7 @@ public class CommercialController {
 	@PostMapping("/debloquer")
 	public @ResponseBody boolean debloquer(@RequestBody OtpRequest req,HttpServletRequest httpReq) throws Exception {		
 		
-		System.out.println(req.getTelephone()); 
-		System.out.println(req.getUserName());
+		
 		boolean res =commercialService.deblockByPhone(req.getTelephone());
 	
 		DeblocageLog deblocageLog =new DeblocageLog();
@@ -147,9 +146,7 @@ public class CommercialController {
 	@PostMapping("/resendPin")
 	public @ResponseBody boolean resendPin(@RequestBody OtpRequest req,HttpServletRequest httpReq) throws Exception {		
 		
-		System.out.println(req.getTelephone()); 
-		System.out.println(req.getUserName());
-		System.out.println(req.getPinTemp());
+		
 		String pin =commercialService.resendPinTemporaire(req.getTelephone());
 	
 		boolean res=pin!=null;
@@ -169,10 +166,6 @@ public class CommercialController {
 	}
 	@PostMapping("/resetAttempts")
 	public @ResponseBody boolean resetAttempts(@RequestBody OtpRequest req,HttpServletRequest httpReq) throws Exception {		
-		System.out.println("reset attempts ");
-		System.out.println(req.getTelephone()); 
-		System.out.println(req.getUserName());
-		
 		boolean res =commercialService.resetAttempt(req.getTelephone());
 	
 		OtpLog otpLog=new OtpLog();

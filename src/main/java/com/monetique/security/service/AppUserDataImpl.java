@@ -113,7 +113,7 @@ public class AppUserDataImpl implements AppUserData{
 			newUser.setNom(out.data.getGivenName());
 			newUser.setPrenom(out.data.getSn());
 			newUser.setUserName(out.data.getsAMAccountName());
-			Rule rule=ruleRepository.findBylibelle("Commercial");
+			Rule rule=ruleRepository.findBylibelle("Default");
 			rules.add(rule);
 			newUser.setRules(rules);
 			user=userRepository.save(newUser);

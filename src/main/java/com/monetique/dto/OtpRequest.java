@@ -6,9 +6,16 @@ String userName;
 String searched;
 String type;
 String pinTemp ;
+String lineNumber;
 
 
 
+public String getLineNumber() {
+	return lineNumber;
+}
+public void setLineNumber(String lineNumber) {
+	this.lineNumber = lineNumber;
+}
 public String getPinTemp() {
 	return pinTemp;
 }
