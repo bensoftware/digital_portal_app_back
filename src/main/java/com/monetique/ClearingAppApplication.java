@@ -1,16 +1,22 @@
 package com.monetique;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
-import com.monetique.dto.Jour;
+import com.monetique.dto.Merchant;
+import com.monetique.dto.RequestMerchant;
+import com.monetique.dto.ResponseMerchant;
 import com.monetique.security.service.AppUserData;
+import com.monetique.service.MerchantService;
 import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.service.IActionService;
 import com.monetique.um.service.IRuleService;
@@ -53,10 +59,14 @@ public class ClearingAppApplication implements CommandLineRunner{
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
+	@Bean	
+	public RestTemplate getRest2() {
+		    SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+
+	        factory.setConnectTimeout(1200000);
+	        factory.setReadTimeout(1200000);
+
+	        return new RestTemplate(factory);	}
 
 	@Autowired
 	TraitementClearingBatchService clearingBatchService;
@@ -66,10 +76,24 @@ public class ClearingAppApplication implements CommandLineRunner{
 		return "/login";
 	}
 	
+	@Autowired
+	MerchantService merchantService;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Jour jour=new Jour(2, 5, 2019);
+	/*	Merchant m=new Merchant("PT191126.1459.016219", "PT191126.1459.016219", "GCD", "", "38491505", "HMER");
+		
+		RequestMerchant r=new RequestMerchant();
+		r.setDebut(new Date(1618750800000L));
+		r.setFin(new Date(1619010000000L));
+		r.setMerchant(m);
+		
+		merchantService.generationReleveMerchant(r);
+		System.out.println("OK");*/
+	//	ResponseMerchant dto=merchantService.getAllMerchant();
+	//	System.out.println(dto);
+	//	Jour jour=new Jour(2, 5, 2019);
 	//	clearingBatchService.getConsultationCompense(jour);
 		
 		//clearingBatchService.removeFile("BCLEAR.180919.75279.00018");
