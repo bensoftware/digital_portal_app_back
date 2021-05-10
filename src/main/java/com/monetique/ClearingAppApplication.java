@@ -1,7 +1,5 @@
 package com.monetique;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,10 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
-import com.monetique.dto.Merchant;
-import com.monetique.dto.RequestMerchant;
-import com.monetique.dto.ResponseMerchant;
 import com.monetique.security.service.AppUserData;
+import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
 import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.service.IActionService;
@@ -79,8 +75,13 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	MerchantService merchantService;
 	
+	@Autowired
+	MajService majService;
+	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
 		
 	/*	Merchant m=new Merchant("PT191126.1459.016219", "PT191126.1459.016219", "GCD", "", "38491505", "HMER");
 		
