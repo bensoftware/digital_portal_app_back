@@ -96,7 +96,7 @@ public class CommercialController {
 	
 	
 	@RequestMapping(value="/getCifByTelephone",method=RequestMethod.POST)
-	public @ResponseBody ResponseDto getConsultationRechargeStock(@RequestParam String telephone) throws Exception {		
+	public @ResponseBody ResponseDto getCifByTelephone(@RequestParam String telephone) throws Exception {		
 		String cif=commercialService.getCifByTelephone(telephone);
 					
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), cif);

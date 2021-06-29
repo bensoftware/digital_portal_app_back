@@ -187,6 +187,7 @@ public class CommercialServiceImpl implements CommercialService {
 	}
 		return client;
 	}
+	
 	@Override
 	public Client getClientDetailsByCif(String cif) throws Exception {
 		Client client=null;
