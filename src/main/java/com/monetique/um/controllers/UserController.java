@@ -27,10 +27,7 @@ import com.monetique.um.service.IUserService;
 public class UserController {
     
 	@Autowired
-	IUserService userService;
-	
-
-	
+	IUserService userService;	
 	@Autowired
 	HttpServletResponse  httpServletResponse;
 	
@@ -64,7 +61,6 @@ public class UserController {
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),userService.getUser(id));
 
 	}
-	
 	
 	@PreAuthorize("hasAuthority('users')")
 	@RequestMapping(value="/deleteUser",method= RequestMethod.DELETE)

@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// authorisation des URL sans authentification
 		http.authorizeRequests().antMatchers("/login/**","/TELEPIN/**","/generationPdf/**","/**").permitAll();
+		http.authorizeRequests().antMatchers("/getAllGroupe/**","/addGroupe/**","/updateGroupe/**").permitAll();
 		
 	//	http.authorizeRequests().anyRequest().permitAll();
 

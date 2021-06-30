@@ -56,6 +56,9 @@ public class User implements Serializable{
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	Set<Rule> rules = new HashSet<>();
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	Set<Groupe> groupes = new HashSet<>();
 
 
 	public User(Long id, String userName, String password, String nom, String prenom, String email, Date dateCreation,
