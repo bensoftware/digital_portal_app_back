@@ -3,6 +3,7 @@ package com.monetique.um.service;
 import java.util.List;
 
 import com.monetique.um.dao.entities.Groupe;
+import com.monetique.um.dao.entities.User;
 
 public interface IGroupeService {
 	public Groupe addGroupe(Groupe groupe);
@@ -11,4 +12,5 @@ public interface IGroupeService {
 	public List<Groupe> getAllGroupe();
 	public List<Groupe> getAllGroupeActive();
 	public int changerEtatGroup(long id,boolean active);
+	public List<User> getAllUser();
 }

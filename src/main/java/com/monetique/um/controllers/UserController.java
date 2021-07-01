@@ -128,6 +128,18 @@ public class UserController {
 		
 	}
 	
-
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/addGroupeToUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto addGroupeToUser(@RequestBody UserDto UserDto) throws Exception {
+		userService.addGroupeToUser(UserDto.getGroupe(),UserDto.getIdUser());
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
+	}
+	
+	@PreAuthorize("hasAuthority('users')")
+	@RequestMapping(value="/removeGroupeToUser",method= RequestMethod.POST)
+	public @ResponseBody ResponseDto removeGroupeToUser(@RequestBody UserDto UserDto) throws Exception {
+		userService.removeGroupeToUser(UserDto.getGroupe(),UserDto.getIdUser());
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
+	}
 	
 }

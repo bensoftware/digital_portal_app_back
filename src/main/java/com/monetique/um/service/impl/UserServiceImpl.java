@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.security.service.AppUserData;
+import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.Rule;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.dao.repositories.UserRepository;
@@ -415,7 +416,54 @@ public class UserServiceImpl implements IUserService{
 		return false;
 	}
 
+	@Override
+	public void addGroupeToUser(Groupe groupe, long idUser) throws Exception {
+		if(idUser==0 && groupe==null ) throw new Exception("Id groupe ou  user non définit");
+		  Optional<User> userOp=userRepository.findById(idUser);   	
+	   	
+	   	if(userOp.isPresent()) {
+	   		
+	   		User user=userOp.get();
+	   		Set<Groupe> listGroupe=user.getGroupes();
+	   		
+	   		boolean existe=false;
+	   		for(Groupe ac: listGroupe) {
+	   			if(ac.getLibelle().equals(groupe.getLibelle())  && ac.getId()== groupe.getId()) {
+	   				existe=true;
+	   				break;
+	   			}
+	   		}
+	   		
+	   		if(!existe)
+	   			listGroupe.add(groupe);
+	   		userRepository.saveAndFlush(user);
+	   		
+	   	}
+	}
 
+	@Override
+	public void removeGroupeToUser(Groupe groupe, long idUser) throws Exception {
+		if(idUser==0 && groupe==null ) throw new Exception("Id utilisateur ou  groupe non définit");
+		Optional<User> userOp=userRepository.findById(idUser);		   	
+		   	if(userOp.isPresent()) {
+		   		User user=userOp.get();
+		   		Set<Groupe> listGroupe=user.getGroupes();	
+		   		boolean existe=false;
+		   		Groupe supp=null;
+		   		for(Groupe ac: listGroupe) {
+		   			if(ac.getLibelle().equals(groupe.getLibelle())  && ac.getId()== groupe.getId()) {
+		   				existe=true;
+		   				supp=ac;
+		   				break;
+		   			}
+		   		}
+		   		
+		   		if(existe)
+		   		listGroupe.remove(supp);
+		   		userRepository.saveAndFlush(user);
+	}
+
+	}
 
 
 }

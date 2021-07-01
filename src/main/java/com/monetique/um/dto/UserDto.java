@@ -3,6 +3,7 @@ package com.monetique.um.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.Rule;
 
 
@@ -18,7 +19,24 @@ public class UserDto implements Serializable{
 
 	 List<Rule> rules;
 	 Rule rule;
-	 long idUser;
+	 List<Groupe> groupes;
+	 Groupe groupe;
+	 public List<Groupe> getGroupes() {
+		return groupes;
+	}
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
+	}
+	public Groupe getGroupe() {
+		return groupe;
+	}
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	long idUser;
 	 
 	 
 	 

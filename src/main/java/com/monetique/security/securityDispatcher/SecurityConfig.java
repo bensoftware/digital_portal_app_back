@@ -56,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		// authorisation des URL sans authentification
-		http.authorizeRequests().antMatchers("/login/**","/TELEPIN/**","/generationPdf/**","/**").permitAll();
-		http.authorizeRequests().antMatchers("/getAllGroupe/**","/addGroupe/**","/updateGroupe/**").permitAll();
+		http.authorizeRequests().antMatchers("/login/**","/generationPdf/**","/**").permitAll();
+//		http.authorizeRequests().antMatchers("/getAllGroupe/**","/addGroupe/**","/updateGroupe/**","/changerEtatGroupe/**").permitAll();
 		
 	//	http.authorizeRequests().anyRequest().permitAll();
 

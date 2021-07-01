@@ -18,6 +18,10 @@ import javax.persistence.Table;
 @Table(name = "utilisateur")
 public class User implements Serializable{
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	private static final long serialVersionUID = 4740612708609554436L;
 
 	@Id
@@ -187,6 +191,15 @@ public class User implements Serializable{
 
 	public void setRules(Set<Rule> rules) {
 		this.rules = rules;
+	}
+
+
+	public Set<Groupe> getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(Set<Groupe> groupes) {
+		this.groupes = groupes;
 	}
 
 	
