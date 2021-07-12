@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.monetique.um.dao.entities.Groupe;
-import com.monetique.um.dao.entities.User;
 import com.monetique.um.dao.repositories.GroupeRepository;
 import com.monetique.um.dao.repositories.UserRepository;
 import com.monetique.um.service.IGroupeService;
@@ -50,11 +48,6 @@ public class GroupeServiceImpl implements IGroupeService
 	@Override
 	public int changerEtatGroup(long id, boolean active) {
 		return groupeRepository.changerEtatGroup(id, active);
-	}
-
-	@Override
-	public List<User> getAllUser() {
-		return userRepository.findAll();
 	}
 
 }

@@ -21,7 +21,6 @@ public class GroupeController {
 	@Autowired
 	HttpServletResponse  httpServletResponse;
 	
-	
 	@PreAuthorize("hasAuthority('gestgroupe')")
 	@PostMapping("/addGroupe")
 	public Groupe addGroupe(@RequestBody Groupe groupe) {
@@ -44,7 +43,6 @@ public class GroupeController {
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), groupes);
 
 	}
-
 	@PreAuthorize("hasAuthority('users')")
 	@GetMapping("/getAllGroupeActive")
 	public ResponseDto getAllGroupeActive() {

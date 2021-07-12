@@ -1,16 +1,13 @@
 package com.monetique.um.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.Rule;
 import com.monetique.um.dao.entities.User;
 
 @Service
 public interface IUserService {
-
 	public boolean addUser(User User) throws Exception;
 	public boolean addNewUser(User User) throws Exception;
 	public void updateUser(User user) throws Exception;

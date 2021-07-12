@@ -2,18 +2,15 @@ package com.monetique.um.controllers;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.monetique.dto.RequestDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.um.dao.entities.User;
@@ -27,7 +24,7 @@ import com.monetique.um.service.IUserService;
 public class UserController {
     
 	@Autowired
-	IUserService userService;	
+	IUserService userService;
 	@Autowired
 	HttpServletResponse  httpServletResponse;
 	
@@ -141,5 +138,6 @@ public class UserController {
 		userService.removeGroupeToUser(UserDto.getGroupe(),UserDto.getIdUser());
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
 	}
+	
 	
 }

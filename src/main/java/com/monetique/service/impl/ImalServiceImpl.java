@@ -21,10 +21,8 @@ public class ImalServiceImpl implements ImalService {
 	@Override
 	public ImalResponse getCompteBpmByCif(String cif) throws Exception {
 		ImalResponse res=null;
-		
 		String url= urlImal+"/getCompteBpmByCif/"+cif;
-		ResponseEntity<ImalResponse> response
-		  = restTemplate.getForEntity(url, ImalResponse.class);
+		ResponseEntity<ImalResponse> response = restTemplate.getForEntity(url, ImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
 		}
