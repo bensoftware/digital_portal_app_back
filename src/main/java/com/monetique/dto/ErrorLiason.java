@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LiaisonRequest {
-	public String CifNo;
-	public String bearerCode;
-	public String languageId;
-	
+public class ErrorLiason {
+	private String code;
+	private String message;
 
 }

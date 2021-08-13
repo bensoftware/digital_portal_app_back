@@ -27,6 +27,7 @@ public class LiaisonBankily {
 	private String cif;
 	private String compte;
 	private String idUserApprobation;
+	private String idUserRejet;
 	private boolean isRejeted;
 	private String motifRejet;
 	private String nomClient;

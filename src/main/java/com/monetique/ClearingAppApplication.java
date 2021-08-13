@@ -9,8 +9,8 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
-
 import com.monetique.security.service.AppUserData;
+import com.monetique.service.EtatCivilService;
 import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
 import com.monetique.service.TraitementClearingBatchService;
@@ -34,6 +34,10 @@ public class ClearingAppApplication implements CommandLineRunner{
 	
 	@Autowired
 	IUserService iuserService ;
+	
+
+	@Autowired
+	EtatCivilService etatCivilService;
 	
 	@Autowired
 	IRuleService ruleService ;
@@ -80,7 +84,6 @@ public class ClearingAppApplication implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
 		
 	}
 	

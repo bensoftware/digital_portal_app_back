@@ -31,9 +31,6 @@ public class ParametrageController {
 	@Autowired
 	HttpServletResponse  httpServletResponse;
 	
-	
-	
-	
 	@PreAuthorize("hasAuthority('parglo')")
 	@RequestMapping(value="/getParameter",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getParameter() throws Exception {

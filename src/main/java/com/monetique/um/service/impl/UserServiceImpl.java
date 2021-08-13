@@ -415,9 +415,7 @@ public class UserServiceImpl implements IUserService{
 	public void addGroupeToUser(Groupe groupe, long idUser) throws Exception {
 		if(idUser==0 && groupe==null ) throw new Exception("Id groupe ou  user non définit");
 		  Optional<User> userOp=userRepository.findById(idUser);   	
-	   	
 	   	if(userOp.isPresent()) {
-	   		
 	   		User user=userOp.get();
 	   		Set<Groupe> listGroupe=user.getGroupes();
 	   		
@@ -458,6 +456,12 @@ public class UserServiceImpl implements IUserService{
 		   		userRepository.saveAndFlush(user);
 	}
 
+	}
+	@Override
+	public Set<Groupe> getGroupeToUser(String username) throws Exception {
+		User userOp=userRepository.findByuserName(username);	
+		   		Set<Groupe> listGroupe=userOp.getGroupes();	
+		   		return listGroupe;
 	}
 
 }

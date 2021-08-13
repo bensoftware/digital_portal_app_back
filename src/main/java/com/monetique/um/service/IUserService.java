@@ -1,6 +1,8 @@
 package com.monetique.um.service;
 
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.Rule;
@@ -25,4 +27,5 @@ public interface IUserService {
 	public void updatePassword(String userName, String actuelPwd, String newPwd) throws Exception;
 	public void addGroupeToUser(Groupe groupe,long idUser) throws Exception;
 	public void removeGroupeToUser(Groupe groupe,long idUser) throws Exception;
+	public Set<Groupe> getGroupeToUser(String username) throws Exception;
 }

@@ -150,4 +150,14 @@ switch (code) {
 		
 		return res;
 	}
+	
+	public static String getNniFormat(String nni) {
+		int maxWidth = 10;
+	    StringBuilder sb = new StringBuilder();
+	    while (sb.length() < maxWidth - nni.length()) {
+	        sb.append('0');
+	    }
+	    sb.append(nni);
+	    return sb.toString();
+	}
 }

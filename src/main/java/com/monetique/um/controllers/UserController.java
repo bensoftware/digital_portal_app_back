@@ -1,10 +1,13 @@
 package com.monetique.um.controllers;
 
+import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.monetique.dto.RequestDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
+import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.dto.ResponseDto;
 import com.monetique.um.dto.UserDto;
@@ -119,7 +123,7 @@ public class UserController {
 	 */
 	@PreAuthorize("hasAuthority('user')")
 	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
-	public @ResponseBody ResponseDto changePasswordRestService(@RequestBody  RequestDto req) throws Exception{
+	public @ResponseBody ResponseDto changePasswordRestService(@RequestBody RequestDto req) throws Exception{
 		userService.updatePassword(req.getUserName(),req.getActuelPwd(),req.getNewPwd());
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
 		
@@ -138,6 +142,11 @@ public class UserController {
 		userService.removeGroupeToUser(UserDto.getGroupe(),UserDto.getIdUser());
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
 	}
-	
+	@PreAuthorize("hasAuthority('users')")
+	@GetMapping("/getGroupeToUser/{username}")
+	public ResponseDto getGroupeToUser(@PathVariable String username) throws Exception {
+		   Set<Groupe>	bankilies = userService.getGroupeToUser(username);
+			return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), bankilies);
+		}
 	
 }
