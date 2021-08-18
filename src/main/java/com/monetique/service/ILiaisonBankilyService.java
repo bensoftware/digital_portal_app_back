@@ -7,6 +7,10 @@ import com.monetique.dto.ApprobationResponse;
 import com.monetique.dto.Liaison;
 import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.ListLiaisonResponse;
+import com.monetique.dto.VerificationMobileRequest;
+import com.monetique.dto.VerificationMobileResponse;
+import com.monetique.um.dao.entities.Alert;
+import com.monetique.um.dao.entities.ExceptionMessage;
 import com.monetique.um.dao.entities.LiaisonBankily;
 import com.monetique.um.dto.VerificationImalResponse;
 
@@ -26,5 +30,8 @@ public interface ILiaisonBankilyService {
 	ApprobationResponse addRejet(Approbation approbation) throws Exception;
 	public LiaisonBankily updateRejetLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception;
 	public LiaisonBankily getLiaisonBankilyByTelephone(String telephone);
+	public ExceptionMessage addExceptionMessage(ExceptionMessage exceptionMessage) throws Exception ;
+	public Alert addAlert(Alert alert) throws Exception ;
+	public VerificationMobileResponse getVerificationMobile(VerificationMobileRequest mobileRequest) throws Exception ;
 
 }

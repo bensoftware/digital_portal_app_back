@@ -1,38 +1,28 @@
 package com.monetique.um.dao.entities;
 
 import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LiaisonBankily {
+@Entity
+public class ExceptionMessage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private boolean isApproved;
-	private long idGroupe;
-	private String idUserLiaison;
-	private Date dateLiaison;
+	@Column(length = 50)
 	private String nni;
+	@Column(length = 50)
 	private String telephone;
+	@Column(length = 50)
 	private String cif;
-	private String compte;
-	private String idUserApprobation;
-	private String idUserRejet;
-	private boolean isRejeted;
-	private String motifRejet;
-	private String nomClient;
-	private String serviceRequestId;
-
-	private String imageUrl;
-	
+	private String messageEurreur;
+	private Date date;
 }

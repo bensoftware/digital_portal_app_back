@@ -12,4 +12,5 @@ public class LiaisonResponseObject {
 	private String serviceRequestId;
 	private LiaisonResponseResponse response;
 
+	private String status;
 }

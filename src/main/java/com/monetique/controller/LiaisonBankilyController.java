@@ -16,8 +16,12 @@ import com.monetique.dto.Approbation;
 import com.monetique.dto.Liaison;
 import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.ListLiaisonResponse;
+import com.monetique.dto.VerificationMobileRequest;
+import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.ILiaisonBankilyService;
+import com.monetique.um.dao.entities.Alert;
+import com.monetique.um.dao.entities.ExceptionMessage;
 import com.monetique.um.dao.entities.LiaisonBankily;
 import com.monetique.um.dto.ResponseDto;
 import com.monetique.um.dto.VerificationImalResponse;
@@ -55,7 +59,13 @@ public class LiaisonBankilyController {
 	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
 	@RequestMapping(value="/getCompteByCif",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto getCompteByCif(@RequestBody LiaisonRequest req) throws Exception {
-		ListLiaisonResponse res=iLiaisonBankilyService.getCompteByCif(req);
+		ListLiaisonResponse res=null;
+		try {
+			res=iLiaisonBankilyService.getCompteByCif(req);
+
+		} catch (Exception e) {
+             throw new Exception(e.getMessage());
+		}
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res );
 	}
 	
@@ -115,6 +125,23 @@ public class LiaisonBankilyController {
 	@GetMapping("/getLiaisonBankilyByTelephone/{telephone}")
 	public LiaisonBankily getLiaisonBankilyByTelephone(@PathVariable String telephone) {
 		return iLiaisonBankilyService.getLiaisonBankilyByTelephone(telephone);
+	}
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PostMapping("/addExceptionMessage")
+	public ExceptionMessage addExceptionMessage(@RequestBody ExceptionMessage exceptionMessage) throws Exception {
+		return iLiaisonBankilyService.addExceptionMessage(exceptionMessage);
+	}
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PostMapping("/addAlert")
+	public Alert addAlert(@RequestBody Alert alert) throws Exception {
+		return iLiaisonBankilyService.addAlert(alert);
+	}
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PostMapping("/getVerificationMobile")
+	public @ResponseBody ResponseDto getVerificationMobile(@RequestBody VerificationMobileRequest mobileRequest) throws Exception {
+		System.err.println(mobileRequest);
+		VerificationMobileResponse dto=iLiaisonBankilyService.getVerificationMobile(mobileRequest);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
 
 }

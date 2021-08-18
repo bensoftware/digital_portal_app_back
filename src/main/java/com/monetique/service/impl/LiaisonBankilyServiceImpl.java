@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,9 +20,15 @@ import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.LiaisonResponse;
 import com.monetique.dto.LiaisonResponseObject;
 import com.monetique.dto.ListLiaisonResponse;
+import com.monetique.dto.VerificationMobileRequest;
+import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.helper.CorrespondanteCodeHelper;
+import com.monetique.repositories.AlertRepository;
+import com.monetique.repositories.ExceptionMessageRepository;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.ILiaisonBankilyService;
+import com.monetique.um.dao.entities.Alert;
+import com.monetique.um.dao.entities.ExceptionMessage;
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.LiaisonBankily;
 import com.monetique.um.dao.entities.User;
@@ -48,6 +52,10 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	private LiaisonBankilyRepository liaisonBankilyRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private ExceptionMessageRepository exceptionMessageRepository;
+	@Autowired
+	private AlertRepository alertRepository;
 	@Autowired
 	HttpServletRequest request;
 
@@ -95,10 +103,13 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		String url= urlLiaison+"/DIGIBANKREGWEB";
 		ResponseEntity<LiaisonResponseObject> response = restTemplate.postForEntity(url, liaisonRequest, LiaisonResponseObject.class) ;
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			List<LiaisonResponse> list=null;
 			LiaisonResponseObject resp= response.getBody(); 
+			if(resp!=null && resp.getStatus().equalsIgnoreCase("PAUSED"))
+			list=  resp.getResponse().getAccountList();		
 			res= new ListLiaisonResponse();
-			res.setServiceRequestId(resp.getServiceRequestId());
-			List<LiaisonResponse> list=  resp.getResponse().getAccountList();
+			if(resp!=null && resp.getServiceRequestId()!=null)
+			res.setServiceRequestId(resp.getServiceRequestId());			
 			res.setList(list);
 		}
 		
@@ -254,5 +265,27 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public LiaisonBankily getLiaisonBankilyByTelephone(String telephone) {
 		return liaisonBankilyRepository.getLiaisonBankilyByTelephone(telephone);
+	}
+
+	@Override
+	public ExceptionMessage addExceptionMessage(ExceptionMessage exceptionMessage) throws Exception {
+		exceptionMessage.setDate(new Date());
+		return exceptionMessageRepository.save(exceptionMessage);
+	}
+
+	@Override
+	public Alert addAlert(Alert alert) throws Exception {
+		return alertRepository.save(alert);
+	}
+
+	@Override
+	public VerificationMobileResponse getVerificationMobile(VerificationMobileRequest mobileRequest) throws Exception {
+		VerificationMobileResponse res=null;
+		String url= urlVerifImal+"/getVerificationMobile";
+		ResponseEntity<VerificationMobileResponse> response = restTemplate.postForEntity(url,mobileRequest, VerificationMobileResponse.class);
+		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			 res= response.getBody(); 
+		}
+		return res;
 	}
 }
