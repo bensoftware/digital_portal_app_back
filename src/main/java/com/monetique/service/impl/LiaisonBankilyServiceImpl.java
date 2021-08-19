@@ -1,5 +1,7 @@
 package com.monetique.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +29,15 @@ import com.monetique.repositories.AlertRepository;
 import com.monetique.repositories.ExceptionMessageRepository;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.ILiaisonBankilyService;
+import com.monetique.service.NotificationService;
 import com.monetique.um.dao.entities.Alert;
 import com.monetique.um.dao.entities.ExceptionMessage;
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.LiaisonBankily;
+import com.monetique.um.dao.entities.Superviseur;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.dao.repositories.LiaisonBankilyRepository;
+import com.monetique.um.dao.repositories.SuperviseurRepository;
 import com.monetique.um.dao.repositories.UserRepository;
 import com.monetique.um.dto.VerificationImalResponse;
 import io.jsonwebtoken.Claims;
@@ -55,9 +60,13 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Autowired
 	private ExceptionMessageRepository exceptionMessageRepository;
 	@Autowired
+	private SuperviseurRepository superviseurRepository;
+	@Autowired
 	private AlertRepository alertRepository;
 	@Autowired
 	HttpServletRequest request;
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public LiaisonBankily addLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
@@ -275,7 +284,30 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 
 	@Override
 	public Alert addAlert(Alert alert) throws Exception {
-		return alertRepository.save(alert);
+		String pattern = "dd-MM-yyyy HH:mm";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String jwt=request.getHeader(SecurityConstants.HEADER_STRING);
+		Claims claims=Jwts.parser()
+				.setSigningKey(SecurityConstants.SECRET)
+				.parseClaimsJws(jwt.replace(SecurityConstants.TOKEN_PREFIX,""))
+				.getBody();
+		alert.setIdUser(claims.getSubject());
+		alert.setDate(new Date());
+		LiaisonBankily bankily=liaisonBankilyRepository.getLiaisonBankilyByCif(alert.getCif());
+		if(bankily==null||bankily.isApproved()==true) {
+			 alertRepository.save(alert);
+			 List<String> list=new ArrayList<>();
+				List<Superviseur> superviseurs=superviseurRepository.getAll();
+				for(Superviseur superviseur:superviseurs) {
+					list.add(superviseur.getTelephone());		
+				}
+				try {
+					notificationService.sendSms(list, "Tentative d'une liaison Bankily CIF: "+alert.getCif()+" date: "+simpleDateFormat.format(alert.getDate()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}	
+		}
+		return alert;
 	}
 
 	@Override

@@ -12,4 +12,6 @@ public interface LiaisonBankilyRepository extends JpaRepository<LiaisonBankily, 
 	public List<LiaisonBankily> getAllLiaisonBankilyByIdGroup(long idG);
 	@Query("select g from LiaisonBankily g where g.isRejeted=false and g.telephone=?1")
 	public LiaisonBankily getLiaisonBankilyByTelephone(String telephone);
+	@Query("select g from LiaisonBankily g where g.isRejeted=false and g.cif=?1")
+	public LiaisonBankily getLiaisonBankilyByCif(String cif);
 }

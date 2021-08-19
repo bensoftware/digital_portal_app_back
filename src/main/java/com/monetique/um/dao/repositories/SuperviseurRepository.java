@@ -12,5 +12,7 @@ import com.monetique.um.dao.entities.Superviseur;
 public interface SuperviseurRepository extends CrudRepository<Superviseur, Long>{
 
 	List <Superviseur> findByActiveTrue();
+	@Query("select d from Superviseur d where d.active=true")
+	public List<Superviseur> getAll();
 
 }
