@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.monetique.dto.Approbation;
 import com.monetique.dto.Liaison;
+import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.ListLiaisonResponse;
 import com.monetique.dto.VerificationMobileRequest;
@@ -142,6 +143,12 @@ public class LiaisonBankilyController {
 		System.err.println(mobileRequest);
 		VerificationMobileResponse dto=iLiaisonBankilyService.getVerificationMobile(mobileRequest);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
+	}
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PostMapping("/deleteLiaisonIncompleteMobile")
+	public @ResponseBody ResponseDto deleteLiaisonIncompleteMobile(@RequestBody LiaisonIncomplet incomplet) throws Exception {
+		iLiaisonBankilyService.deleteLiaisonIncompleteMobile(incomplet);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
 	}
 
 }

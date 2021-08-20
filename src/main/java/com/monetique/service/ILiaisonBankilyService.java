@@ -5,6 +5,7 @@ import com.monetique.dto.AddLiaisonObject;
 import com.monetique.dto.Approbation;
 import com.monetique.dto.ApprobationResponse;
 import com.monetique.dto.Liaison;
+import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.ListLiaisonResponse;
 import com.monetique.dto.VerificationMobileRequest;
@@ -33,5 +34,6 @@ public interface ILiaisonBankilyService {
 	public ExceptionMessage addExceptionMessage(ExceptionMessage exceptionMessage) throws Exception ;
 	public Alert addAlert(Alert alert) throws Exception ;
 	public VerificationMobileResponse getVerificationMobile(VerificationMobileRequest mobileRequest) throws Exception ;
+	public void deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception ;
 
 }

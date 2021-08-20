@@ -18,6 +18,7 @@ import com.monetique.dto.Approbation;
 import com.monetique.dto.ApprobationResponse;
 import com.monetique.dto.ErrorLiason;
 import com.monetique.dto.Liaison;
+import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.LiaisonResponse;
 import com.monetique.dto.LiaisonResponseObject;
@@ -319,5 +320,11 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 			 res= response.getBody(); 
 		}
 		return res;
+	}
+
+	@Override
+	public void deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception {
+		String url= urlVerifImal+"/deleteLiaisonIncompleteMobile";
+		restTemplate.delete(url,incomplet, LiaisonIncomplet.class);
 	}
 }
