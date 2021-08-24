@@ -25,5 +25,7 @@ public class VerificationMobileResponse {
 	private String listC;
 	private String incomplet;
 	private String existe;
+	private int erreurCode; // 0 succes
+	private String erreurMessage; // existe si erreurCode != 0
 
 }

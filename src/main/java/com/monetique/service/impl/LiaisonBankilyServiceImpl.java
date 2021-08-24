@@ -325,6 +325,27 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public void deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception {
 		String url= urlVerifImal+"/deleteLiaisonIncompleteMobile";
-		restTemplate.delete(url,incomplet, LiaisonIncomplet.class);
+		ResponseEntity<Void> response=restTemplate.postForEntity(url,incomplet, Void.class);
+		if(!response.getStatusCode().equals(HttpStatus.OK)) {
+			response.getStatusCodeValue();
+		}
 	}
+	
+//	@Override
+//	public VerificationMobileResponse deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception {
+//		String url= urlVerifImal+"/deleteLiaisonIncompleteMobile";
+//		ResponseEntity<VerificationMobileResponse> response=null;
+//		try {
+//			response=	restTemplate.postForEntity(url,incomplet, VerificationMobileResponse.class);
+//			if(response.getStatusCode().equals(HttpStatus.OK)) {
+//				//return response.get;
+//				VerificationMobileResponse res= response.getBody();
+//					return res;
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+//		
+//		return null;
+//	}
 }

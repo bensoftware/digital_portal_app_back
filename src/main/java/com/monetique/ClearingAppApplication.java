@@ -9,8 +9,11 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
+
+import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.security.service.AppUserData;
 import com.monetique.service.EtatCivilService;
+import com.monetique.service.ILiaisonBankilyService;
 import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
 import com.monetique.service.TraitementClearingBatchService;
@@ -78,13 +81,25 @@ public class ClearingAppApplication implements CommandLineRunner{
 	
 	@Autowired
 	MerchantService merchantService;
+	@Autowired
+	ILiaisonBankilyService bankilyService;
 	
 	@Autowired
 	MajService majService;
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
+	
+		LiaisonIncomplet req=new LiaisonIncomplet();
+//		req.setCif("453");
+//		req.setTelephone("34212133");
+//		req.setNni("1842979922");
+//		req.setCompte("00018000012100004530312");
+		req.setCif("10005498");
+		req.setTelephone("22335526");
+		req.setNni("6086352883");
+		req.setCompte("00018000022100054980191");
+		bankilyService.deleteLiaisonIncompleteMobile(req);
 	}
 	
 	
