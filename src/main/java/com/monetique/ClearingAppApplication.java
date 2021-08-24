@@ -95,11 +95,11 @@ public class ClearingAppApplication implements CommandLineRunner{
 //		req.setTelephone("34212133");
 //		req.setNni("1842979922");
 //		req.setCompte("00018000012100004530312");
-		req.setCif("10005498");
-		req.setTelephone("22335526");
-		req.setNni("6086352883");
-		req.setCompte("00018000022100054980191");
-		bankilyService.deleteLiaisonIncompleteMobile(req);
+//		req.setCif("10005498");
+//		req.setTelephone("22335526");
+//		req.setNni("6086352883");
+//		req.setCompte("00018000022100054980191");
+//		bankilyService.deleteLiaisonIncompleteMobile(req);
 	}
 	
 	

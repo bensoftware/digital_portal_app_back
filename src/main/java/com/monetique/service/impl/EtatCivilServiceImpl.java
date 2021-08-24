@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.monetique.dto.ClientNni;
+import com.monetique.dto.ClientNniDto;
 import com.monetique.service.EtatCivilService;
 
 @Service
@@ -21,14 +21,14 @@ public class EtatCivilServiceImpl implements EtatCivilService {
        
        
        @Override
-       public ClientNni getInfoNni(String nni) throws Exception {
+       public ClientNniDto getInfoNni(String nni) throws Exception {
        
-             ClientNni res=null;
+    	   ClientNniDto res=null;
 
              try {
-                    String url= hostNni+"/getInfoNni/"+nni;
-                    ResponseEntity<ClientNni> response
-                      = restTemplate.getForEntity(url, ClientNni.class);
+                    String url= hostNni+"/getInfoNniMobile/"+nni;
+                    ResponseEntity<ClientNniDto> response
+                      = restTemplate.getForEntity(url, ClientNniDto.class);
                     if(response.getStatusCode().equals(HttpStatus.OK)) {
                            res= response.getBody(); 
                     }
