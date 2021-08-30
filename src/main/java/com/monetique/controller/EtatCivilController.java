@@ -23,7 +23,7 @@ public class EtatCivilController {
 	@Autowired
 	HttpServletResponse  httpServletResponse;
 
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb','users')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb','users')")
 	@RequestMapping(value="/getEtatCivilService/{nni}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getEtatCivilService(@PathVariable String nni) throws Exception {
 		nni=CorrespondanteCodeHelper.getNniFormat(nni);

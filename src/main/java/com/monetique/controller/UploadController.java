@@ -48,7 +48,7 @@ public class UploadController {
     public void generationPdf(HttpServletResponse resonse,@PathVariable String fileName) throws IOException {
 
         org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-        File file = new File(Paths.get(System.getProperty("user.home")) + "/releve_commercant/" + fileName);
+        File file = new File(Paths.get(System.getProperty("user.home")) + "/releve/" + fileName);
         resonse.setContentType(mediaType.getType());
         resonse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName());
         resonse.setContentLength((int) file.length());

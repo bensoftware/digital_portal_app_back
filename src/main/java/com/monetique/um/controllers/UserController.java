@@ -142,7 +142,7 @@ public class UserController {
 		userService.removeGroupeToUser(UserDto.getGroupe(),UserDto.getIdUser());
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),null);
 	}
-	@PreAuthorize("hasAuthority('users')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb','users')")
 	@GetMapping("/getGroupeToUser/{username}")
 	public ResponseDto getGroupeToUser(@PathVariable String username) throws Exception {
 		   Set<Groupe>	bankilies = userService.getGroupeToUser(username);

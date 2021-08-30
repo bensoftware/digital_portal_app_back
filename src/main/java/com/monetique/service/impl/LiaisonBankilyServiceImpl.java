@@ -150,6 +150,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public LiaisonBankily updateLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
 		LiaisonBankily bankily=liaisonBankilyRepository.findById(liaisonBankily.getId()).get();
+		liaisonBankily.setDateApprobation(new Date());
 		liaisonBankily.setId(bankily.getId());
 		liaisonBankily.setApproved(true);
 		return liaisonBankilyRepository.save(liaisonBankily);
@@ -267,6 +268,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public LiaisonBankily updateRejetLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
 		LiaisonBankily bankily=liaisonBankilyRepository.findById(liaisonBankily.getId()).get();
+		liaisonBankily.setDateRejet(new Date());
 		liaisonBankily.setId(bankily.getId());
 		liaisonBankily.setRejeted(true);
 		return liaisonBankilyRepository.save(liaisonBankily);

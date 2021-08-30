@@ -32,7 +32,11 @@ public class LiaisonBankily {
 	private String motifRejet;
 	private String nomClient;
 	private String serviceRequestId;
-
+	private String prenomClient;
+	private String nomFamille;
+	private String prenomPere;
+	private Date dateApprobation;
+	private Date dateRejet;
 	private String imageUrl;
 	
 }

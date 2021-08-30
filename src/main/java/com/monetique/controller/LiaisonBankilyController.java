@@ -51,13 +51,13 @@ public class LiaisonBankilyController {
 	}
 	
 
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@GetMapping("/getAllLiaisonBankily")
 	public  ResponseDto  getAllLiaisonBankily() throws Exception {
 		   List<LiaisonBankily>	bankilies = iLiaisonBankilyService.getAllLiaisonBankily();
 			return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), bankilies);
 		}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getCompteByCif",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto getCompteByCif(@RequestBody LiaisonRequest req) throws Exception {
 		ListLiaisonResponse res=null;
@@ -70,81 +70,81 @@ public class LiaisonBankilyController {
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res );
 	}
 	
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getVerificationImalByCif/{cif}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getVerificationImalByCif(@PathVariable String cif) throws Exception {
 		VerificationImalResponse dto=iLiaisonBankilyService.getVerificationImalByCif(cif);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getVerificationMobileByTelephone/{phone}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getVerificationMobileByTelephone(@PathVariable String phone) throws Exception {
 		VerificationImalResponse dto=iLiaisonBankilyService.getVerificationMobileByTelephone(phone);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@PostMapping("/updateLiaisonBankily")
 	public LiaisonBankily updateLiaisonBankily(@RequestBody LiaisonBankily liaisonBankily) throws Exception {
 		return iLiaisonBankilyService.updateLiaisonBankily(liaisonBankily);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@GetMapping("/getAllLiaisonBankilyByIdGroup/{idG}")
 	public  ResponseDto  getAllLiaisonBankilyByIdGroup(@PathVariable long idG) throws Exception {
 		   List<LiaisonBankily>	bankilies = iLiaisonBankilyService.getAllLiaisonBankilyByIdGroup(idG);
 			return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), bankilies);
 			}
 
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/addLiaison",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto addLiaison(@RequestBody Liaison r) throws Exception {
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), iLiaisonBankilyService.addLiaison(r));
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getGroupeByUsername/{username}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getGroupeByUsername(@PathVariable String username) throws Exception {
 		long dto=iLiaisonBankilyService.getGroupeByUsername(username);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getUserIdByLogin/{username}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getUserIdByLogin(@PathVariable String username) throws Exception {
 		VerificationImalResponse dto=iLiaisonBankilyService.getUserIdByLogin(username.toUpperCase());
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getUserIdByTelephone/{phone}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getUserIdByTelephone(@PathVariable String phone) throws Exception {
 		VerificationImalResponse dto=iLiaisonBankilyService.getUserIdByTelephone(phone);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@PostMapping("/updateRejetLiaisonBankily")
 	public LiaisonBankily updateRejetLiaisonBankily(@RequestBody LiaisonBankily liaisonBankily) throws Exception {
 		return iLiaisonBankilyService.updateRejetLiaisonBankily(liaisonBankily);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@GetMapping("/getLiaisonBankilyByTelephone/{telephone}")
 	public LiaisonBankily getLiaisonBankilyByTelephone(@PathVariable String telephone) {
 		return iLiaisonBankilyService.getLiaisonBankilyByTelephone(telephone);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@PostMapping("/addExceptionMessage")
 	public ExceptionMessage addExceptionMessage(@RequestBody ExceptionMessage exceptionMessage) throws Exception {
 		return iLiaisonBankilyService.addExceptionMessage(exceptionMessage);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@PostMapping("/addAlert")
 	public Alert addAlert(@RequestBody Alert alert) throws Exception {
 		return iLiaisonBankilyService.addAlert(alert);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@PostMapping("/getVerificationMobile")
 	public @ResponseBody ResponseDto getVerificationMobile(@RequestBody VerificationMobileRequest mobileRequest) throws Exception {
 		System.err.println(mobileRequest);
 		VerificationMobileResponse dto=iLiaisonBankilyService.getVerificationMobile(mobileRequest);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'apprlb')")
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@PostMapping("/deleteLiaisonIncompleteMobile")
 	public @ResponseBody ResponseDto deleteLiaisonIncompleteMobile(@RequestBody LiaisonIncomplet incomplet) throws Exception {
 		iLiaisonBankilyService.deleteLiaisonIncompleteMobile(incomplet);
