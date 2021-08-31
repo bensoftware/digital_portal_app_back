@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
-import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.security.service.AppUserData;
 import com.monetique.service.EtatCivilService;
 import com.monetique.service.ILiaisonBankilyService;
@@ -64,11 +63,13 @@ public class ClearingAppApplication implements CommandLineRunner{
 	
 	@Bean	
 	public RestTemplate getRest2() {
+
 		    SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
 
 	        factory.setConnectTimeout(1200000);
 	        factory.setReadTimeout(1200000);
-
+	 //       RestTemplate rest= new RestTemplate(factory);
+	 //       rest.setErrorHandler(new RestTemplateResponseErrorHandler());
 	        return new RestTemplate(factory);	}
 
 	@Autowired
@@ -90,7 +91,7 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 	
-		LiaisonIncomplet req=new LiaisonIncomplet();
+//		LiaisonIncomplet req=new LiaisonIncomplet();
 //		req.setCif("453");
 //		req.setTelephone("34212133");
 //		req.setNni("1842979922");

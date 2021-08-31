@@ -6,13 +6,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
 import com.monetique.dto.AddLiaisonObject;
 import com.monetique.dto.Approbation;
 import com.monetique.dto.ApprobationResponse;
@@ -41,6 +45,7 @@ import com.monetique.um.dao.repositories.LiaisonBankilyRepository;
 import com.monetique.um.dao.repositories.SuperviseurRepository;
 import com.monetique.um.dao.repositories.UserRepository;
 import com.monetique.um.dto.VerificationImalResponse;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 @Service
@@ -105,23 +110,30 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	}
 
 	@Override
-	public ListLiaisonResponse getCompteByCif(LiaisonRequest liaisonRequest) throws Exception {
+	public ListLiaisonResponse getCompteByCif(LiaisonRequest liaisonRequest)  {
 		ListLiaisonResponse res= null;
 		liaisonRequest.bearerCode="WEB";
 		liaisonRequest.languageId="1";
 		System.out.println(liaisonRequest);
 		String url= urlLiaison+"/DIGIBANKREGWEB";
-		ResponseEntity<LiaisonResponseObject> response = restTemplate.postForEntity(url, liaisonRequest, LiaisonResponseObject.class) ;
-		if(response.getStatusCode().equals(HttpStatus.OK)) {
-			List<LiaisonResponse> list=null;
-			LiaisonResponseObject resp= response.getBody(); 
-			if(resp!=null && resp.getStatus().equalsIgnoreCase("PAUSED"))
-			list=  resp.getResponse().getAccountList();		
-			res= new ListLiaisonResponse();
-			if(resp!=null && resp.getServiceRequestId()!=null)
-			res.setServiceRequestId(resp.getServiceRequestId());			
-			res.setList(list);
-		}
+		try {
+			ResponseEntity<LiaisonResponseObject> response = restTemplate.postForEntity(url, liaisonRequest, LiaisonResponseObject.class) ;
+			if(response.getStatusCode().equals(HttpStatus.OK)) {
+				List<LiaisonResponse> list=null;
+				LiaisonResponseObject resp= response.getBody(); 
+				if(resp!=null && resp.getStatus()!=null && resp.getStatus().equalsIgnoreCase("PAUSED"))
+				list=  resp.getResponse().getAccountList();		
+				res= new ListLiaisonResponse();
+				if(resp!=null && resp.getServiceRequestId()!=null)
+				res.setServiceRequestId(resp.getServiceRequestId());			
+				res.setList(list);
+			}
+			} catch (HttpStatusCodeException ex) {
+				System.err.println(ex.getResponseBodyAsString());
+				System.err.println(ex.getResponseHeaders());
+				System.err.println(ex.getStatusCode());
+			}
+	
 		
 		return res;
 	}

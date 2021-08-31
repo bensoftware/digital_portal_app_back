@@ -59,14 +59,12 @@ public class LiaisonBankilyController {
 		}
 	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getCompteByCif",method=RequestMethod.POST)
-	public @ResponseBody ResponseDto getCompteByCif(@RequestBody LiaisonRequest req) throws Exception {
+	public @ResponseBody ResponseDto getCompteByCif(@RequestBody LiaisonRequest req) {
 		ListLiaisonResponse res=null;
-		try {
+	
 			res=iLiaisonBankilyService.getCompteByCif(req);
 
-		} catch (Exception e) {
-             throw new Exception(e.getMessage());
-		}
+		
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res );
 	}
 	

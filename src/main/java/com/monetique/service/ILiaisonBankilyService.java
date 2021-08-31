@@ -19,7 +19,7 @@ import com.monetique.um.dto.VerificationImalResponse;
 public interface ILiaisonBankilyService {
 	public LiaisonBankily addLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception;
 	public List<LiaisonBankily> getAllLiaisonBankily();
-	public ListLiaisonResponse getCompteByCif(LiaisonRequest liaisonRequest) throws Exception ;
+	public ListLiaisonResponse getCompteByCif(LiaisonRequest liaisonRequest)  ;
 	public VerificationImalResponse getVerificationImalByCif(String cif) throws Exception ;
 	public VerificationImalResponse getVerificationMobileByTelephone(String phone) throws Exception ;
 	public LiaisonBankily updateLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception;
