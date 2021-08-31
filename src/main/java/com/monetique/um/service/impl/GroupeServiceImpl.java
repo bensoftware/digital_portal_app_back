@@ -50,4 +50,9 @@ public class GroupeServiceImpl implements IGroupeService
 		return groupeRepository.changerEtatGroup(id, active);
 	}
 
+	@Override
+	public Groupe getGroupeByLibelle(String libelle) {
+		return groupeRepository.getGroupeByLibelle(libelle);
+	}
+
 }

@@ -28,4 +28,5 @@ public interface IUserService {
 	public void addGroupeToUser(Groupe groupe,long idUser) throws Exception;
 	public void removeGroupeToUser(Groupe groupe,long idUser) throws Exception;
 	public Set<Groupe> getGroupeToUser(String username) throws Exception;
+	public User getUserByUsername(String username) throws Exception;
 }

@@ -3,10 +3,8 @@ package com.monetique;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.NumberFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -15,10 +13,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.Rule;
 import com.monetique.um.dao.entities.User;
+import com.monetique.um.dao.repositories.UserRepository;
+import com.monetique.um.service.IGroupeService;
 import com.monetique.um.service.IRuleService;
 import com.monetique.um.service.IUserService;
 
@@ -34,11 +33,15 @@ public class TestFCM implements CommandLineRunner{
 	IUserService iUserService;
 	@Autowired
 	IRuleService iRuleService;
+	@Autowired
+	IGroupeService iGroupeService;
+	@Autowired
+	UserRepository userRepository;
 	@Override
 	public void run(String... args) throws Exception {
 
 
-		String FILE_NAME = "C:\\dossier\\test.xlsx";
+		String FILE_NAME = "E:\\Taches\\test\\test.xlsx";
 		
 		   FileInputStream excelFile;
 			try {
@@ -70,6 +73,7 @@ public class TestFCM implements CommandLineRunner{
 		                
 		                String grade=null;
 		                String agence=null;
+		                String nomComplet=null;
 
 		                // itteration colonne par colonne
 		                while (cellIterator.hasNext()) {
@@ -100,21 +104,39 @@ public class TestFCM implements CommandLineRunner{
 		                    else if(c==2) {
 		                    	agence=item;
 		                    	
+		                    }else if(c==3) {
+		                    	nomComplet=item;
+		                    	
 		                    }
 		                
 		                    c++;
 
 		                }
 		                
-		                System.out.println("Ligne "+cpt+" "+identifiant+" "+grade+" "+agence);
+		                System.out.println("Ligne "+cpt+" "+identifiant+" "+grade+" "+agence+" "+nomComplet);
 		                
 		                User user=null;
 		                Groupe groupe=null;
 		                Rule role=null;
 		                
 		                // recuperation ou creation de l'utilisateur
-		                
+		                user=iUserService.getUserByUsername(identifiant);
+		                if(user==null) {
+		                	user=new User();
+		                	user.setActif(true);
+		                	user.setDateCreation(new Date());
+		                	user.setUserName(identifiant);
+		                	userRepository.save(user);
+		                }
 		                // recuperarion ou creation du groupe
+		                groupe=iGroupeService.getGroupeByLibelle(agence);
+		                if(groupe==null) {
+		                	groupe=new Groupe();
+		                	groupe.setLibelle(agence);
+		                	groupe.setNomComplet(nomComplet);
+		                	groupe.setActive(true);
+		                	iGroupeService.addGroupe(groupe);
+		                }
 		                
 		                
 		                // recuperarion du role
