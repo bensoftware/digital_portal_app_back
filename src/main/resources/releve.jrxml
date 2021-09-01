@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="releve" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bdf34dc6-0f7e-4292-9e8c-f30801547a90">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="agence" class="java.lang.String"/>
+	<parameter name="au" class="java.lang.String"/>
+	<parameter name="dateReleve" class="java.lang.String"/>
+	<parameter name="nomTitulaire" class="java.lang.String"/>
+	<parameter name="du" class="java.lang.String"/>
+	<parameter name="soldeBloque" class="java.lang.String"/>
+	<parameter name="pan" class="java.lang.String"/>
+	<parameter name="soldeComptable" class="java.lang.String"/>
+	<parameter name="soldeDisponible" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="dateTransaction" class="java.lang.String"/>
+	<field name="dateComptabilisation" class="java.lang.String"/>
+	<field name="typeTransaction" class="java.lang.String"/>
+	<field name="lieuTransaction" class="java.lang.String"/>
+	<field name="montantTransaction" class="java.lang.String"/>
+	<field name="devise" class="java.lang.String"/>
+	<field name="montantLocale" class="java.lang.String"/>
+	<field name="commission" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="226" splitType="Stretch">
+			<staticText>
+				<reportElement x="310" y="0" width="240" height="30" uuid="71b112f5-4b07-49a8-89bd-2eaf8d2e6b0b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relevé de compte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="30" width="240" height="20" uuid="4be99a2c-fd52-4e0a-8850-f061f742c862"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Monsieur :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="30" width="170" height="20" uuid="a5d53574-1591-4ef7-b96c-d775c3974815"/>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomTitulaire}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="76" width="100" height="20" uuid="284b52d0-2c8d-4534-8209-bb221a4d3e79"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numéro Carte :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="96" width="100" height="20" uuid="a8c415d9-d7a1-4982-93a5-314215c18f7c"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solde Comptable :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="116" width="100" height="20" uuid="f1f8ec93-5bcc-482c-9fcc-67d8a0481182"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solde Disponible :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="146" width="100" height="20" uuid="cfd650ef-68cb-45e1-a23c-15977b78caab"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Montant Bloqué :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="76" width="120" height="20" uuid="3be1b506-dee7-46a0-81be-8fc4e3c0c26d"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="96" width="120" height="20" uuid="c9530c59-c2f2-4d77-9aac-e204560e5581"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{soldeComptable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="116" width="120" height="20" uuid="5762e636-3b0c-45f4-bc3e-b9e30cd90be6"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{soldeDisponible}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="146" width="120" height="20" uuid="5b90fd0b-f471-486f-a530-88e2fbaa814e"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{soldeBloque}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="76" width="80" height="20" uuid="ae852400-1b67-4c6e-8b4a-520abb66cc51"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Relevé :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="96" width="80" height="20" uuid="3d670877-60b2-48e4-b0a4-d0ca89147e3b"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Du :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="116" width="80" height="20" uuid="6cc6647d-e1d1-40d1-8164-9f0a0ca1df05"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Au :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="136" width="80" height="20" uuid="df5c4519-143d-4de3-a912-4eb8f26445d3"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom sur Carte :]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="67" width="110" height="119" uuid="e03df146-93bd-4d6e-a624-99d9be5726f8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["bpm.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="193" width="60" height="27" uuid="1e24c7fc-4268-4099-9a56-a763602dae23"/>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Agence :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="193" width="240" height="27" uuid="8290125a-138a-437e-b42a-4a1b6eaf4cb8"/>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agence}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="120" y="66" width="1" height="120" uuid="dde7d9a9-3939-4e4b-bed5-875c49411933"/>
+			</line>
+			<line>
+				<reportElement x="120" y="186" width="430" height="1" uuid="93fd239d-35c4-4e75-a8e6-de95b6cc6f4a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="120" y="66" width="430" height="1" uuid="513d7f8f-0319-414a-8c71-20f993ea5ae9"/>
+			</line>
+			<line>
+				<reportElement x="550" y="65" width="1" height="122" uuid="bbed2ec7-60fc-4476-bd48-1b7dcb987309"/>
+			</line>
+			<textField>
+				<reportElement x="460" y="136" width="90" height="40" uuid="05ced4ff-dfe9-4a9c-bdbd-2209b47c71a3"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomTitulaire}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="116" width="90" height="20" uuid="b19c65f3-061c-43e8-857b-f83f43715478"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{au}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="96" width="90" height="20" uuid="31dcf5c9-c0a1-4d17-827d-c2f1ba60af7d"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{du}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="76" width="90" height="20" uuid="40f64dda-3278-4094-b9af-25b573a727a6"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateReleve}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="166" width="100" height="20" uuid="17b487f7-b466-4e7f-a50c-9f235b6aec74"/>
+				<box>
+					<pen lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Devise en MRU]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="66" width="1" height="120" uuid="91c9d8d7-4e77-4b62-93d1-3e90611a752a"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-1" width="60" height="41" uuid="5df652f8-bf18-4af3-a140-9487f97aaff4"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Date
+ Transaction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="-1" width="70" height="41" uuid="de61bc9b-1817-4b15-9be4-40f0f9445ac1"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Date
+ Comptabilisation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="-1" width="80" height="41" uuid="04f03b9a-c50f-4086-926e-99f69690e502"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Type
+ Transaction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="-1" width="90" height="41" uuid="39dbcca0-c815-461f-89ed-0c03a714c0c4"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lieu Transaction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="-1" width="60" height="41" uuid="cb565d9b-e777-473a-afff-ec6a1b49a054"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Montant
+ Transaction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="-1" width="40" height="41" uuid="2227f328-b2ec-440c-a109-4ad50663ad94"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Devise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="-1" width="47" height="41" uuid="5e1bb013-86d2-4380-9cfe-7f693785fccb"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Montant
+ Local]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="-1" width="63" height="41" uuid="1a744005-58a6-49dd-b46a-9ac15b8a456e"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Commission
+ (en MRU)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="-1" width="41" height="41" uuid="eb514865-3259-4696-8bf1-0c399010626a"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-2" width="60" height="52" uuid="013a46b6-1663-4672-92a4-a523939ee1ef">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1821f328-c364-410e-8df4-7ea0b7729081"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{dateTransaction}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="-2" width="70" height="52" uuid="c2b0798e-0968-4a00-a80a-be1558d36018">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a9b6bdbe-4c66-4ac7-9e20-26d1034556ee"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{dateComptabilisation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="-2" width="80" height="52" uuid="21fdb679-c3ff-4dc8-9ca8-fa3e2eadd79c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38693865-b006-4007-9400-3221a5a78688"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{typeTransaction}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="-2" width="90" height="52" uuid="290a5fd8-9bb9-4d06-80fb-4cdc68ae2683">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a610e0d9-46a1-4143-a6d3-c5bb068aa440"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{lieuTransaction}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="-2" width="61" height="52" uuid="a905a563-8f2f-4099-8d77-8f450f4ddc5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43e990eb-05f6-42e3-a2bc-150b238cec64"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{montantTransaction}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="-2" width="39" height="52" uuid="87616eeb-c76a-47e6-87e7-306bcd80049c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2920b403-11e0-49d1-9fde-e5490ab22bd5"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{devise}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="-2" width="47" height="52" uuid="641a3ac0-dacd-404b-abd4-55620e23e616">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01ff41b8-5a00-4959-9c67-1b04cedbc003"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{montantLocale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="447" y="-2" width="63" height="52" uuid="9013296b-4d29-46f0-93bd-9ec9df794e43">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e1eb912-23b1-408a-92b1-4f53d6824e6c"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{commission}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="-2" width="41" height="52" uuid="85af4733-1c23-49d8-96d1-ba8bb1918ed6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78228e04-c63c-4766-bb32-c1d3ef067d01"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
