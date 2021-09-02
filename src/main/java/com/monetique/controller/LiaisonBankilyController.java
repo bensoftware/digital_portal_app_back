@@ -29,10 +29,13 @@ import com.monetique.um.dto.VerificationImalResponse;
 
 @RestController
 public class LiaisonBankilyController {
+	
 	@Autowired
 	private ILiaisonBankilyService iLiaisonBankilyService;
+	
 	@Autowired
 	HttpServletResponse  httpServletResponse;
+	
 	@PreAuthorize("hasAuthority('validlb')")
 	@RequestMapping(value="/addLiaisonBankily",method= RequestMethod.POST)
 	public LiaisonBankily addLiaisonBankily(@RequestBody LiaisonBankily liaisonBankily) throws Exception {
@@ -57,6 +60,8 @@ public class LiaisonBankilyController {
 		   List<LiaisonBankily>	bankilies = iLiaisonBankilyService.getAllLiaisonBankily();
 			return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), bankilies);
 		}
+	
+	
 	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getCompteByCif",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto getCompteByCif(@RequestBody LiaisonRequest req) throws Exception {
@@ -67,15 +72,13 @@ public class LiaisonBankilyController {
 		} catch (Exception e) {
              throw new Exception(e.getMessage());
 		}
-		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res );
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res);
 	}
 	
-	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
-	@RequestMapping(value="/getVerificationImalByCif/{cif}",method=RequestMethod.GET)
-	public @ResponseBody ResponseDto getVerificationImalByCif(@PathVariable String cif) throws Exception {
-		VerificationImalResponse dto=iLiaisonBankilyService.getVerificationImalByCif(cif);
-		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
-	}
+	
+
+	
+	
 	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
 	@RequestMapping(value="/getVerificationMobileByTelephone/{phone}",method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getVerificationMobileByTelephone(@PathVariable String phone) throws Exception {
