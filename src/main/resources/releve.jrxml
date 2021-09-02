@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="releve" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bdf34dc6-0f7e-4292-9e8c-f30801547a90">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="agence" class="java.lang.String"/>
@@ -43,12 +43,12 @@
 				<textElement textAlignment="Left">
 					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[  Monsieur :]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="380" y="30" width="170" height="20" uuid="a5d53574-1591-4ef7-b96c-d775c3974815"/>
+				<reportElement x="320" y="30" width="230" height="20" uuid="a5d53574-1591-4ef7-b96c-d775c3974815"/>
 				<textElement textAlignment="Left">
-					<font fontName="Serif" size="12" isBold="true"/>
+					<font fontName="Serif" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nomTitulaire}]]></textFieldExpression>
 			</textField>
@@ -245,7 +245,7 @@
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Date
@@ -256,39 +256,39 @@
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Date
  Comptabilisation]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="-1" width="80" height="41" uuid="04f03b9a-c50f-4086-926e-99f69690e502"/>
+				<reportElement x="130" y="-1" width="70" height="41" uuid="04f03b9a-c50f-4086-926e-99f69690e502"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Type
  Transaction]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="210" y="-1" width="90" height="41" uuid="39dbcca0-c815-461f-89ed-0c03a714c0c4"/>
+				<reportElement x="200" y="-1" width="110" height="41" uuid="39dbcca0-c815-461f-89ed-0c03a714c0c4"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Lieu Transaction]]></text>
+				<text><![CDATA[ Lieu Transaction]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="-1" width="60" height="41" uuid="cb565d9b-e777-473a-afff-ec6a1b49a054"/>
+				<reportElement x="310" y="-1" width="50" height="41" uuid="cb565d9b-e777-473a-afff-ec6a1b49a054"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Montant
@@ -299,42 +299,42 @@
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Devise]]></text>
+				<text><![CDATA[ Devise]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="400" y="-1" width="47" height="41" uuid="5e1bb013-86d2-4380-9cfe-7f693785fccb"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Montant
  Local]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="447" y="-1" width="63" height="41" uuid="1a744005-58a6-49dd-b46a-9ac15b8a456e"/>
+				<reportElement x="447" y="-1" width="53" height="41" uuid="1a744005-58a6-49dd-b46a-9ac15b8a456e"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Commission
  (en MRU)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="510" y="-1" width="41" height="41" uuid="eb514865-3259-4696-8bf1-0c399010626a"/>
+				<reportElement x="500" y="-1" width="51" height="41" uuid="eb514865-3259-4696-8bf1-0c399010626a"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total]]></text>
+				<text><![CDATA[ Total]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -347,7 +347,7 @@
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" "+$F{dateTransaction}]]></textFieldExpression>
@@ -359,58 +359,58 @@
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{dateComptabilisation}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["  "+$F{dateComptabilisation}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="130" y="-2" width="80" height="52" uuid="21fdb679-c3ff-4dc8-9ca8-fa3e2eadd79c">
+				<reportElement x="130" y="-2" width="70" height="52" uuid="21fdb679-c3ff-4dc8-9ca8-fa3e2eadd79c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38693865-b006-4007-9400-3221a5a78688"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" "+$F{typeTransaction}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="210" y="-2" width="90" height="52" uuid="290a5fd8-9bb9-4d06-80fb-4cdc68ae2683">
+				<reportElement x="200" y="-2" width="110" height="52" uuid="290a5fd8-9bb9-4d06-80fb-4cdc68ae2683">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a610e0d9-46a1-4143-a6d3-c5bb068aa440"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{lieuTransaction}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{lieuTransaction}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="-2" width="61" height="52" uuid="a905a563-8f2f-4099-8d77-8f450f4ddc5c">
+				<reportElement x="310" y="-2" width="50" height="52" uuid="a905a563-8f2f-4099-8d77-8f450f4ddc5c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43e990eb-05f6-42e3-a2bc-150b238cec64"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" "+$F{montantTransaction}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="361" y="-2" width="39" height="52" uuid="87616eeb-c76a-47e6-87e7-306bcd80049c">
+				<reportElement x="360" y="-2" width="40" height="52" uuid="87616eeb-c76a-47e6-87e7-306bcd80049c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2920b403-11e0-49d1-9fde-e5490ab22bd5"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{devise}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{devise}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="400" y="-2" width="47" height="52" uuid="641a3ac0-dacd-404b-abd4-55620e23e616">
@@ -419,31 +419,31 @@
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" "+$F{montantLocale}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="447" y="-2" width="63" height="52" uuid="9013296b-4d29-46f0-93bd-9ec9df794e43">
+				<reportElement x="447" y="-2" width="53" height="52" uuid="9013296b-4d29-46f0-93bd-9ec9df794e43">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e1eb912-23b1-408a-92b1-4f53d6824e6c"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" "+$F{commission}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="510" y="-2" width="41" height="52" uuid="85af4733-1c23-49d8-96d1-ba8bb1918ed6">
+				<reportElement x="500" y="-2" width="51" height="52" uuid="85af4733-1c23-49d8-96d1-ba8bb1918ed6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78228e04-c63c-4766-bb32-c1d3ef067d01"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" "+$F{total}]]></textFieldExpression>
