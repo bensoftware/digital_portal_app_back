@@ -459,9 +459,14 @@ public class UserServiceImpl implements IUserService{
 	}
 	@Override
 	public Set<Groupe> getGroupeToUser(String username) throws Exception {
-		User userOp=userRepository.findByuserName(username);	
+		User userOp=userRepository.findByuserNameIgnoreCase(username);	
 		   		Set<Groupe> listGroupe=userOp.getGroupes();	
 		   		return listGroupe;
+	}
+
+	@Override
+	public User getUserByUsername(String username) throws Exception {
+		return userRepository.findByuserNameIgnoreCase(username);
 	}
 
 }

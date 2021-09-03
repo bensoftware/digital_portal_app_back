@@ -9,4 +9,5 @@ public interface IGroupeService {
 	public List<Groupe> getAllGroupe();
 	public List<Groupe> getAllGroupeActive();
 	public int changerEtatGroup(long id,boolean active);
+	public Groupe getGroupeByLibelle(String libelle);
 }

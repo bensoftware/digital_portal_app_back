@@ -13,5 +13,7 @@ public interface GroupeRepository extends JpaRepository<Groupe, Long>{
 	public List<Groupe> getAllGroupeActive();
 	@Modifying
 	@Query("update Groupe g set g.active=?2 where g.id=?1")
-	public int changerEtatGroup(long id, boolean active);	
+	public int changerEtatGroup(long id, boolean active);
+	@Query("select g from Groupe g where g.libelle=?1")
+	public Groupe getGroupeByLibelle(String libelle);
 }

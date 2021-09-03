@@ -19,5 +19,6 @@ public class Groupe {
 	private long id;
 	@Column(unique=true)
 	private String libelle;
+	private String nomComplet;
 	private boolean active=true;
 }
