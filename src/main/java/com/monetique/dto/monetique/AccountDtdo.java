@@ -1,20 +1,24 @@
 package com.monetique.dto.monetique;
 
+import java.util.List;
 import lombok.Data;
 
 @Data
 public class AccountDtdo {
+	
 	public String additionalReference;
 	public String agence;
 	public String devise;
 	public String glCode;
 	public String cif;
 	public String slNo;
-	public String num;
+	public String longNameEng;
 	
+	//Type of card or product
+	public List<CardDto> ListLinkedToAccount;
 	
 	public AccountDtdo(String additionalReference, String agence, String devise, String glCode, String cif, String slNo,
-			String num) {
+			String longNameEng) {
 		
 		this.additionalReference = additionalReference;
 		this.agence = agence;
@@ -22,13 +26,11 @@ public class AccountDtdo {
 		this.glCode = glCode;
 		this.cif = cif;
 		this.slNo = slNo;
-		this.num = num;
+		this.longNameEng = longNameEng;
 	}
-
 
 	public AccountDtdo() {
 		super();
 	}
-	
 	
 }

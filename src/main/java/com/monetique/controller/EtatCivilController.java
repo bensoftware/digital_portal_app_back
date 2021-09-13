@@ -18,8 +18,10 @@ import com.monetique.um.dto.ResponseDto;
 
 @RestController
 public class EtatCivilController {
+	
 	@Autowired
 	private EtatCivilService etatCivilService;
+	
 	@Autowired
 	HttpServletResponse  httpServletResponse;
 

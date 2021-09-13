@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.monetique.dto.LiaisonIncomplet;
+import com.monetique.dto.monetique.ClientCifDto;
 import com.monetique.security.service.AppUserData;
 import com.monetique.service.EtatCivilService;
 import com.monetique.service.ILiaisonBankilyService;
 import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
+import com.monetique.service.MonetiqueService;
 import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.service.IActionService;
 import com.monetique.um.service.IRuleService;
@@ -87,6 +89,11 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	MajService majService;
 	
+	@Autowired
+	MonetiqueService monetiqueService;
+	
+	
+	
 	@Override
 	public void run(String... args) throws Exception {
 	
@@ -100,6 +107,24 @@ public class ClearingAppApplication implements CommandLineRunner{
 //		req.setNni("6086352883");
 //		req.setCompte("00018000022100054980191");
 //		bankilyService.deleteLiaisonIncompleteMobile(req);
+		
+	     // ClientCifDto cifDto=monetiqueService.getClientDataByCif("453");
+		//System.err.println(cifDto);
+		
+
+
+//		
+//		  ClientCifDto clientCifDto=monetiqueService.getClientDataByCif("453");
+//		  
+//		  clientCifDto.setEmail("benjudicaelle@gmail.com");
+//		  clientCifDto.setTelephone("37818077");
+//		  
+//		  clientCifDto.setTypeCardDtos(clientCifDto.getListTypeCardDtos().get(0));
+//		  clientCifDto.setAccountDtdos(clientCifDto.getListAccountDtdos().get(0));
+//		  
+//		   clientCifDto=monetiqueService.createCarte(clientCifDto);
+//		   System.err.println("OK : "  +  clientCifDto);
+		 
 	}
 	
 	
