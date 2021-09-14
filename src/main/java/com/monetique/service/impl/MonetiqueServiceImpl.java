@@ -3,10 +3,15 @@ package com.monetique.service.impl;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.monetique.dto.RequestDto;
 import com.monetique.dto.monetique.ClientCifDto;
 import com.monetique.dto.monetique.ResponseDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
@@ -56,12 +61,15 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 //	
 	@Override
 	public ResponseDto getClientDataByCif(String cif) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		ResponseDto  responseDto=new ResponseDto();;
-		
+		HttpHeaders headers= new HttpHeaders();
+		headers.set("authorization", "BpmMonetique");
+		HttpEntity<String> entete = new HttpEntity<String>("parameters", headers);
 		try {
 			 String url= urlMonetiqueService+"/getClientDataBy/"+cif;
-			 ResponseEntity<ResponseDto> response=restTemplate.getForEntity(url,ResponseDto.class);
+			 
+	            ResponseEntity<ResponseDto> response = restTemplate.exchange(url, HttpMethod.GET, entete, ResponseDto.class);
 			 
 			 if(response.getStatusCode().equals(HttpStatus.OK)) {
 				 if(response.getBody()==null) {
@@ -125,6 +133,7 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 		// TODO Auto-generated method stub
 		// ClientCifDto clientCifDtoRturn;
 		ResponseDto  responseDto=new ResponseDto();
+		
 		if(clientCifDto ==null) {
 			 responseDto.setErrorCode(1);
 			 responseDto.setErrorMessage("clientCifDto null");
@@ -143,13 +152,22 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 		
 		String username=claims.getSubject();
 		clientCifDto.setPUser(username);
+		clientCifDto.setApikey("BpmMonetique");
+	
+		HttpHeaders headers= new HttpHeaders();
+		headers.set("authorization", "BpmMonetique");
+
+		HttpEntity<ClientCifDto> requete = new HttpEntity<>(clientCifDto,headers);
+				
 		
+	
 		try {
 			 String url= urlMonetiqueService+"/createCard";
 			 
 			 if(clientCifDto !=null);
-			 ResponseEntity<ResponseDto> response=restTemplate.postForEntity(url,clientCifDto,ResponseDto.class);
-			///asuivvre
+				ResponseEntity<ResponseDto> response
+				  =restTemplate.postForEntity(url, requete, ResponseDto.class);
+			
 			 if(response.getStatusCode().equals(HttpStatus.OK)) {
 				 if(response.getBody()==null) {
 					 responseDto.setErrorCode(1);
