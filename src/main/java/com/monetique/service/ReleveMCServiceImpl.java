@@ -1,7 +1,9 @@
 package com.monetique.service;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.monetique.dto.Carte;
 import com.monetique.dto.RequestReleveDto;
+import com.monetique.dto.TransactionMc;
 
 import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -56,14 +59,24 @@ public class ReleveMCServiceImpl implements ReleveMCService{
 		  
 		  String path = resourceLoader.getResource("classpath:releve.jrxml").getURI().getPath();
 		  JasperReport jasperReport = JasperCompileManager.compileReport(path);
-		  JRBeanCollectionDataSource dataSource=new JRBeanCollectionDataSource(res.getMonetiqueClasses());
-		  JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,res.getMap(), dataSource);
+		  List<TransactionMc> list1=new ArrayList<>();
+		  list1.add(new TransactionMc());
+		  list1.addAll(res.getMonetiqueClasses());
+		  JRBeanCollectionDataSource dataSource=new JRBeanCollectionDataSource(list1);
+		  Map<String,Object> mapR= res.getMap();
+		  mapR.put("releves",dataSource);
+		  JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,mapR, dataSource);
 
 		 		  
 	   	  String pathT = resourceLoader.getResource("classpath:transaction.jrxml").getURI().getPath();
 		  JasperReport jasperReportT = JasperCompileManager.compileReport(pathT);
-		  JRBeanCollectionDataSource dataSourceT=new JRBeanCollectionDataSource(res.getMonetiqueB());
-		  JasperPrint jasperPrintT=JasperFillManager.fillReport(jasperReportT,res.getMap(), dataSourceT);
+		  List<TransactionMc> list2=new ArrayList<>();
+		  list2.add(new TransactionMc());
+		  list2.addAll(res.getMonetiqueB());
+		  JRBeanCollectionDataSource dataSourceT=new JRBeanCollectionDataSource(list2);
+		  Map<String,Object> map2= res.getMap();
+		  map2.put("transaction",dataSourceT);
+		  JasperPrint jasperPrintT=JasperFillManager.fillReport(jasperReportT,map2, dataSourceT);
 		  List<JRPrintPage> pages = jasperPrintT .getPages();
 		  for (int j = 0; j < pages.size(); j++) {
 		      JRPrintPage object = (JRPrintPage)pages.get(j);
