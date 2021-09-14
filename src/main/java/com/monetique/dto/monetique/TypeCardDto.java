@@ -6,6 +6,7 @@ import lombok.Data;
 public class TypeCardDto {
 	
 	public String id ;
+	public String code ;
 	public String libelle;
 	
 

@@ -9,8 +9,6 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
-
-import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.dto.monetique.ClientCifDto;
 import com.monetique.security.service.AppUserData;
 import com.monetique.service.EtatCivilService;
@@ -97,7 +95,7 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 	
-		LiaisonIncomplet req=new LiaisonIncomplet();
+	//	LiaisonIncomplet req=new LiaisonIncomplet();
 //		req.setCif("453");
 //		req.setTelephone("34212133");
 //		req.setNni("1842979922");
@@ -111,19 +109,17 @@ public class ClearingAppApplication implements CommandLineRunner{
 	     // ClientCifDto cifDto=monetiqueService.getClientDataByCif("453");
 		//System.err.println(cifDto);
 		
-
-
-//		
-//		  ClientCifDto clientCifDto=monetiqueService.getClientDataByCif("453");
-//		  
-//		  clientCifDto.setEmail("benjudicaelle@gmail.com");
-//		  clientCifDto.setTelephone("37818077");
-//		  
-//		  clientCifDto.setTypeCardDtos(clientCifDto.getListTypeCardDtos().get(0));
-//		  clientCifDto.setAccountDtdos(clientCifDto.getListAccountDtdos().get(0));
-//		  
-//		   clientCifDto=monetiqueService.createCarte(clientCifDto);
-//		   System.err.println("OK : "  +  clientCifDto);
+			/*
+			 * ClientCifDto clientCifDto=monetiqueService.getClientDataByCif("453");
+			 * 
+			 * clientCifDto.setEmail("benjudicaelle@gmail.com");
+			 * clientCifDto.setTelephone("37818077");
+			 * clientCifDto.setTypeCardDtos(clientCifDto.getListTypeCardDtos().get(0));
+			 * clientCifDto.setAccountDtdos(clientCifDto.getListAccountDtdos().get(0));
+			 * 
+			 * boolean b=monetiqueService.createCarte(clientCifDto);
+			 * System.err.println("OK : " + b);
+			 */
 		 
 	}
 	

@@ -33,35 +33,28 @@ public class MonetiqueController {
 	@RequestMapping(value="/getClientDataByCif/{cif}", produces ={"application/json"},method=RequestMethod.GET)
 	public @ResponseBody ResponseDto getClientDataByCif (@PathVariable String cif) throws Exception {
 		//test cif validations format
-		ClientCifDto res=null;
-		try {
+		com.monetique.dto.monetique.ResponseDto res=null;
+
 			res=monetiqueService.getClientDataByCif(cif);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res);
-	}
-	
-	
-	@PreAuthorize("hasAuthority('createcardmon')")
-	@RequestMapping(value="/test",method=RequestMethod.POST)
-	public @ResponseBody ResponseDto test(@RequestBody ClientCifDto clientCifDto) throws Exception {
-		//test cif validations format
-		ClientCifDto res=null;
-		try {
-			res=monetiqueService.getClientDataByCif(clientCifDto.getCif());
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
 		
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res);
 	}
 	
 	
+
+	
 	@PreAuthorize("hasAuthority('createcardmon')")
 	@RequestMapping(value="/createCarte",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto createCarte(@RequestBody ClientCifDto clientCifDto) throws Exception {
-		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),monetiqueService.createCarte(clientCifDto));
+	
+		System.err.println(""+clientCifDto.getAdresse());
+		com.monetique.dto.monetique.ResponseDto res=null;
+		try {
+			res=monetiqueService.createCarte(clientCifDto);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res);
 	}
 	
 }

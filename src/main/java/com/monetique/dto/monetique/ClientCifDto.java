@@ -23,8 +23,8 @@ public class ClientCifDto implements Serializable {
 	private String dateNaissance;
 	private String lieuNaissance;
 	private String pUser;
-	private TypeCardDto typeCardDtos; // choix de la carte
-	private AccountDtdo accountDtdos; // choix du compte 
+	private TypeCardDto typeCardDto; // choix de la carte
+	private AccountDtdo accountDtdo; // choix du compte 
     //Owned by the client
 	private List<CardDto> listcardDtos;
 	private List<AccountDtdo> listAccountDtdos; 
