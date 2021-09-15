@@ -255,6 +255,17 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="50"/>
+		<band height="50">
+			<textField>
+				<reportElement x="400" y="19" width="90" height="30" uuid="a88533dc-95ec-4064-915a-340b6adf29f3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="490" y="19" width="60" height="30" uuid="062c2369-642d-4400-b7c4-32aa244fe019"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" / " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 </jasperReport>

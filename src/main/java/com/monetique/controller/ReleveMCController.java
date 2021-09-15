@@ -3,6 +3,8 @@ package com.monetique.controller;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,11 @@ public class ReleveMCController {
 	public @ResponseBody void generateInfoReleve(@PathVariable String pan) throws Exception {
 		
 		releveMCService.generateInfoReleve(pan,httpServletResponse);
+	}
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
+	@RequestMapping(value="/generateRapport/{pan}/{dateDu}/{dateAu}",method=RequestMethod.GET)
+	public @ResponseBody void generateInfoBetwwenDateReleve(@PathVariable String pan,@PathVariable long dateDu,@PathVariable long dateAu) throws Exception {
+		releveMCService.generateInfoBetwwenDateReleve(pan,dateDu,dateAu,httpServletResponse);
 	}
 
 }
