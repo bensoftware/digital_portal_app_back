@@ -2,6 +2,48 @@
 <!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ead6535-71a1-4936-b17f-f3f454206165">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#D7D9DB">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="TransactionDataset" uuid="0c30b289-0417-446c-9bdc-f7ee7c14fd7c">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="dateTransaction" class="java.lang.String"/>
+		<field name="typeTransaction" class="java.lang.String"/>
+		<field name="lieuTransaction" class="java.lang.String"/>
+		<field name="dateComptabilisation" class="java.lang.String"/>
+		<field name="devise" class="java.lang.String"/>
+		<field name="montantTransaction" class="java.lang.String"/>
+		<field name="commission" class="java.lang.String"/>
+		<field name="montantLocale" class="java.lang.String"/>
+		<field name="total" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="transaction" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -19,7 +61,7 @@
 	<title>
 		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="80" y="0" width="400" height="30" uuid="09e03631-2a4b-4737-9cba-656e0d2502e1"/>
+				<reportElement x="80" y="0" width="400" height="20" uuid="09e03631-2a4b-4737-9cba-656e0d2502e1"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
@@ -27,193 +69,203 @@
 			</staticText>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="31" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="70" height="30" uuid="45131e70-e705-4b6a-a592-e3c1346de6bc"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ Date
- Transaction]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="0" width="70" height="30" uuid="de687f5a-80f5-40f1-b496-5c7d8297fa28"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ Type
- Transaction]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="140" y="0" width="120" height="30" uuid="37701151-61fa-4bd7-a803-2f9c59b5e078"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Lieu Transaction]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="260" y="0" width="70" height="30" uuid="fd01f833-a11a-4a09-b533-6252a817464f"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ Montant
- Transaction]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="330" y="0" width="40" height="30" uuid="5d7d1a35-d31f-4b28-9356-bdbf1eb6c6e5"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Devise]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="370" y="0" width="50" height="30" uuid="ba2d52cf-7875-49d1-a1b9-9ed8234a4c93"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ Montant
- Local]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="420" y="0" width="70" height="30" uuid="22a297cf-182e-401c-a6b3-5435852e6f2f"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ Commission
- (en MRU)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="490" y="0" width="60" height="30" uuid="3bedd2e1-af58-41a1-95ac-c439175df82b"/>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
 	<detail>
-		<band height="50" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="70" height="50" uuid="b530aca4-d623-4949-b66c-762d66d982c0">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36e627f1-1cae-405d-b327-950e7ee678b4"/>
+		<band height="86" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="10" width="550" height="70" uuid="2917473c-0d16-4ec4-ba0f-96de6e752461">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
 				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{dateTransaction}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="70" y="0" width="70" height="50" uuid="4fbad8de-411e-4b7f-a240-748f09657abd">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f6b6278-a9f0-46c3-aba4-6cb5d49b8087"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{typeTransaction}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="140" y="0" width="120" height="50" uuid="bab30420-d946-495f-a92c-4737279d1077">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd792c70-e94f-42ae-883b-671ded525d9a"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{lieuTransaction}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="260" y="0" width="70" height="50" uuid="826824ad-e1de-497f-a59d-95225f217d0b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34d8330a-b0c2-4118-8780-9f3d87a95f89"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{montantTransaction}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="330" y="0" width="40" height="50" uuid="84881859-39de-46cd-92c0-0c38d0c72ffc">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18d0ab7b-6c76-4fad-9424-7d5fc1cf452c"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{devise}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="370" y="0" width="50" height="50" uuid="a83f8d2f-bcd4-47d4-bd53-b17aedc879aa">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a8ed54f-e102-4467-bf2b-3f6e07b137b2"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{montantLocale}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="420" y="0" width="70" height="50" uuid="bd3896ab-e503-4d7e-a827-bb8b5ed2a21b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5158c005-09d2-4d3e-ac99-58d646b4177c"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{commission}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="490" y="0" width="60" height="50" uuid="37b3985d-5d8c-4ab2-910d-f6160f1505d6">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0fa0e83a-458f-4e67-94b5-ebf23b23aff3"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement>
-					<font fontName="SansSerif" size="9" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{total}]]></textFieldExpression>
-			</textField>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="TransactionDataset" uuid="1e446ac8-d857-4a83-8dcc-13db2713854c">
+						<dataSourceExpression><![CDATA[$P{transaction}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="80" uuid="ef583a1a-69dd-490d-8033-b9db5e0dc723">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="4c83103d-024a-4efe-95ec-f4f8f1aa65ab"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Date transaction]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="c1126400-cb9f-472a-b60e-c5765364a741"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dateTransaction}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="8ccc0df2-9dca-4f8c-afef-8a4642cfcaca">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="8fcd9e24-4a5c-4566-acbb-d627edd6e63f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Type transaction]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="090afda9-30e6-46e4-8aed-486d7997f1ba"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{typeTransaction}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="2a4dee0c-dc23-44c7-934e-b16db88264b2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="7ec98402-8d68-46ce-9a7e-228717b86945"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Lieu transaction]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="e03f9593-f7b8-43b5-a9f2-0ddbcb1343c5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lieuTransaction}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="23cf2e1e-f8d0-42a6-a7c3-f8797bf39ce5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="42cdee18-cdf0-4755-b4a6-11324188747f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Montant transaction]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="30" uuid="ac5025dc-c54a-4799-9eef-bbe219d3115a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{montantTransaction}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="defea725-a1a5-406c-842b-fe247f37605b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" uuid="38119ca9-d579-4e9b-977e-c4945d04a5f9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Devise]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="32aaae87-c0e4-45a7-b14d-c6e8735ae9aa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{devise}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="c6b8931a-1cf0-4edf-a100-e889b7d96f08">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" uuid="390dbf7f-6e4d-4caa-bea6-3e44ba2cc742"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Montant local]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="30" uuid="33ccdda7-d180-4a01-a7e3-7e96506a8c9b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{montantLocale}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="b181bd3f-2f66-4f4c-8a25-cc6222db3608">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="30" uuid="cd896387-c5ca-437a-a0e1-8cf01f35cfdd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Commission]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="3c79fa93-e88c-44f4-bdce-01f2b024a63d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="6e0d1750-9328-40c1-acd4-5a625823edf0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" uuid="bf80a26d-c0db-46f3-b694-be29e41c4352"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Candara" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="dab5d423-650f-4303-9677-efe2811cb4a8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="400" y="19" width="90" height="30" uuid="a88533dc-95ec-4064-915a-340b6adf29f3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="490" y="19" width="60" height="30" uuid="062c2369-642d-4400-b7c4-32aa244fe019"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" / " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>
