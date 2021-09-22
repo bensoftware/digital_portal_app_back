@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
@@ -36,6 +37,8 @@ import com.monetique.repositories.ParametrageRepository;
 @CrossOrigin("*")
 public class UploadController {
 
+	@Value("${url.releve_personnalise}")
+	String urlReleve;
 	
 	@Autowired
 	ParametrageRepository parametrageRepository;
@@ -47,7 +50,7 @@ public class UploadController {
     @GetMapping("/generationPdf/{fileName}")
     public void generationPdf(HttpServletResponse resonse,@PathVariable String fileName) throws IOException {
         org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-        File file = new File(Paths.get(System.getProperty("user.home")) + "/releve/" + fileName);
+        File file = new File(Paths.get(System.getProperty("user.home")) + urlReleve + fileName);
         resonse.setContentType(mediaType.getType());
         resonse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName());
         resonse.setContentLength((int) file.length());
