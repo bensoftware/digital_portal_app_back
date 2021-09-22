@@ -1,5 +1,6 @@
 package com.monetique.service;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.monetique.dto.Carte;
@@ -33,9 +35,16 @@ public class ReleveMCServiceImpl implements ReleveMCService{
 	private ResourceLoader resourceLoader;
     @Value("${host.urlVerifReleveMC}")
 	String urlVerifReleveMC;
+    @Value("${url.file.releve}")
+	String urlReleve;
+	
+	@Value("${url.file.transaction}")
+	String urlTransaction;
 	@Autowired
     RestTemplate restTemplate;
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	
+
 	@Override
 	public Carte getInfo(String pan) {
 		Carte res=null;
@@ -94,6 +103,7 @@ public class ReleveMCServiceImpl implements ReleveMCService{
 	  out.flush();
 	return jasperPrint;	
 	}
+	
 	@Override
 	public JasperPrint generateInfoBetwwenDateReleve(String pan, long dateDu, long dateAu,
 			HttpServletResponse response) throws Exception {
@@ -106,9 +116,8 @@ public class ReleveMCServiceImpl implements ReleveMCService{
 	      response.setContentType("application/x-download");
 	   	  response.setHeader("Content-Disposition", String.format("attachment; filename=\"resultats.pdf\""));
 
-		  
-		  String path = resourceLoader.getResource("classpath:releve.jrxml").getURI().getPath();
-		  JasperReport jasperReport = JasperCompileManager.compileReport(path);
+	   	  File fileC=ResourceUtils.getFile(urlReleve);
+		  JasperReport jasperReport = JasperCompileManager.compileReport(fileC.getAbsolutePath());
 		  List<TransactionMc> list1=new ArrayList<>();
 		  list1.add(new TransactionMc());
 		  list1.addAll(res.getMonetiqueClasses());
@@ -117,9 +126,8 @@ public class ReleveMCServiceImpl implements ReleveMCService{
 		  mapR.put("releves",dataSource);
 		  JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,mapR, dataSource);
 
-		 		  
-	   	  String pathT = resourceLoader.getResource("classpath:transaction.jrxml").getURI().getPath();
-		  JasperReport jasperReportT = JasperCompileManager.compileReport(pathT);
+		  File fileT=ResourceUtils.getFile(urlTransaction);
+		  JasperReport jasperReportT = JasperCompileManager.compileReport(fileT.getAbsolutePath());
 		  List<TransactionMc> list2=new ArrayList<>();
 		  list2.add(new TransactionMc());
 		  list2.addAll(res.getMonetiqueB());
