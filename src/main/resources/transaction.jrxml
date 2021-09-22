@@ -88,7 +88,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="30" uuid="4c83103d-024a-4efe-95ec-f4f8f1aa65ab"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Date transaction]]></text>
 							</staticText>
@@ -109,7 +109,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="30" uuid="8fcd9e24-4a5c-4566-acbb-d627edd6e63f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Type transaction]]></text>
 							</staticText>
@@ -130,7 +130,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="30" uuid="7ec98402-8d68-46ce-9a7e-228717b86945"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Lieu transaction]]></text>
 							</staticText>
@@ -151,7 +151,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="42cdee18-cdf0-4755-b4a6-11324188747f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Montant transaction]]></text>
 							</staticText>
@@ -172,7 +172,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="40" height="30" uuid="38119ca9-d579-4e9b-977e-c4945d04a5f9"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Devise]]></text>
 							</staticText>
@@ -193,7 +193,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="70" height="30" uuid="390dbf7f-6e4d-4caa-bea6-3e44ba2cc742"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Montant local]]></text>
 							</staticText>
@@ -214,7 +214,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="60" height="30" uuid="cd896387-c5ca-437a-a0e1-8cf01f35cfdd"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Commission]]></text>
 							</staticText>
@@ -235,7 +235,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="40" height="30" uuid="bf80a26d-c0db-46f3-b694-be29e41c4352"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Candara" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Total]]></text>
 							</staticText>

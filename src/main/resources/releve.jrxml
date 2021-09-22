@@ -207,7 +207,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
-				<imageExpression><![CDATA["E:/Java Project/digital_portal_app/src/main/resources/bpm.png"]]></imageExpression>
+				<imageExpression><![CDATA["bpm.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="10" y="193" width="60" height="27" uuid="1e24c7fc-4268-4099-9a56-a763602dae23"/>
@@ -289,7 +289,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="30" uuid="13d54864-2710-46ef-8bea-f01975315d7c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Date Transaction]]></text>
 							</staticText>
@@ -298,7 +298,7 @@
 							<textField>
 								<reportElement x="0" y="0" width="50" height="30" uuid="e0febfbf-01fc-4df4-bbe9-12a1f406a3c6"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{dateTransaction}]]></textFieldExpression>
 							</textField>
@@ -310,7 +310,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="70" height="30" uuid="30affcdd-6eea-4ec8-9ada-43051a3f90d1"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Date Comptabilisation]]></text>
 							</staticText>
@@ -319,7 +319,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="70" height="30" uuid="5a2a2f61-45a5-41e9-bd86-be3b651862b7"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{dateComptabilisation}]]></textFieldExpression>
 							</textField>
@@ -331,7 +331,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="30" uuid="30fb1c2f-bc13-4463-a252-f980c361de08"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Type Transaction]]></text>
 							</staticText>
@@ -340,7 +340,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="50" height="30" uuid="fee12f1c-674d-41ae-afd1-49beeafa835f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{typeTransaction}]]></textFieldExpression>
 							</textField>
@@ -352,7 +352,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="110" height="30" uuid="fe6a8436-6a89-4bcd-a222-29297338d085"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Lieu Transaction]]></text>
 							</staticText>
@@ -361,7 +361,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="110" height="30" uuid="b5f85220-5e7c-4d6b-b900-eb2907b69fac"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{lieuTransaction}]]></textFieldExpression>
 							</textField>
@@ -373,7 +373,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="70" height="30" uuid="c5c3cf04-2b29-4f9a-9a4b-09f829c3cf27"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Montant Transaction]]></text>
 							</staticText>
@@ -382,7 +382,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="70" height="30" uuid="284a67f6-86c5-42fe-99a5-be74eda2b251"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{montantTransaction}]]></textFieldExpression>
 							</textField>
@@ -394,7 +394,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="30" uuid="ae992977-1488-4d4d-9601-e156339bf3d5"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Devise]]></text>
 							</staticText>
@@ -403,7 +403,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="50" height="30" uuid="98ca436e-7af2-40da-ab7c-377511b2fd0d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{devise}]]></textFieldExpression>
 							</textField>
@@ -415,7 +415,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="60" height="30" uuid="8c443186-9e66-4f29-8cda-c1688a08e2e9"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Montant Local]]></text>
 							</staticText>
@@ -424,7 +424,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="60" height="30" uuid="e18b9e6f-06b7-466e-ba25-655889c93cc0"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{montantLocale}]]></textFieldExpression>
 							</textField>
@@ -436,7 +436,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="30" uuid="e82903f5-dd01-4a21-a684-d935414d590d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Commission]]></text>
 							</staticText>
@@ -445,7 +445,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="50" height="30" uuid="61cf7016-be28-4a0c-8af1-d68414456166"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
 							</textField>
@@ -457,7 +457,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="40" height="30" uuid="d9c5b692-0492-4581-b32e-ce46c4a87062"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="8" isBold="true"/>
+									<font fontName="Serif" size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Total]]></text>
 							</staticText>
@@ -466,7 +466,7 @@
 							<textField textAdjust="StretchHeight">
 								<reportElement x="0" y="0" width="40" height="30" uuid="29f76b33-b5f7-47b0-8ed9-a33a4cf47772"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="Serif" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 							</textField>
