@@ -106,8 +106,8 @@ public class ClearingAppApplication implements CommandLineRunner{
 //		req.setCompte("00018000022100054980191");
 //		bankilyService.deleteLiaisonIncompleteMobile(req);
 		
-	     // ClientCifDto cifDto=monetiqueService.getClientDataByCif("453");
-		//System.err.println(cifDto);
+	    
+	//	System.err.println("Informations du clienCif : " + monetiqueService.getClientDataByCif("453"));
 		
 			/*
 			 * ClientCifDto clientCifDto=monetiqueService.getClientDataByCif("453");
