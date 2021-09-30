@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.monetique</groupId>
-	<artifactId>ClearingApp</artifactId>
+	<artifactId>ClearingAppApplication</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ClearingApp</name>
+	<name>ClearingAppApplication</name>
 	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 
@@ -131,6 +131,13 @@
     <artifactId>security</artifactId>
     <version>1.0.0</version>
 </dependency> 
+
+	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 		
 	</dependencies>
 

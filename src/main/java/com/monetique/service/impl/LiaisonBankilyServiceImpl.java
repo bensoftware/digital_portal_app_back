@@ -52,7 +52,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 @Service
 public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
-    @Value("${host.liaison.n1}")
+
+	@Value("${host.liaison.n1}")
 	String urlLiaison;
 
     @Value("${host.liaison.n2}")
