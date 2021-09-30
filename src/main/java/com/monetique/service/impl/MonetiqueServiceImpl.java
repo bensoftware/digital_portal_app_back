@@ -1,6 +1,9 @@
 package com.monetique.service.impl;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -11,11 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.monetique.dto.RequestDto;
 import com.monetique.dto.monetique.ClientCifDto;
 import com.monetique.dto.monetique.ResponseDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.MonetiqueService;
+import com.monetique.um.dao.entities.OtpLog;
+import com.monetique.um.dao.repositories.OtpLogRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,6 +35,10 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 	
 	@Autowired
 	HttpServletRequest request;
+	
+	@Autowired
+	OtpLogRepository otpLogRepository;
+	
 	
 //	@Override
 //	public ClientCifDto getClientDataByCif(String cif) throws Exception {
@@ -175,6 +183,15 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 					
 				 }
 				 responseDto= response.getBody();
+				 
+				 // log
+			   		OtpLog otpLog=new OtpLog();
+			   		otpLog.setDate(new Date());
+					otpLog.setUserName(username);
+					otpLog.setHost(request.getRemoteHost());
+					otpLog.setType("CREATION CARTE DEBIT");
+
+					otpLogRepository.save(otpLog);
 		
 			 }else {
 				 responseDto.setErrorCode(1);
