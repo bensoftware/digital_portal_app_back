@@ -1,6 +1,9 @@
 package com.monetique.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -147,6 +150,17 @@ public class LiaisonBankilyController {
 	public @ResponseBody ResponseDto deleteLiaisonIncompleteMobile(@RequestBody LiaisonIncomplet incomplet) throws Exception {
 		iLiaisonBankilyService.deleteLiaisonIncompleteMobile(incomplet);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+	}
+
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
+	@RequestMapping(value = "/uploadFilePdf/{id}" , method = RequestMethod.POST)
+	public void uploadFile(HttpServletRequest request,@PathVariable long id) throws Exception {
+		iLiaisonBankilyService.uploadFile(request,id);
+	}
+
+    @GetMapping("/generationLiaisonPdf/{fileName}")
+	public void generationPdf(HttpServletResponse resonse,@PathVariable String fileName) throws IOException {
+		iLiaisonBankilyService.generationPdf(resonse, fileName);
 	}
 
 }

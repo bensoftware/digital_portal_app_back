@@ -1,21 +1,35 @@
 package com.monetique.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.monetique.dto.AddLiaisonObject;
 import com.monetique.dto.Approbation;
@@ -30,6 +44,7 @@ import com.monetique.dto.ListLiaisonResponse;
 import com.monetique.dto.VerificationMobileRequest;
 import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.helper.CorrespondanteCodeHelper;
+import com.monetique.helper.MediaTypeUtils;
 import com.monetique.repositories.AlertRepository;
 import com.monetique.repositories.ExceptionMessageRepository;
 import com.monetique.security.securityDispatcher.SecurityConstants;
@@ -51,6 +66,7 @@ import com.monetique.um.dto.VerificationImalResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 @Service
+@Transactional
 public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 
 	@Value("${host.liaison.n1}")
@@ -61,7 +77,8 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
     
     @Value("${host.bankilydb}")
 	String urlVerifMobile;
-    
+	@Value("${host.urlDocPdf}")
+	String urlDocPdf;
     @Autowired
     RestTemplate restTemplate;
 	@Autowired
@@ -81,6 +98,8 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Autowired
 	OtpLogRepository otpLogRepository;
 	
+    private ServletContext servletContext;
+    
 	@Override
 	public LiaisonBankily addLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
 		String jwt=request.getHeader(SecurityConstants.HEADER_STRING);
@@ -406,6 +425,63 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		if(!response.getStatusCode().equals(HttpStatus.OK)) {
 			response.getStatusCodeValue();
 		}
+	}
+
+	@Override
+	public void uploadFile(HttpServletRequest request,long id) throws Exception {
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		MultipartHttpServletRequest mRequest;
+	    mRequest = (MultipartHttpServletRequest) request;
+	    LiaisonBankily bankily=liaisonBankilyRepository.findById(id).get();
+		  String directory =urlDocPdf;		   
+		    String lien="";
+		   
+		    String filepath = Paths.get(directory,lien).toString();
+		    System.out.println("nom : "+filepath);
+	   
+		    Iterator<String> itr = mRequest.getFileNames();
+		    
+		    if (itr.hasNext()) {
+		    
+		    	MultipartFile mFile = mRequest.getFile(itr.next());
+	        
+		    	String fileName = "enregistrement_"+bankily.getCif()+"_"+bankily.getTelephone()+"_"+bankily.getNni()+"_"+formatter.format(new Date())+".pdf";
+		    	File file = new File(directory+fileName);
+		    	updateDocLiaison(fileName, id);
+			    try {
+					FileCopyUtils.copy(mFile.getBytes(),file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+	    	    }
+		
+	}
+
+	@Override
+	public void updateDocLiaison(String doc, long id) {
+		liaisonBankilyRepository.updateDocLiaison(doc, id);		
+	}
+
+	@Override
+	public void generationPdf(HttpServletResponse resonse, String fileName) throws IOException {
+		String directory =urlDocPdf;
+		org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+        File file = new File(Paths.get(directory + fileName).toString());
+        //String filepath = Paths.get(directory,lien).toString();
+        resonse.setContentType(mediaType.getType());
+        resonse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName());
+        resonse.setContentLength((int) file.length());
+        BufferedInputStream inStream = new BufferedInputStream(new FileInputStream(file));
+        BufferedOutputStream outStream = new BufferedOutputStream(resonse.getOutputStream());
+        byte[] buffer = new byte[1024];
+        int bytesRead = 0;
+        while ((bytesRead = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, bytesRead);
+        }
+        outStream.flush();
+        inStream.close();
 	}
 	
 //	@Override

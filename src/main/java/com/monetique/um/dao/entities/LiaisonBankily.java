@@ -38,5 +38,6 @@ public class LiaisonBankily {
 	private Date dateApprobation;
 	private Date dateRejet;
 	private String imageUrl;
+	private String document;
 	
 }

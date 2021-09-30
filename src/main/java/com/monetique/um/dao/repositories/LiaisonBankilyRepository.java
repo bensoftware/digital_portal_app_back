@@ -2,6 +2,7 @@ package com.monetique.um.dao.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import com.monetique.um.dao.entities.LiaisonBankily;
 
@@ -14,4 +15,7 @@ public interface LiaisonBankilyRepository extends JpaRepository<LiaisonBankily, 
 	public LiaisonBankily getLiaisonBankilyByTelephone(String telephone);
 	@Query("select g from LiaisonBankily g where g.isRejeted=false and g.cif=?1")
 	public LiaisonBankily getLiaisonBankilyByCif(String cif);
+	@Modifying
+	@Query("update LiaisonBankily c set c.document=?1 where c.id=?2")
+	public void updateDocLiaison(String doc,long id);
 }

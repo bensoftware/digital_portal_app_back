@@ -49,7 +49,6 @@ public class UploadController {
 	//@PreAuthorize("hasAuthority('genReleve')")
     @GetMapping("/generationPdf/{fileName}")
     public void generationPdf(HttpServletResponse resonse,@PathVariable String fileName) throws IOException {
-
         org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
         File file = new File(Paths.get(System.getProperty("user.home")) + urlReleve + fileName);
         resonse.setContentType(mediaType.getType());

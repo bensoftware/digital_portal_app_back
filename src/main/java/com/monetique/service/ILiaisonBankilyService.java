@@ -1,6 +1,12 @@
 package com.monetique.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.monetique.dto.AddLiaisonObject;
 import com.monetique.dto.Approbation;
@@ -36,5 +42,8 @@ public interface ILiaisonBankilyService {
 	public Alert addAlert(Alert alert) throws Exception ;
 	public VerificationMobileResponse getVerificationMobile(VerificationMobileRequest mobileRequest) throws Exception ;
 	public void deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception ;
+	public void uploadFile(HttpServletRequest request,long id) throws Exception;
+	public void updateDocLiaison(String doc,long id);
+	 public void generationPdf(HttpServletResponse resonse,String fileName) throws IOException;
 
 }
