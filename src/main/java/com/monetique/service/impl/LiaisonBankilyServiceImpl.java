@@ -39,9 +39,11 @@ import com.monetique.um.dao.entities.Alert;
 import com.monetique.um.dao.entities.ExceptionMessage;
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.LiaisonBankily;
+import com.monetique.um.dao.entities.OtpLog;
 import com.monetique.um.dao.entities.Superviseur;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.dao.repositories.LiaisonBankilyRepository;
+import com.monetique.um.dao.repositories.OtpLogRepository;
 import com.monetique.um.dao.repositories.SuperviseurRepository;
 import com.monetique.um.dao.repositories.UserRepository;
 import com.monetique.um.dto.VerificationImalResponse;
@@ -50,11 +52,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 @Service
 public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
-    @Value("${host.liaison}")
+    @Value("${host.liaison.n1}")
 	String urlLiaison;
-    @Value("${host.urlVerifImal}")
-	String urlVerifImal;
-    @Value("${host.urlVerifMobile}")
+
+    @Value("${host.liaison.n2}")
+	String urlLiaison2;
+    
+    @Value("${host.bankilydb}")
 	String urlVerifMobile;
     
     @Autowired
@@ -73,7 +77,9 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	HttpServletRequest request;
 	@Autowired
 	private NotificationService notificationService;
-
+	@Autowired
+	OtpLogRepository otpLogRepository;
+	
 	@Override
 	public LiaisonBankily addLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
 		String jwt=request.getHeader(SecurityConstants.HEADER_STRING);
@@ -100,6 +106,18 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
    				liaisonBankily.setDateLiaison(new Date());
    			    liaisonBankilyRepository.save(liaisonBankily);
 	   		}
+	   		
+	   		
+	   		// LOG
+	   		OtpLog otpLog=new OtpLog();
+	   		otpLog.setDate(new Date());
+			otpLog.setUserName(username);
+			otpLog.setHost(request.getRemoteHost());
+			otpLog.setType("VALIDATION LIAISON BANKILY");
+
+			otpLogRepository.save(otpLog);
+			
+	   		
 	   		}
 	   	return liaisonBankily;
 	}
@@ -140,7 +158,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationImalResponse getVerificationImalByCif(String cif) throws Exception {
 		VerificationImalResponse res=null;
-		String url= "http://30.30.1.140:8854/getVerificationImalByCif/"+cif;
+		String url= urlVerifMobile+"/getVerificationImalByCif/"+cif;
 		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
@@ -161,11 +179,34 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 
 	@Override
 	public LiaisonBankily updateLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
-		LiaisonBankily bankily=liaisonBankilyRepository.findById(liaisonBankily.getId()).get();
-		liaisonBankily.setDateApprobation(new Date());
-		liaisonBankily.setId(bankily.getId());
-		liaisonBankily.setApproved(true);
-		return liaisonBankilyRepository.save(liaisonBankily);
+		
+		String jwt=request.getHeader(SecurityConstants.HEADER_STRING);
+		Claims claims=Jwts.parser()
+				.setSigningKey(SecurityConstants.SECRET)
+				.parseClaimsJws(jwt.replace(SecurityConstants.TOKEN_PREFIX,""))
+				.getBody();
+		
+		String username=claims.getSubject();
+
+		
+			LiaisonBankily bankily=liaisonBankilyRepository.findById(liaisonBankily.getId()).get();
+			liaisonBankily.setDateApprobation(new Date());
+			liaisonBankily.setId(bankily.getId());
+			liaisonBankily.setApproved(true);
+			liaisonBankily.setIdUserApprobation(username);
+
+	   		// LOG
+	   		OtpLog otpLog=new OtpLog();
+	   		otpLog.setDate(new Date());
+			otpLog.setUserName(username);
+			otpLog.setHost(request.getRemoteHost());
+			otpLog.setType("APPROBATION LIAISON BANKILY");
+
+			otpLogRepository.save(otpLog);
+			return liaisonBankilyRepository.save(liaisonBankily);
+
+	   		
+	  
 	}
 
 	@Override
@@ -184,7 +225,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		approbation.setLanguageId("1");
 		approbation.setRemarks("OK");
 		System.out.println(approbation);
-		String url= urlLiaison+"/DIGITALAPPROVAL";
+		String url= urlLiaison2+"/DIGITALAPPROVAL";
 		ResponseEntity<ApprobationResponse> response = restTemplate.postForEntity(url, approbation, ApprobationResponse.class) ;
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			res= response.getBody(); 			
@@ -203,7 +244,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		approbation.setLanguageId("1");
 		approbation.setRemarks("OK");
 		System.out.println(approbation);
-		String url= urlLiaison+"/DIGITALAPPROVAL";
+		String url= urlLiaison2+"/DIGITALAPPROVAL";
 		ResponseEntity<ApprobationResponse> response = restTemplate.postForEntity(url, approbation, ApprobationResponse.class) ;
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			res= response.getBody(); 			
@@ -258,7 +299,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationImalResponse getUserIdByLogin(String username) throws Exception {
 		VerificationImalResponse res=null;
-		String url= urlVerifImal+"/getUserIdByLogin/"+username;
+		String url= urlVerifMobile+"/getUserIdByLogin/"+username;
 		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
@@ -269,7 +310,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationImalResponse getUserIdByTelephone(String phone) throws Exception {
 		VerificationImalResponse res=null;
-		String url= urlVerifImal+"/getUserIdByTelephone/"+phone;
+		String url= urlVerifMobile+"/getUserIdByTelephone/"+phone;
 		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
@@ -279,10 +320,31 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 
 	@Override
 	public LiaisonBankily updateRejetLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
+		
+		String jwt=request.getHeader(SecurityConstants.HEADER_STRING);
+		Claims claims=Jwts.parser()
+				.setSigningKey(SecurityConstants.SECRET)
+				.parseClaimsJws(jwt.replace(SecurityConstants.TOKEN_PREFIX,""))
+				.getBody();
+		
+		String username=claims.getSubject();
+		
+		
 		LiaisonBankily bankily=liaisonBankilyRepository.findById(liaisonBankily.getId()).get();
 		liaisonBankily.setDateRejet(new Date());
+		liaisonBankily.setIdUserRejet(username);
 		liaisonBankily.setId(bankily.getId());
 		liaisonBankily.setRejeted(true);
+		
+		// LOG
+   		OtpLog otpLog=new OtpLog();
+   		otpLog.setDate(new Date());
+		otpLog.setUserName(username);
+		otpLog.setHost(request.getRemoteHost());
+		otpLog.setType("REJECT LIAISON BANKILY");
+
+		otpLogRepository.save(otpLog);
+		
 		return liaisonBankilyRepository.save(liaisonBankily);
 	}
 
@@ -328,7 +390,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationMobileResponse getVerificationMobile(VerificationMobileRequest mobileRequest) throws Exception {
 		VerificationMobileResponse res=null;
-		String url= urlVerifImal+"/getVerificationMobile";
+		String url= urlVerifMobile+"/getVerificationMobile";
 		ResponseEntity<VerificationMobileResponse> response = restTemplate.postForEntity(url,mobileRequest, VerificationMobileResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
@@ -338,7 +400,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 
 	@Override
 	public void deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception {
-		String url= urlVerifImal+"/deleteLiaisonIncompleteMobile";
+		String url= urlVerifMobile+"/deleteLiaisonIncompleteMobile";
 		ResponseEntity<Void> response=restTemplate.postForEntity(url,incomplet, Void.class);
 		if(!response.getStatusCode().equals(HttpStatus.OK)) {
 			response.getStatusCodeValue();
