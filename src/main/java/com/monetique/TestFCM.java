@@ -73,6 +73,7 @@
 //		                
 //		                String grade=null;
 //		                String agence=null;
+//		                String nomComplet=null;
 //
 //		                // itteration colonne par colonne
 //		                while (cellIterator.hasNext()) {
@@ -126,7 +127,7 @@
 //		                	user.setActif(true);
 //		                	user.setDateCreation(new Date());
 //		                	user.setUserName(identifiant);
-//		                	userRepository.save(user);
+//		                	user=userRepository.save(user);
 //		                }
 //		                // recuperarion ou creation du groupe
 //		                groupe=iGroupeService.getGroupeByLibelle(agence);
@@ -135,7 +136,7 @@
 //		                	groupe.setLibelle(agence);
 //		                	groupe.setNomComplet(nomComplet);
 //		                	groupe.setActive(true);
-//		                	iGroupeService.addGroupe(groupe);
+//		                	groupe=iGroupeService.addGroupe(groupe);
 //		                }
 //		                
 //		                
