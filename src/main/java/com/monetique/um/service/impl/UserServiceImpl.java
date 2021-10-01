@@ -11,6 +11,9 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.monetique.security.entities.AppRole;
+import com.monetique.security.entities.AppUser;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.security.service.AppUserData;
 import com.monetique.um.dao.entities.Groupe;
@@ -466,7 +469,17 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public User getUserByUsername(String username) throws Exception {
-		return userRepository.findByuserNameIgnoreCase(username);
+		
+		User user=null;
+		user=userRepository.findByuserName(username.toLowerCase());
+		
+		if (user==null)
+			user=userRepository.findByuserName(username.toUpperCase());
+		
+		if (user==null)
+			user=userRepository.findByuserName(username);
+		
+		return user;
 	}
 
 }
