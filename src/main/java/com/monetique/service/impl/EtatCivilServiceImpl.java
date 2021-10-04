@@ -6,12 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.monetique.dto.ClientNniDto;
 import com.monetique.service.EtatCivilService;
 
 @Service
 public class EtatCivilServiceImpl implements EtatCivilService {
+	
        @Autowired
        RestTemplate restTemplate;
        
@@ -19,12 +19,10 @@ public class EtatCivilServiceImpl implements EtatCivilService {
        String hostNni;
 
        
-       
        @Override
        public ClientNniDto getInfoNni(String nni) throws Exception {
        
     	   ClientNniDto res=null;
-
              try {
                     String url= hostNni+"/getInfoNniMobile/"+nni;
                     ResponseEntity<ClientNniDto> response
@@ -32,16 +30,10 @@ public class EtatCivilServiceImpl implements EtatCivilService {
                     if(response.getStatusCode().equals(HttpStatus.OK)) {
                            res= response.getBody(); 
                     }
-                    
-             } catch (Exception e) {
+             }catch(Exception e) {
            System.err.println(e);
              }
-             
              return res;
-             
        }
-
-       
-       
 
 }

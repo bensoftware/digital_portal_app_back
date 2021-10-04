@@ -15,6 +15,7 @@ import com.monetique.service.EtatCivilService;
 import com.monetique.service.ILiaisonBankilyService;
 import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
+import com.monetique.service.MonetiqueService;
 import com.monetique.service.TraitementClearingBatchService;
 import com.monetique.um.service.IActionService;
 import com.monetique.um.service.IRuleService;
@@ -88,19 +89,14 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	MajService majService;
 	
+	@Autowired
+	MonetiqueService monetiqueService;
+	
+	
+	
 	@Override
 	public void run(String... args) throws Exception {
 	
-//		LiaisonIncomplet req=new LiaisonIncomplet();
-//		req.setCif("453");
-//		req.setTelephone("34212133");
-//		req.setNni("1842979922");
-//		req.setCompte("00018000012100004530312");
-//		req.setCif("10005498");
-//		req.setTelephone("22335526");
-//		req.setNni("6086352883");
-//		req.setCompte("00018000022100054980191");
-//		bankilyService.deleteLiaisonIncompleteMobile(req);
 	}
 	
 	
