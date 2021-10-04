@@ -467,10 +467,18 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public void generationPdf(HttpServletResponse resonse, String fileName) throws IOException {
 		String directory =urlDocPdf;
-		org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-        File file = new File(Paths.get(directory + fileName).toString());
+		System.out.println(directory + fileName);
+	//	org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+       
+		System.out.println(directory + fileName);
+		File file = new File(Paths.get(directory + fileName).toString());
         //String filepath = Paths.get(directory,lien).toString();
-        resonse.setContentType(mediaType.getType());
+      //  resonse.setContentType(mediaType.getType());
+        
+        resonse.setContentType("application/x-download");
+        resonse.setHeader("Content-Disposition", String.format("attachment; filename=\""+fileName+"\""));
+	   	  
+        System.out.println(file.getName());
         resonse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName());
         resonse.setContentLength((int) file.length());
         BufferedInputStream inStream = new BufferedInputStream(new FileInputStream(file));
