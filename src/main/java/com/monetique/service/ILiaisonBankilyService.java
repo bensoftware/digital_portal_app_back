@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.monetique.dto.AddLiaisonObject;
 import com.monetique.dto.Approbation;
 import com.monetique.dto.ApprobationResponse;
@@ -15,6 +13,7 @@ import com.monetique.dto.Liaison;
 import com.monetique.dto.LiaisonIncomplet;
 import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.ListLiaisonResponse;
+import com.monetique.dto.ResponseDto;
 import com.monetique.dto.VerificationMobileRequest;
 import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.um.dao.entities.Alert;
@@ -43,6 +42,8 @@ public interface ILiaisonBankilyService {
 	public VerificationMobileResponse getVerificationMobile(VerificationMobileRequest mobileRequest) throws Exception ;
 	public void deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception ;
 	public void uploadFile(HttpServletRequest request,long id) throws Exception;
+	public ResponseDto uploadFileAutomatique(HttpServletRequest request,String cif,String nni,String telephone) throws Exception;
+
 	public void updateDocLiaison(String doc,long id);
 	 public void generationPdf(HttpServletResponse resonse,String fileName) throws IOException;
 
