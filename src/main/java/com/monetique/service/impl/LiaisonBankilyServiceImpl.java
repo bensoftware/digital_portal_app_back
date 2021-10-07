@@ -467,15 +467,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public void generationPdf(HttpServletResponse resonse, String fileName) throws IOException {
 		String directory =urlDocPdf;
-<<<<<<< HEAD
-		//org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-        File file = new File(Paths.get(directory + fileName).toString());
-        //String filepath = Paths.get(directory,lien).toString();
-        //resonse.setContentType(mediaType.getType());
-=======
-		System.out.println(directory + fileName);
-	//	org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-       
+  
 		System.out.println(directory + fileName);
 		File file = new File(Paths.get(directory + fileName).toString());
         //String filepath = Paths.get(directory,lien).toString();
@@ -483,11 +475,6 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
         
         resonse.setContentType("application/x-download");
         resonse.setHeader("Content-Disposition", String.format("attachment; filename=\""+fileName+"\""));
-	   	  
-        System.out.println(file.getName());
->>>>>>> 2b1e7f95752b1af0e9d5381914a91387863b78fd
-        resonse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName());
-        resonse.setContentLength((int) file.length());
         BufferedInputStream inStream = new BufferedInputStream(new FileInputStream(file));
         BufferedOutputStream outStream = new BufferedOutputStream(resonse.getOutputStream());
         byte[] buffer = new byte[1024];
