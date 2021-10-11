@@ -30,6 +30,8 @@ public class EtatCivilController {
 	public @ResponseBody ResponseDto getEtatCivilService(@PathVariable String nni) throws Exception {
 		nni=CorrespondanteCodeHelper.getNniFormat(nni);
 		ClientNniDto dto=etatCivilService.getInfoNni(nni);
+		if(dto==null)
+			throw new Exception("Exception appel etat civil");
 		return new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), dto);
 	}
 
