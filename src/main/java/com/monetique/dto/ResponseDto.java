@@ -24,11 +24,20 @@ public class ResponseDto implements Serializable {
 	String loginId;
 	String otp;
 	int statusUser;
+	String filename;
 	boolean historique;
 	boolean succes;
 	
 	
 	
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
 	public boolean isSucces() {
 		return succes;
 	}

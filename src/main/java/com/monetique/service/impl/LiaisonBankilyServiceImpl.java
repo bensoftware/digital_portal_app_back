@@ -41,6 +41,7 @@ import com.monetique.dto.LiaisonRequest;
 import com.monetique.dto.LiaisonResponse;
 import com.monetique.dto.LiaisonResponseObject;
 import com.monetique.dto.ListLiaisonResponse;
+import com.monetique.dto.ResponseDto;
 import com.monetique.dto.VerificationMobileRequest;
 import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.helper.CorrespondanteCodeHelper;
@@ -469,16 +470,12 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	public void generationPdf(HttpServletResponse resonse, String fileName) throws IOException {
 		String directory =urlDocPdf;
 		System.out.println(directory + fileName);
-	//	org.springframework.http.MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-       
-		System.out.println(directory + fileName);
 		File file = new File(Paths.get(directory + fileName).toString());
         //String filepath = Paths.get(directory,lien).toString();
       //  resonse.setContentType(mediaType.getType());
         
         resonse.setContentType("application/x-download");
         resonse.setHeader("Content-Disposition", String.format("attachment; filename=\""+fileName+"\""));
-	    resonse.setContentLength((int) file.length());
         BufferedInputStream inStream = new BufferedInputStream(new FileInputStream(file));
         BufferedOutputStream outStream = new BufferedOutputStream(resonse.getOutputStream());
         byte[] buffer = new byte[1024];
@@ -488,6 +485,44 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
         }
         outStream.flush();
         inStream.close();
+	}
+
+	@Override
+	public ResponseDto uploadFileAutomatique(HttpServletRequest request, String cif, String nni, String telephone)
+			throws Exception {
+		
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		MultipartHttpServletRequest mRequest;
+	    mRequest = (MultipartHttpServletRequest) request;
+		  String directory =urlDocPdf;		   
+		    String lien="";
+		   
+		    String filepath = Paths.get(directory,lien).toString();
+		    System.out.println("nom : "+filepath);
+	   
+		    Iterator<String> itr = mRequest.getFileNames();
+		    
+		    if (itr.hasNext()) {
+		    
+		    	MultipartFile mFile = mRequest.getFile(itr.next());
+	        
+		    	String fileName = "enregistrement_"+cif+"_"+telephone+"_"+nni+"_"+formatter.format(new Date())+".pdf";
+		    	File file = new File(directory+fileName);
+			    try {
+					FileCopyUtils.copy(mFile.getBytes(),file);
+					ResponseDto res=new ResponseDto();
+					res.setFilename(fileName);
+					return res;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new Exception("Erreur upload "+fileName);
+				}
+
+	    	    }
+	
+		    return null;
 	}
 	
 //	@Override

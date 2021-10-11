@@ -157,6 +157,12 @@ public class LiaisonBankilyController {
 	public void uploadFile(HttpServletRequest request,@PathVariable long id) throws Exception {
 		iLiaisonBankilyService.uploadFile(request,id);
 	}
+	
+	@PreAuthorize ("hasAnyAuthority ('apprlb', 'validlb')")
+	@RequestMapping(value = "/uploadFilePdfAutomatique/{cif}/{nni}/{telephone}" , method = RequestMethod.POST)
+	public @ResponseBody com.monetique.dto.ResponseDto uploadFilePdfAutomatique(HttpServletRequest request,@PathVariable String cif,@PathVariable String nni,@PathVariable String telephone) throws Exception {
+		return iLiaisonBankilyService.uploadFileAutomatique(request, cif, nni, telephone);
+	}
 
     @GetMapping("/generationLiaisonPdf/{fileName}")
 	public void generationPdf(HttpServletResponse resonse,@PathVariable String fileName) throws IOException {
