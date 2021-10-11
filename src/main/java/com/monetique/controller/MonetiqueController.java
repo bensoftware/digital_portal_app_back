@@ -40,9 +40,6 @@ public class MonetiqueController {
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res);
 	}
 	
-	
-
-	
 	@PreAuthorize("hasAuthority('createcardmon')")
 	@RequestMapping(value="/createCarte",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto createCarte(@RequestBody ClientCifDto clientCifDto) throws Exception {
