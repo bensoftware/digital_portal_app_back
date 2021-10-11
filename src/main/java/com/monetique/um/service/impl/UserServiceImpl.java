@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.monetique.security.entities.AppRole;
-import com.monetique.security.entities.AppUser;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.security.service.AppUserData;
 import com.monetique.um.dao.entities.Groupe;
@@ -24,6 +24,7 @@ import com.monetique.um.service.IMailService;
 import com.monetique.um.service.IUserService;
 import com.monetique.um.utils.DateUtils;
 import com.monetique.um.utils.Password;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 

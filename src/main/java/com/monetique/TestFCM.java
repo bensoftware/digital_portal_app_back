@@ -41,7 +41,7 @@
 //       public void run(String... args) throws Exception {
 //
 //
-//             String FILE_NAME = "C:\\Logs\\test.xlsx";
+//             String FILE_NAME = "C:\\Logs\\test_agence7.xlsx";
 //             
 //                FileInputStream excelFile;
 //                    try {
@@ -137,6 +137,10 @@
 //                                 groupe.setNomComplet(nomComplet);
 //                                 groupe.setActive(true);
 //                                 groupe=iGroupeService.addGroupe(groupe);
+//                             }
+//                             else {
+//                            	 groupe.setNomComplet(nomComplet);
+//                            	 groupe=iGroupeService.addGroupe(groupe);
 //                             }
 //                             
 //                             

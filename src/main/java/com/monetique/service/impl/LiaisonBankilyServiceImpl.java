@@ -179,7 +179,8 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationImalResponse getVerificationImalByCif(String cif) throws Exception {
 		VerificationImalResponse res=null;
-		String url= urlVerifMobile+"/getVerificationImalByCif/"+cif;
+		//String url= urlVerifMobile+"/getVerificationImalByCif/"+cif;
+		String url= "http://30.30.1.140:8854/getVerificationImalByCif/"+cif;	
 		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
@@ -468,7 +469,6 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public void generationPdf(HttpServletResponse resonse, String fileName) throws IOException {
 		String directory =urlDocPdf;
-  
 		System.out.println(directory + fileName);
 		File file = new File(Paths.get(directory + fileName).toString());
         //String filepath = Paths.get(directory,lien).toString();
