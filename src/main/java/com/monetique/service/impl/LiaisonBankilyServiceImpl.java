@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,6 @@ import com.monetique.dto.ResponseDto;
 import com.monetique.dto.VerificationMobileRequest;
 import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.helper.CorrespondanteCodeHelper;
-import com.monetique.helper.MediaTypeUtils;
 import com.monetique.repositories.AlertRepository;
 import com.monetique.repositories.ExceptionMessageRepository;
 import com.monetique.security.securityDispatcher.SecurityConstants;
@@ -179,8 +177,8 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationImalResponse getVerificationImalByCif(String cif) throws Exception {
 		VerificationImalResponse res=null;
-		//String url= urlVerifMobile+"/getVerificationImalByCif/"+cif;
-		String url= "http://30.30.1.140:8854/getVerificationImalByCif/"+cif;	
+		String url= urlVerifMobile+"/getVerificationImalByCif/"+cif;
+		//String url= "http://30.30.1.140:8854/getVerificationImalByCif/"+cif;	
 		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
