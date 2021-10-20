@@ -67,7 +67,6 @@ public class LiaisonBankilyController {
 	
 			res=iLiaisonBankilyService.getCompteByCif(req);
 
-		
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res );
 	}
 	
