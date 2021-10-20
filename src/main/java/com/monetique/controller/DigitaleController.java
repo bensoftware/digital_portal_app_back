@@ -1,7 +1,5 @@
 package com.monetique.controller;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,9 +51,7 @@ public class DigitaleController {
 	@PreAuthorize("hasAuthority('majComptBkl')")
 	@RequestMapping(value="/getVerify",method=RequestMethod.POST)
 	public @ResponseBody ResponseDto getVerify(@RequestBody RequestDto req) throws Exception {	
-		
 		com.monetique.dto.ResponseDto re=  majService.verify(req);
-	
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), re);
 
 	}
@@ -71,20 +67,14 @@ public class DigitaleController {
 			// TODO: handle exception
 			throw new Exception(e.getMessage());
 		}
-		
-	
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), re);
-
 	}
 	
 	@PreAuthorize("hasAuthority('majComptBkl')")
 	@RequestMapping(value="/getAllHistorique",method=RequestMethod.GET)
-	public @ResponseBody ResponseDto getAllHistorique() throws Exception {	
-			
+	public @ResponseBody ResponseDto getAllHistorique() throws Exception {		
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), majService.getAllHistorique());
-
 	}
-	
 	
 	
 }

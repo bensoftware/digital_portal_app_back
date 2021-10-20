@@ -494,19 +494,14 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
 		MultipartHttpServletRequest mRequest;
-	    mRequest = (MultipartHttpServletRequest) request;
-		  String directory =urlDocPdf;		   
+	    mRequest =(MultipartHttpServletRequest) request;
+		    String directory =urlDocPdf;		   
 		    String lien="";
-		   
 		    String filepath = Paths.get(directory,lien).toString();
 		    System.out.println("nom : "+filepath);
-	   
 		    Iterator<String> itr = mRequest.getFileNames();
-		    
 		    if (itr.hasNext()) {
-		    
 		    	MultipartFile mFile = mRequest.getFile(itr.next());
-	        
 		    	String fileName = "enregistrement_"+cif+"_"+telephone+"_"+nni+"_"+formatter.format(new Date())+".pdf";
 		    	File file = new File(directory+fileName);
 			    try {
@@ -519,9 +514,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 					e.printStackTrace();
 					throw new Exception("Erreur upload "+fileName);
 				}
-
 	    	    }
-	
 		    return null;
 	}
 	

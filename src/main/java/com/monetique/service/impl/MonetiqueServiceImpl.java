@@ -1,21 +1,27 @@
 package com.monetique.service.impl;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.monetique.dto.monetique.ClientCifDto;
 import com.monetique.dto.monetique.ResponseDto;
+import com.monetique.dto.monetique.FileDto;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.MonetiqueService;
 import com.monetique.um.dao.entities.OtpLog;
@@ -173,8 +179,7 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 			 String url= urlMonetiqueService+"/createCard";
 			 
 			 if(clientCifDto !=null);
-				ResponseEntity<ResponseDto> response
-				  =restTemplate.postForEntity(url, requete, ResponseDto.class);
+				ResponseEntity<ResponseDto> response=restTemplate.postForEntity(url, requete, ResponseDto.class);
 			
 			 if(response.getStatusCode().equals(HttpStatus.OK)) {
 				 if(response.getBody()==null) {
@@ -204,5 +209,37 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 		}
 		return responseDto;
 	}
+	
+	
+	@Override
+	public FileDto sendFile(MultipartHttpServletRequest multipartHttpServletRequest,String cif) throws Exception {
+		
+		FileDto fileDto=new FileDto();	
+		Iterator<String> itr = multipartHttpServletRequest.getFileNames();
+		String filename=itr.next();
+		MultipartFile mFile = multipartHttpServletRequest.getFile(filename);
+		fileDto.setMultipartHttpServletRequest(mFile.getBytes());
+		fileDto.setCif(cif);
+		
+		HttpHeaders headers= new HttpHeaders();
+		headers.set("authorization", "BpmMonetique");
+		HttpEntity<FileDto> requete = new HttpEntity<>(fileDto,headers);
 
+		try {
+			String url= urlMonetiqueService+"/getFile";
+			 if(fileDto !=null);
+				ResponseEntity<FileDto> response=restTemplate.postForEntity(url,requete,FileDto.class);
+				if(response.getStatusCode().equals(HttpStatus.OK)) {
+				 fileDto= response.getBody();
+				 return fileDto;
+			 }else {
+				 fileDto.setErrorMessage("Erreur lors de l'appel de l'API MONETIQUE SERVICE");
+			 }
+		} catch (Exception e) {
+			 throw new Exception("Erreur lors de l'appel  de monetique Service : "+e.getMessage());
+		}
+		return fileDto;
+	}
+	
+	
 }
