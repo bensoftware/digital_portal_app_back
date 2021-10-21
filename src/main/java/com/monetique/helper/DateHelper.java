@@ -34,4 +34,30 @@ public static Date getDateAu(Date index) {
 	
 }
 
+public static String getDateDir(Date d) {
+	String res="";
+	
+	Date date = d;
+	int annee= date.getYear()+1900;
+	int mois= date.getMonth()+1;
+	int jour=date.getDate();
+	
+	String jour2,mois2;
+	
+	if(jour<10)
+		jour2="0"+jour;
+	else
+		jour2=""+jour;
+	
+	if(mois<10)
+		mois2="0"+mois;
+	else
+		mois2=""+mois;
+	
+	
+	res=jour2+"-"+mois2+"-"+annee;
+	
+	return res;
+}
+
 }

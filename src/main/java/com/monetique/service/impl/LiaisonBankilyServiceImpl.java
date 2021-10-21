@@ -560,26 +560,49 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 
 	@Override
 	public void generateAllLiaisonQuotidient() throws Exception {
-		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		
+		// recuperation date index 
 		Params params=paramsRepository.findById(1L).get();
+		Date dateIntex= params.getDate();
+		dateIntex=DateHelper.getDateSansHeure(dateIntex);
+		Date dateDu= DateHelper.getDateDu(dateIntex);
+		
+		// recuperation date actuel
+		Date courant = DateHelper.getDateSansHeure(new Date());
+		Date dateAu= DateHelper.getDateAu(courant);
+
+		String dossierJour=null;
+		String dossierClient=null;
+		String fichierPj=null;
+		String fichierId=null;
+		
+		String prefix = params.getPrefix();
+		
+		//SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		
 		List<LiaisonBankily> liaisonBankilies = new ArrayList<LiaisonBankily>();
-		String fileName;
-		String fileNameD;
-		String dateD=formatter.format(params.getDate());
-		Date dateDu= DateHelper.getDateDu(params.getDate());
-		Date dateAu= DateHelper.getDateAu(new Date());
+		String urlDossierClient;
+		
 		System.err.println(" du "+dateDu);
 		System.err.println("AU "+dateAu);
+		
+		// liste des liaison approuvé entre 2 dates
 		List<LiaisonBankily> bankilies=getAllLiaisonBankilyApprove(dateDu,dateAu);
 		System.out.println(bankilies);
 		for(LiaisonBankily liaison : bankilies) {
+		// information necessaire pour jasper	
         liaisonBankilies.add(new LiaisonBankily(liaison.getIdGroupe(), liaison.getIdUserLiaison(), liaison.getDateLiaison(), liaison.getNni(), liaison.getTelephone(), liaison.getCif(), liaison.getCompte(), liaison.getIdUserApprobation(),
         		liaison.getNomClient(), liaison.getPrenomClient(), liaison.getNomFamille(), liaison.getPrenomPere(), liaison.getDateApprobation(), liaison.getImageUrl(), liaison.getDocument()));
-		// nom du dossier
-        fileName=dateD+"/"+liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
-        // nom du fichier
-		fileNameD=liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
-		Path path = Paths.get(urlLiaisonQuotidien+fileName);
+
+          
+        dossierJour=DateHelper.getDateDir(liaison.getDateApprobation());
+        dossierClient=liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
+        // nom dossier
+        urlDossierClient=urlLiaisonQuotidien+dossierJour+prefix+dossierClient;
+		   // nom du fichier
+        fichierId=dossierClient+".pdf";
+		
+		Path path = Paths.get(urlDossierClient);
         if (!Files.exists(path)) {
         	// creation du dossier
             Files.createDirectories(path);
@@ -589,43 +612,25 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
      		JasperReport jasperReport=JasperCompileManager.compileReport(fileD.getAbsolutePath());
      		JRBeanCollectionDataSource dataSource=new JRBeanCollectionDataSource(liaisonBankilies);
      		JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,map, dataSource);
-            JasperExportManager.exportReportToPdfFile(jasperPrint, urlLiaisonQuotidien+fileName+"/"+fileNameD+".pdf");
+     		// generation fichier jasper
+            JasperExportManager.exportReportToPdfFile(jasperPrint, urlDossierClient+prefix+fichierId);
         } 
-        Path file = Paths.get(urlDocPdf+"/"+liaison.getDocument());
+        fichierPj=liaison.getDocument();
+        Path file = Paths.get(urlDocPdf+fichierPj);
         System.err.println(file);
-        Path pathOut = Paths.get(urlLiaisonQuotidien+"/"+fileName+"/"+liaison.getDocument());
+        Path pathOut = Paths.get(urlDossierClient+prefix+fichierPj);
 
-		if(environnement.equalsIgnoreCase("WINDOWS")) {
          if(Files.isRegularFile(file)) {
-               // deplacer vers exception
+               // deplacer vers dossier client
                Files.copy(file, pathOut, StandardCopyOption.REPLACE_EXISTING);
           }
         
-	}
-		else {
-			OutputStream destination = null;
-			InputStream originalfile = null;
-			try {
-				
-				NtlmPasswordAuthentication npa = new NtlmPasswordAuthentication(
-						ipPartage, usernamePartage, pwdPartage);
-				SmbFile filesmb = new SmbFile(urlLiaisonQuotidien+"/"+fileName+"/"+liaison.getDocument(), npa);
-				 destination = filesmb.getOutputStream();
-				 originalfile = new FileInputStream(urlDocPdf+"/"+liaison.getDocument());
-				IOUtils.copy(originalfile, destination);
-				originalfile.close();
-				destination.close();			
-			} catch (Exception e) {
-				originalfile.close();
-				destination.close();
-				throw new Exception(e.getMessage());
-			}
-			
-		}
 
         liaisonBankilies.clear();
 		}
-		updateParams(params);
+	    // maj index
+		params.setDate(dateAu);
+		paramsRepository.save(params);
 		
 	}
 
