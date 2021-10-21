@@ -5,12 +5,19 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,6 +32,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,26 +52,36 @@ import com.monetique.dto.ResponseDto;
 import com.monetique.dto.VerificationMobileRequest;
 import com.monetique.dto.VerificationMobileResponse;
 import com.monetique.helper.CorrespondanteCodeHelper;
+import com.monetique.helper.DateHelper;
 import com.monetique.repositories.AlertRepository;
 import com.monetique.repositories.ExceptionMessageRepository;
 import com.monetique.security.securityDispatcher.SecurityConstants;
 import com.monetique.service.ILiaisonBankilyService;
 import com.monetique.service.NotificationService;
+import com.monetique.service.TransferService;
 import com.monetique.um.dao.entities.Alert;
 import com.monetique.um.dao.entities.ExceptionMessage;
 import com.monetique.um.dao.entities.Groupe;
 import com.monetique.um.dao.entities.LiaisonBankily;
 import com.monetique.um.dao.entities.OtpLog;
+import com.monetique.um.dao.entities.Params;
 import com.monetique.um.dao.entities.Superviseur;
 import com.monetique.um.dao.entities.User;
 import com.monetique.um.dao.repositories.LiaisonBankilyRepository;
 import com.monetique.um.dao.repositories.OtpLogRepository;
+import com.monetique.um.dao.repositories.ParamsRepository;
 import com.monetique.um.dao.repositories.SuperviseurRepository;
 import com.monetique.um.dao.repositories.UserRepository;
 import com.monetique.um.dto.VerificationImalResponse;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 @Transactional
 public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
@@ -78,6 +96,27 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	String urlVerifMobile;
 	@Value("${host.urlDocPdf}")
 	String urlDocPdf;
+	@Value("${host.urlLiaisonQuotidien}")
+	String urlLiaisonQuotidien;
+	@Value("${host.urlDocLiaison}")
+	String urlDocLiaison;
+	@Value("${environnement}")
+	String environnement;
+	@Value("${partage.username}")
+	String usernamePartage;
+	
+	@Value("${partage.password}")
+	String pwdPartage;
+	
+	@Value("${partage.ip}")
+	String ipPartage;
+	
+	@Value("${url.partage}")
+	String urlPartageQuot;
+	
+	@Autowired
+    TransferService transferService;
+	
     @Autowired
     RestTemplate restTemplate;
 	@Autowired
@@ -96,6 +135,8 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	private NotificationService notificationService;
 	@Autowired
 	OtpLogRepository otpLogRepository;
+	@Autowired
+	ParamsRepository paramsRepository;
 	
     private ServletContext servletContext;
     
@@ -330,7 +371,9 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	@Override
 	public VerificationImalResponse getUserIdByTelephone(String phone) throws Exception {
 		VerificationImalResponse res=null;
-		String url= urlVerifMobile+"/getUserIdByTelephone/"+phone;
+		//String url= urlVerifMobile+"/getUserIdByTelephone/"+phone;
+
+		String url="http://30.30.1.148:7834/getUserIdByTelephone/"+phone;
 		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			 res= response.getBody(); 
@@ -514,6 +557,162 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 				}
 	    	    }
 		    return null;
+	}
+
+	@Override
+	public Set<String> generateAllLiaisonLocal() throws Exception{
+		 
+		Set<String> res= new HashSet<>();
+		 
+			// recuperation date index 
+			Params params=paramsRepository.findById(1L).get();
+			Date dateIntex= params.getDate();
+			dateIntex=DateHelper.getDateSansHeure(dateIntex);
+			Date dateDu= DateHelper.getDateDu(dateIntex);
+			
+			// recuperation date actuel
+			Date courant = DateHelper.getDateSansHeure(new Date());
+			Date dateAu= DateHelper.getDateAu(courant);
+
+			String dossierJour=null;
+			String dossierClient=null;
+			String fichierPj=null;
+			String fichierId=null;
+			
+			String prefix = params.getPrefix();
+			
+			//SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+			
+			List<LiaisonBankily> liaisonBankilies = new ArrayList<LiaisonBankily>();
+			String urlDossierClient;
+			
+			System.err.println(" du "+dateDu);
+			System.err.println("AU "+dateAu);
+			
+			// liste des liaison approuvé entre 2 dates
+			List<LiaisonBankily> bankilies=getAllLiaisonBankilyApprove(dateDu,dateAu);
+			System.out.println(bankilies);
+			for(LiaisonBankily liaison : bankilies) {
+			// information necessaire pour jasper	
+	        liaisonBankilies.add(new LiaisonBankily(liaison.getIdGroupe(), liaison.getIdUserLiaison(), liaison.getDateLiaison(), liaison.getNni(), liaison.getTelephone(), liaison.getCif(), liaison.getCompte(), liaison.getIdUserApprobation(),
+	        		liaison.getNomClient(), liaison.getPrenomClient(), liaison.getNomFamille(), liaison.getPrenomPere(), liaison.getDateApprobation(), liaison.getImageUrl(), liaison.getDocument()));
+
+	          
+	        dossierJour=DateHelper.getDateDir(liaison.getDateApprobation());
+	        
+	        res.add(dossierJour);
+	        
+	        dossierClient=liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
+	        // nom dossier
+	        urlDossierClient=urlLiaisonQuotidien+dossierJour+prefix+dossierClient;
+			   // nom du fichier
+	        fichierId=dossierClient+".pdf";
+			
+			Path path = Paths.get(urlDossierClient);
+	        if (!Files.exists(path)) {
+	        	// creation du dossier
+	            Files.createDirectories(path);
+	            System.out.println("Directory created");
+	            Map<String, Object> map=new HashMap<>();
+	     		File fileD=ResourceUtils.getFile(urlDocLiaison);
+	     		JasperReport jasperReport=JasperCompileManager.compileReport(fileD.getAbsolutePath());
+	     		JRBeanCollectionDataSource dataSource=new JRBeanCollectionDataSource(liaisonBankilies);
+	     		JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,map, dataSource);
+	     		// generation fichier jasper
+	            JasperExportManager.exportReportToPdfFile(jasperPrint, urlDossierClient+prefix+fichierId);
+	        } 
+	        fichierPj=liaison.getDocument();
+	        if(fichierPj!=null) {
+	        	   Path file = Paths.get(urlDocPdf+fichierPj);
+	        	   
+	        	   if(file!=null) {
+	                   Path pathOut = Paths.get(urlDossierClient+prefix+fichierPj);
+
+	                    if(Files.isRegularFile(file)) {
+	                          // deplacer vers dossier client
+	                          Files.copy(file, pathOut, StandardCopyOption.REPLACE_EXISTING);
+	                     } 
+	        	   }
+	               
+	               
+	        	
+	        }
+	     
+
+	        liaisonBankilies.clear();
+			}
+		    // maj index
+			params.setDate(dateAu);
+			paramsRepository.save(params);
+			
+		 
+		 return res;
+	}
+	
+	@Override
+	public void generateAllLiaisonQuotidient() throws Exception {
+		
+		Params params=paramsRepository.findById(1L).get();
+		String prefix=params.getPrefix();
+		
+	    Set<String> res= generateAllLiaisonLocal();
+	
+		 if(res!=null && res.size()>0) {
+			
+			for (String x : res) {
+				sendToPartage(prefix, x);
+			}
+			
+		  }
+		
+	}
+
+	@Override
+	public List<LiaisonBankily> getAllLiaisonBankilyApprove(Date debut,Date fin) {
+		return liaisonBankilyRepository.getAllLiaisonBankilyApprove(debut, fin);
+	}
+
+	@Override
+	public Params updateParams(Params params) throws Exception {
+		params.setId(1L);
+		params.setDate(new Date());
+		return paramsRepository.save(params);
+	}
+	
+	@Override
+	public void sendToPartage(String prefix,String filename) throws Exception {
+		
+		Path path = Paths.get(urlLiaisonQuotidien+filename);
+		if(Files.isDirectory(path)) {
+			// creation du dossier vers partage
+			transferService.createDirToPartage(urlPartageQuot+filename);
+			
+			try(DirectoryStream<Path> listing = Files.newDirectoryStream(path)){
+
+			    for(Path file : listing){
+                    // type fichier
+			    	String fileD=file.getFileName().toString();	
+		    		String fileDir=filename+prefix+fileD;
+		    		
+			    	if(Files.isRegularFile(file)) {
+			    		// envoi vers partage
+			    		transferService.transferToPartage(urlLiaisonQuotidien+fileDir, urlPartageQuot+fileDir);
+			    	}
+			    	// type dossier
+			    	else if(Files.isDirectory(file)) {
+
+			    		// appel recurssive
+			    		sendToPartage(prefix, fileDir);
+			    	}
+			    }
+					
+			  } catch (IOException e) {
+			    e.printStackTrace();
+			  }	
+		
+			
+		}
+		
 	}
 	
 //	@Override

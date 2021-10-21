@@ -39,5 +39,28 @@ public class LiaisonBankily {
 	private Date dateRejet;
 	private String imageUrl;
 	private String document;
+	public LiaisonBankily(long idGroupe, String idUserLiaison, Date dateLiaison, String nni, String telephone,
+			String cif, String compte, String idUserApprobation, String nomClient, String prenomClient,
+			String nomFamille, String prenomPere, Date dateApprobation, String imageUrl, String document) {
+		super();
+		this.idGroupe = idGroupe;
+		this.idUserLiaison = idUserLiaison;
+		this.dateLiaison = dateLiaison;
+		this.nni = nni;
+		this.telephone = telephone;
+		this.cif = cif;
+		this.compte = compte;
+		this.idUserApprobation = idUserApprobation;
+		this.nomClient = nomClient;
+		this.prenomClient = prenomClient;
+		this.nomFamille = nomFamille;
+		this.prenomPere = prenomPere;
+		this.dateApprobation = dateApprobation;
+		this.imageUrl = imageUrl;
+		this.document = document;
+	}
+	
+	
+	
 	
 }

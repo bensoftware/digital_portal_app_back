@@ -1,5 +1,6 @@
 package com.monetique.um.dao.repositories;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,4 +19,6 @@ public interface LiaisonBankilyRepository extends JpaRepository<LiaisonBankily, 
 	@Modifying
 	@Query("update LiaisonBankily c set c.document=?1 where c.id=?2")
 	public void updateDocLiaison(String doc,long id);
+	@Query("select g from LiaisonBankily g where g.isApproved=true and g.isRejeted=false and g.dateApprobation>= ?1 and g.dateApprobation< ?2")
+	public List<LiaisonBankily> getAllLiaisonBankilyApprove(Date debut,Date fin);
 }

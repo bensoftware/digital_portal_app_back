@@ -168,4 +168,9 @@ public class LiaisonBankilyController {
 		iLiaisonBankilyService.generationPdf(resonse, fileName);
 	}
 
+    @GetMapping("/getAll")
+	public void generateAllLiaisonQuotidient() throws Exception {
+		iLiaisonBankilyService.generateAllLiaisonQuotidient();
+	}
+
 }

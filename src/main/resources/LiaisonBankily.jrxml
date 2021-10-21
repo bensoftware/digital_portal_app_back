@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LiaisonBankily" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4b4c32cc-85d9-472b-acd3-d41cb180bb74">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="idUserLiaison" class="java.lang.String"/>
+	<field name="dateLiaison" class="java.util.Date"/>
+	<field name="nni" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="cif" class="java.lang.String"/>
+	<field name="compte" class="java.lang.String"/>
+	<field name="idUserApprobation" class="java.lang.String"/>
+	<field name="nomClient" class="java.lang.String"/>
+	<field name="prenomClient" class="java.lang.String"/>
+	<field name="nomFamille" class="java.lang.String"/>
+	<field name="prenomPere" class="java.lang.String"/>
+	<field name="dateApprobation" class="java.util.Date"/>
+	<field name="imageUrl" class="java.lang.String"/>
+	<field name="idGroupe" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="0" width="200" height="30" uuid="45f5fbc1-0a2d-4256-b600-649a6832dbac"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detail de la liaison]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="112" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="10" width="200" height="30" uuid="11f4ddcd-646d-4fea-9efa-09c04e25ea07"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Information Etat Civil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="41" width="50" height="15" uuid="ee894e76-a3a1-423a-a745-d411dd16b55a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénom :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="60" width="90" height="15" uuid="8181fcf5-e1c2-40ea-91ee-eac2f41835a8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom de la famille :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="80" width="80" height="18" uuid="7aa7a4f2-762d-49a3-92ef-e96291ca785b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénom du pere :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="42" width="230" height="13" uuid="ab4852bb-40f9-4ccc-8dac-a5f84c7fc6a9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prenomClient}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="60" width="230" height="18" uuid="999adb8a-998a-4679-862d-630dc6f643d5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomFamille}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="80" width="230" height="19" uuid="39037e8d-dba7-4f8d-a6b5-516c44262d53"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prenomPere}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="6" width="550" height="1" uuid="7de3b1ac-0448-4f0e-b3f1-751e341cb3ba"/>
+			</line>
+			<line>
+				<reportElement x="0" y="6" width="1" height="104" uuid="75845e7c-3772-436c-8275-b1a29c562963"/>
+			</line>
+			<line>
+				<reportElement x="0" y="110" width="550" height="1" uuid="d6573837-7d5d-46a6-8c33-0a7f3d33fc1d"/>
+			</line>
+			<line>
+				<reportElement x="550" y="6" width="1" height="105" uuid="0a035de7-9b2d-468a-a14b-7a365e0ed102"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="173" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="10" width="551" height="1" uuid="e1405022-02cf-40a6-88c8-a5d781b7418c"/>
+			</line>
+			<staticText>
+				<reportElement x="180" y="20" width="210" height="30" uuid="b24916e1-6d6a-4080-bb60-ccb856bcd980"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Information du compte Imal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="60" width="100" height="16" uuid="05d43eff-0ae9-4d08-aab9-29e4d6bb5bea"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIF :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="61" width="190" height="15" uuid="763454fd-d2b5-4e71-a0e4-430160d6405b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="80" width="100" height="20" uuid="d28baa2a-372e-47e1-8fa5-d1b04e5413ef"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom client dans Imal :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="80" width="190" height="20" uuid="dd0c58e3-5013-46c5-bd8c-15d64bfeaba3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomClient}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="100" width="100" height="20" uuid="0fc97988-c53c-42f9-bc7b-5f997a0d5819"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Compte :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="100" width="190" height="20" uuid="f5d37bad-3a90-4a9e-bc59-b59c8df8f43b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="120" width="100" height="20" uuid="9ce5167e-6d3b-4a55-bd39-f3eed8ce4044"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telephone :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="120" width="190" height="20" uuid="fe807878-aa42-4882-b3ea-c4bf14af5c74"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telephone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="140" width="100" height="20" uuid="61dbf21e-4e3d-4806-84c9-76db0d954e21"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NNI :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="140" width="190" height="20" uuid="2dfce687-3765-4ad9-a8b3-f4ad2b647f97"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nni}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="10" width="1" height="160" uuid="8ab7eccb-49d9-4320-8f2b-3dee0d1fbcc3"/>
+			</line>
+			<line>
+				<reportElement x="550" y="10" width="1" height="160" uuid="e03f6a71-2c71-4d1a-9978-6e4d57eb166a"/>
+			</line>
+			<line>
+				<reportElement x="0" y="170" width="551" height="1" uuid="2b9fdd21-4487-42fc-a8dd-e6f71df1c8fe"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="207" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="10" width="551" height="1" uuid="31d5d247-80bd-4059-9333-a1fa6e9d40a6"/>
+			</line>
+			<staticText>
+				<reportElement x="180" y="23" width="300" height="27" uuid="244cca25-94f6-446f-9829-a129d1dec777"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Information de la liaison des utilisateurs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="64" width="110" height="16" uuid="210d637a-6ba6-4ad5-921c-a45791f98b65"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Utilisateur de la liaison :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="63" width="150" height="17" uuid="7cc01c9f-4b99-4c1d-a868-d0f9bbd47731">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6640fa6a-d9cf-4c32-be46-10061a95ae4b"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idUserLiaison}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="90" width="110" height="18" uuid="d710fea1-c393-47b7-90f5-5edb9551bab9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date de la liaison :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="90" width="150" height="18" uuid="c18910c9-2f12-4488-9846-daee0c70f7f9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc1809e1-3da6-4c59-b549-6495866e09df"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateLiaison}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="120" width="120" height="15" uuid="3ed38a04-6b10-4bb1-9aca-25032ac34fff"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Utilisateur d'approbation :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="120" width="150" height="15" uuid="3feefd24-11ce-4857-b807-388b9840ff45">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a23cc8e7-edcd-42e5-8fff-f6607d0e3295"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idUserApprobation}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="140" width="100" height="21" uuid="6f6b7688-83af-4932-bca6-bbf5601e942e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date d'approbation :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="140" width="150" height="21" uuid="282b8adf-0c98-4bf5-b159-f5f83358e63a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="39623ed7-3adc-4bc7-97a5-90aa744ae320"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateApprobation}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="11" width="1" height="190" uuid="4609882a-fbf7-4b13-a43d-cdf9bc921b93"/>
+			</line>
+			<line>
+				<reportElement x="550" y="11" width="1" height="192" uuid="2159d036-9c0a-47ec-aa22-aac0f955f7f1"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="201" width="551" height="2" uuid="cc4b1191-9cb9-41ca-97dc-88f5a666962e"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="170" width="100" height="20" uuid="a24a919c-7eb4-4da0-bd5e-a6c9e59fcac7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agence :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="170" width="110" height="20" uuid="7f11e38d-8191-4575-a0d3-1bc0e6888c32">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c7fcc02-3c2d-4aaa-847e-053c73b2c502"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idGroupe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
