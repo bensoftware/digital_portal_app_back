@@ -17,6 +17,7 @@ import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
 import com.monetique.service.MonetiqueService;
 import com.monetique.service.TraitementClearingBatchService;
+import com.monetique.um.dao.repositories.LiaisonBankilyRepository;
 import com.monetique.um.service.IActionService;
 import com.monetique.um.service.IRuleService;
 import com.monetique.um.service.IUserService;
@@ -92,11 +93,15 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Autowired
 	MonetiqueService monetiqueService;
 	
-	
+	@Autowired
+	ILiaisonBankilyService liaisonBankilyService;
 	
 	@Override
 	public void run(String... args) throws Exception {
 	
+		
+	//	liaisonBankilyService.sendToPartage("/", "13-10-2021");
+		
 	}
 	
 	

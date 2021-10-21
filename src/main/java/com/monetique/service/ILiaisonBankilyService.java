@@ -3,6 +3,7 @@ package com.monetique.service;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +49,12 @@ public interface ILiaisonBankilyService {
 	public void updateDocLiaison(String doc,long id);
 	public void generationPdf(HttpServletResponse resonse,String fileName) throws IOException;
 	public void generateAllLiaisonQuotidient() throws Exception;
+	
+	public Set<String> generateAllLiaisonLocal() throws Exception;
+
 	public List<LiaisonBankily> getAllLiaisonBankilyApprove(Date debut,Date fin);
 	public Params updateParams(Params params) throws Exception ;
+
+	public void sendToPartage(String prefix,String filename) throws Exception;
 
 }
