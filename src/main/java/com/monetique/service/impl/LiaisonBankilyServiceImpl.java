@@ -662,15 +662,15 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		Params params=paramsRepository.findById(1L).get();
 		String prefix=params.getPrefix();
 		
-	Set<String> res= generateAllLiaisonLocal();
+	    Set<String> res= generateAllLiaisonLocal();
 	
-	 if(res!=null && res.size()>0) {
-		
-		for (String x : res) {
-			sendToPartage(prefix, x);
-		}
-		
-	}
+		 if(res!=null && res.size()>0) {
+			
+			for (String x : res) {
+				sendToPartage(prefix, x);
+			}
+			
+		  }
 		
 	}
 
