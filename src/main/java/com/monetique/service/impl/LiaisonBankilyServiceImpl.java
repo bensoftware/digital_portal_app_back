@@ -575,10 +575,13 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		for(LiaisonBankily liaison : bankilies) {
         liaisonBankilies.add(new LiaisonBankily(liaison.getIdGroupe(), liaison.getIdUserLiaison(), liaison.getDateLiaison(), liaison.getNni(), liaison.getTelephone(), liaison.getCif(), liaison.getCompte(), liaison.getIdUserApprobation(),
         		liaison.getNomClient(), liaison.getPrenomClient(), liaison.getNomFamille(), liaison.getPrenomPere(), liaison.getDateApprobation(), liaison.getImageUrl(), liaison.getDocument()));
-		fileName=dateD+"/"+liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
+		// nom du dossier
+        fileName=dateD+"/"+liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
+        // nom du fichier
 		fileNameD=liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
 		Path path = Paths.get(urlLiaisonQuotidien+fileName);
         if (!Files.exists(path)) {
+        	// creation du dossier
             Files.createDirectories(path);
             System.out.println("Directory created");
             Map<String, Object> map=new HashMap<>();
