@@ -575,7 +575,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		for(LiaisonBankily liaison : bankilies) {
         liaisonBankilies.add(new LiaisonBankily(liaison.getIdGroupe(), liaison.getIdUserLiaison(), liaison.getDateLiaison(), liaison.getNni(), liaison.getTelephone(), liaison.getCif(), liaison.getCompte(), liaison.getIdUserApprobation(),
         		liaison.getNomClient(), liaison.getPrenomClient(), liaison.getNomFamille(), liaison.getPrenomPere(), liaison.getDateApprobation(), liaison.getImageUrl(), liaison.getDocument()));
-		fileName=dateD+"/"+liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
+		fileName=formatter.format(liaison.getDateApprobation())+"/"+liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
 		fileNameD=liaison.getCif()+"_"+liaison.getTelephone()+"_"+liaison.getNni();
 		Path path = Paths.get(urlLiaisonQuotidien+fileName);
         if (!Files.exists(path)) {
@@ -592,33 +592,33 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
         System.err.println(file);
         Path pathOut = Paths.get(urlLiaisonQuotidien+"/"+fileName+"/"+liaison.getDocument());
 
-		if(environnement.equalsIgnoreCase("WINDOWS")) {
+		//if(environnement.equalsIgnoreCase("WINDOWS")) {
          if(Files.isRegularFile(file)) {
                // deplacer vers exception
                Files.copy(file, pathOut, StandardCopyOption.REPLACE_EXISTING);
           }
         
-	}
-		else {
-			OutputStream destination = null;
-			InputStream originalfile = null;
-			try {
-				
-				NtlmPasswordAuthentication npa = new NtlmPasswordAuthentication(
-						ipPartage, usernamePartage, pwdPartage);
-				SmbFile filesmb = new SmbFile(urlLiaisonQuotidien+"/"+fileName+"/"+liaison.getDocument(), npa);
-				 destination = filesmb.getOutputStream();
-				 originalfile = new FileInputStream(urlDocPdf+"/"+liaison.getDocument());
-				IOUtils.copy(originalfile, destination);
-				originalfile.close();
-				destination.close();			
-			} catch (Exception e) {
-				originalfile.close();
-				destination.close();
-				throw new Exception(e.getMessage());
-			}
-			
-		}
+//	}
+//		else {
+//			OutputStream destination = null;
+//			InputStream originalfile = null;
+//			try {
+//				
+//				NtlmPasswordAuthentication npa = new NtlmPasswordAuthentication(
+//						ipPartage, usernamePartage, pwdPartage);
+//				SmbFile filesmb = new SmbFile(urlLiaisonQuotidien+"/"+fileName+"/"+liaison.getDocument(), npa);
+//				 destination = filesmb.getOutputStream();
+//				 originalfile = new FileInputStream(urlDocPdf+"/"+liaison.getDocument());
+//				IOUtils.copy(originalfile, destination);
+//				originalfile.close();
+//				destination.close();			
+//			} catch (Exception e) {
+//				originalfile.close();
+//				destination.close();
+//				throw new Exception(e.getMessage());
+//			}
+//			
+//		}
 
         liaisonBankilies.clear();
 		}
