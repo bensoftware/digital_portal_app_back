@@ -247,8 +247,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 				.parseClaimsJws(jwt.replace(SecurityConstants.TOKEN_PREFIX,""))
 				.getBody();
 		
-		String username=claims.getSubject();
-
+		    String username=claims.getSubject();
 		
 			LiaisonBankily bankily=liaisonBankilyRepository.findById(liaisonBankily.getId()).get();
 			liaisonBankily.setDateApprobation(new Date());
@@ -590,7 +589,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		//	System.err.println("AU "+dateAu);
 			
 			// liste des liaison approuvé entre 2 dates
-			List<LiaisonBankily> bankilies=getAllLiaisonBankilyApprove(dateDu,dateAu);
+			List<LiaisonBankily> bankilies=getAllLiaisonBankilyApprove(dateDu,courant);
 			//System.out.println(bankilies);
 			for(LiaisonBankily liaison : bankilies) {
 			// information necessaire pour jasper	
