@@ -100,7 +100,7 @@ public class ClearingAppApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 	
 		
-	//	liaisonBankilyService.sendToPartage("/", "13-10-2021");
+	//	liaisonBankilyService.generateAllLiaisonQuotidient();
 		
 	}
 	

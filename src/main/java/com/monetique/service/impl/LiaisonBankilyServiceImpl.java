@@ -586,12 +586,12 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 			List<LiaisonBankily> liaisonBankilies = new ArrayList<LiaisonBankily>();
 			String urlDossierClient;
 			
-			System.err.println(" du "+dateDu);
-			System.err.println("AU "+dateAu);
+			//System.err.println(" du "+dateDu);
+		//	System.err.println("AU "+dateAu);
 			
 			// liste des liaison approuvé entre 2 dates
 			List<LiaisonBankily> bankilies=getAllLiaisonBankilyApprove(dateDu,dateAu);
-			System.out.println(bankilies);
+			//System.out.println(bankilies);
 			for(LiaisonBankily liaison : bankilies) {
 			// information necessaire pour jasper	
 	        liaisonBankilies.add(new LiaisonBankily(liaison.getIdGroupe(), liaison.getIdUserLiaison(), liaison.getDateLiaison(), liaison.getNni(), liaison.getTelephone(), liaison.getCif(), liaison.getCompte(), liaison.getIdUserApprobation(),
@@ -612,7 +612,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	        if (!Files.exists(path)) {
 	        	// creation du dossier
 	            Files.createDirectories(path);
-	            System.out.println("Directory created");
+	          //  System.out.println("Directory created");
 	            Map<String, Object> map=new HashMap<>();
 	     		File fileD=ResourceUtils.getFile(urlDocLiaison);
 	     		JasperReport jasperReport=JasperCompileManager.compileReport(fileD.getAbsolutePath());
