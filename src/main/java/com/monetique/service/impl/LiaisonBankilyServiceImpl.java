@@ -226,6 +226,17 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		}
 		return res;
 	}
+	@Override
+	public VerificationImalResponse getUserIdByTelephone(String phone) throws Exception {
+		VerificationImalResponse res=null;
+		String url= urlVerifMobile+"/getUserIdByTelephone/"+phone;
+		//String url="http://30.30.1.148:7834/getUserIdByTelephone/"+phone;
+		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
+		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			 res= response.getBody(); 
+		}
+		return res;
+	}
 
 	@Override
 	public VerificationImalResponse getVerificationMobileByTelephone(String phone) throws Exception {
@@ -367,18 +378,6 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 		return res;
 	}
 
-	@Override
-	public VerificationImalResponse getUserIdByTelephone(String phone) throws Exception {
-		VerificationImalResponse res=null;
-		//String url= urlVerifMobile+"/getUserIdByTelephone/"+phone;
-
-		String url="http://30.30.1.148:7834/getUserIdByTelephone/"+phone;
-		ResponseEntity<VerificationImalResponse> response = restTemplate.getForEntity(url, VerificationImalResponse.class);
-		if(response.getStatusCode().equals(HttpStatus.OK)) {
-			 res= response.getBody(); 
-		}
-		return res;
-	}
 
 	@Override
 	public LiaisonBankily updateRejetLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception {
