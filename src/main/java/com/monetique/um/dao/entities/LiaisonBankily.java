@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
@@ -37,6 +38,8 @@ public class LiaisonBankily {
 	private Date dateRejet;
 	private String imageUrl;
 	private String document;
+	
+	
 	public LiaisonBankily(long idGroupe, String idUserLiaison, Date dateLiaison, String nni, String telephone,
 			String cif, String compte, String idUserApprobation, String nomClient, String prenomClient,
 			String nomFamille, String prenomPere, Date dateApprobation, String imageUrl, String document) {
@@ -56,6 +59,12 @@ public class LiaisonBankily {
 		this.dateApprobation = dateApprobation;
 		this.imageUrl = imageUrl;
 		this.document = document;
+	}
+
+
+	public LiaisonBankily() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	
