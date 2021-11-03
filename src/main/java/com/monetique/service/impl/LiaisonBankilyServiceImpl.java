@@ -20,11 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -476,16 +474,11 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	    LiaisonBankily bankily=liaisonBankilyRepository.findById(id).get();
 		  String directory =urlDocPdf;		   
 		    String lien="";
-		   
 		    String filepath = Paths.get(directory,lien).toString();
 		    System.out.println("nom : "+filepath);
-	   
 		    Iterator<String> itr = mRequest.getFileNames();
-		    
 		    if (itr.hasNext()) {
-		    
 		    	MultipartFile mFile = mRequest.getFile(itr.next());
-	        
 		    	String fileName = "enregistrement_"+bankily.getCif()+"_"+bankily.getTelephone()+"_"+bankily.getNni()+"_"+formatter.format(new Date())+".pdf";
 		    	File file = new File(directory+fileName);
 		    	updateDocLiaison(fileName, id);
@@ -530,7 +523,6 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	public ResponseDto uploadFileAutomatique(HttpServletRequest request, String cif, String nni, String telephone)
 			throws Exception {
 		
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
 		MultipartHttpServletRequest mRequest;
 	    mRequest =(MultipartHttpServletRequest) request;
@@ -556,6 +548,20 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	    	    }
 		    return null;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public Set<String> generateAllLiaisonLocal() throws Exception{
@@ -607,7 +613,7 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	        fichierId=dossierClient+".pdf";
 			
 			Path path = Paths.get(urlDossierClient);
-	        if (!Files.exists(path)) {
+	        if (!Files.exists(path)){
 	        	// creation du dossier
 	            Files.createDirectories(path);
 	          //  System.out.println("Directory created");
@@ -617,54 +623,41 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	     		JRBeanCollectionDataSource dataSource=new JRBeanCollectionDataSource(liaisonBankilies);
 	     		JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,map, dataSource);
 	     		// generation fichier jasper
-	            JasperExportManager.exportReportToPdfFile(jasperPrint, urlDossierClient+prefix+fichierId);
+	            JasperExportManager.exportReportToPdfFile(jasperPrint,urlDossierClient+prefix+fichierId);
 	        } 
+	        ////
 	        fichierPj=liaison.getDocument();
 	        if(fichierPj!=null) {
 	        	   Path file = Paths.get(urlDocPdf+fichierPj);
-	        	   
 	        	   if(file!=null) {
 	                   Path pathOut = Paths.get(urlDossierClient+prefix+fichierPj);
-
 	                    if(Files.isRegularFile(file)) {
 	                          // deplacer vers dossier client
 	                          Files.copy(file, pathOut, StandardCopyOption.REPLACE_EXISTING);
 	                     } 
-	        	   }
-	               
-	               
-	        	
+	        	   }	
 	        }
-	     
-
 	        liaisonBankilies.clear();
 			}
 		    // maj index
 			params.setDate(dateAu);
 			paramsRepository.save(params);
-			
-		 
 		 return res;
 	}
 	
 	@Override
 	public void generateAllLiaisonQuotidient() throws Exception {
-		
 		Params params=paramsRepository.findById(1L).get();
 		String prefix=params.getPrefix();
-		
 	    Set<String> res= generateAllLiaisonLocal();
-	
 		 if(res!=null && res.size()>0) {
-			
 			for (String x : res) {
 				sendToPartage(prefix, x);
 			}
-			
 		  }
-		
 	}
-
+	
+	
 	@Override
 	public List<LiaisonBankily> getAllLiaisonBankilyApprove(Date debut,Date fin) {
 		return liaisonBankilyRepository.getAllLiaisonBankilyApprove(debut, fin);
@@ -681,53 +674,31 @@ public class LiaisonBankilyServiceImpl implements ILiaisonBankilyService{
 	public void sendToPartage(String prefix,String filename) throws Exception {
 		
 		Path path = Paths.get(urlLiaisonQuotidien+filename);
-		if(Files.isDirectory(path)) {
+		if(Files.isDirectory(path)){
 			// creation du dossier vers partage
 			transferService.createDirToPartage(urlPartageQuot+filename);
 			
 			try(DirectoryStream<Path> listing = Files.newDirectoryStream(path)){
-
 			    for(Path file : listing){
                     // type fichier
 			    	String fileD=file.getFileName().toString();	
 		    		String fileDir=filename+prefix+fileD;
-		    		
 			    	if(Files.isRegularFile(file)) {
 			    		// envoi vers partage
 			    		transferService.transferToPartage(urlLiaisonQuotidien+fileDir, urlPartageQuot+fileDir);
 			    	}
 			    	// type dossier
 			    	else if(Files.isDirectory(file)) {
-
 			    		// appel recurssive
 			    		sendToPartage(prefix, fileDir);
 			    	}
 			    }
-					
 			  } catch (IOException e) {
 			    e.printStackTrace();
-			  }	
-		
-			
+			  }		
 		}
 		
 	}
 	
-//	@Override
-//	public VerificationMobileResponse deleteLiaisonIncompleteMobile(LiaisonIncomplet incomplet) throws Exception {
-//		String url= urlVerifImal+"/deleteLiaisonIncompleteMobile";
-//		ResponseEntity<VerificationMobileResponse> response=null;
-//		try {
-//			response=	restTemplate.postForEntity(url,incomplet, VerificationMobileResponse.class);
-//			if(response.getStatusCode().equals(HttpStatus.OK)) {
-//				//return response.get;
-//				VerificationMobileResponse res= response.getBody();
-//					return res;
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-//		
-//		return null;
-//	}
+
 }

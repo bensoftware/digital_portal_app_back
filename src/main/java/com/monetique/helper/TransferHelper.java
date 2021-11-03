@@ -10,10 +10,9 @@ public class TransferHelper {
 
 	public static void transferFichier(String in, String out) throws IOException {
 		  Path pin = Paths.get(in);
-          Path pout = Paths.get(out);
-          
+          Path pout = Paths.get(out); 
            if(Files.isRegularFile(pin)) {
-                 // deplacer vers exception
+                 // Deplacer vers exception
                  Files.copy(pin, pout, StandardCopyOption.REPLACE_EXISTING);
             }    
 	}
