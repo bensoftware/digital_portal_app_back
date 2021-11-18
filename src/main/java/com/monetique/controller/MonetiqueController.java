@@ -79,6 +79,4 @@ public class MonetiqueController {
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING),res);
 	}
 	
-	
-	
 }

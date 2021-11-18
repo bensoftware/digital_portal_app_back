@@ -165,7 +165,7 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 
 		
 		String username=claims.getSubject();
-		clientCifDto.setPUser(username);
+		clientCifDto.setpUser(username);
 		clientCifDto.setApikey("BpmMonetique");
 	
 		HttpHeaders headers= new HttpHeaders();
