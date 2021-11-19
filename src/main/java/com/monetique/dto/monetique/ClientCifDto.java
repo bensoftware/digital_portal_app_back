@@ -3,8 +3,6 @@ package com.monetique.dto.monetique;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import lombok.Data;
 
 @Data
@@ -31,6 +29,8 @@ public class ClientCifDto implements Serializable {
 	private AccountDtdo accountDtdo; // choix du compte 
     //Owned by the client
 	private List<CardDto> listcardDtos;
+	//Owned by the client
+	private List<CardDto> listcardWaitingDtos;
 	private List<AccountDtdo> listAccountDtdos; 
 	//For displaying purpose in the front-end(list of TypeCard comming from select system database)
 	private List<TypeCardDto> listTypeCardDtos;

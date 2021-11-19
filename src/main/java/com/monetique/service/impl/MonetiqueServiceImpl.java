@@ -76,7 +76,7 @@ public class MonetiqueServiceImpl implements MonetiqueService{
 	@Override
 	public ResponseDto getClientDataByCif(String cif) throws Exception {
 		// TODO Auto-generated method stub	
-		ResponseDto  responseDto=new ResponseDto();;
+		ResponseDto  responseDto=new ResponseDto();
 		HttpHeaders headers= new HttpHeaders();
 		headers.set("authorization", "BpmMonetique");
 		HttpEntity<String> entete = new HttpEntity<String>("parameters", headers);
