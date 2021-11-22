@@ -145,6 +145,19 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 		return 0;
 	}
+
+	@Override
+	public void deleteNotification(String pan) {
+		try {
+			String url= hostNotif+"/deleteClient/"+pan;
+			ResponseEntity<String> response
+			  = restTemplate.getForEntity(url, String.class);
+			if(response.getStatusCode().equals(HttpStatus.OK)) {
+			}
+			
+		} catch (Exception e) {
+		}
+	}
 	
 	
 

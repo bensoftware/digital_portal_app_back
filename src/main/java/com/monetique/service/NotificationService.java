@@ -20,6 +20,7 @@ public interface NotificationService {
 	
 
 	public int changeEtatNotification(boolean etat,String pan);
+	public void deleteNotification(String pan);
 
 	
 }

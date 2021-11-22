@@ -46,5 +46,12 @@ public class NotificationMcController {
 		notificationService.changeEtatNotification(etat, pan);
 		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
 	}
+	
+	@PreAuthorize("hasAuthority('notificationmc')")
+	@RequestMapping(value="/deleteNotification/{pan}",method=RequestMethod.GET)
+	public @ResponseBody ResponseDto deleteNotification(@PathVariable String pan) throws Exception {
+		notificationService.deleteNotification(pan);
+		return   new ResponseDto(httpServletResponse.getHeader(SecurityConstants.HEADER_STRING), null);
+	}
 
 }
