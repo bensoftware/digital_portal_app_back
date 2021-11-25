@@ -9,7 +9,6 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
-
 import com.monetique.security.service.AppUserData;
 import com.monetique.service.EtatCivilService;
 import com.monetique.service.ILiaisonBankilyService;
@@ -17,7 +16,6 @@ import com.monetique.service.MajService;
 import com.monetique.service.MerchantService;
 import com.monetique.service.MonetiqueService;
 import com.monetique.service.TraitementClearingBatchService;
-import com.monetique.um.dao.repositories.LiaisonBankilyRepository;
 import com.monetique.um.service.IActionService;
 import com.monetique.um.service.IRuleService;
 import com.monetique.um.service.IUserService;
