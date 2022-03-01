@@ -24,7 +24,7 @@ public class SmsServiceImpl implements SmsService {
 	public int sendSms(String msg, String phone) throws Exception {
 
 		try {
-			String url= "http://192.168.7.33:8800?Phonenumber="+phone+"&text="+msg;
+			String url= "http://30.30.1.149/send_sms.php?Phonenumber="+phone+"&text="+msg+"&unicode=1";
 			ResponseEntity<Object> response
 			  = restTemplate.getForEntity(url, Object.class);
 			if(response.getStatusCode().equals(HttpStatus.OK)) {

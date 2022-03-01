@@ -6,16 +6,15 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import com.monetique.helper.TransferHelper;
 import com.monetique.service.TransferService;
-
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbFile;
+
+
 @Service
 public class TransferServiceImpl implements TransferService{
 	
@@ -27,9 +26,7 @@ public class TransferServiceImpl implements TransferService{
 	
 	@Value("${partage.ip}")
 	String ipPartage;
-	
 
-	
 	@Value("${environnement}")
 	String environnement;
 	
@@ -58,73 +55,42 @@ public class TransferServiceImpl implements TransferService{
 					destination.close();			
 					
 				} catch (Exception e) {
-					
 					originalfile.close();
 					destination.close();
 					throw new Exception(e.getMessage());
-					
-					
 				}
 			}
 			else if(environnement.equals("WINDOWS")) {
 				TransferHelper.transferFichier(in,out);
-	           
-
 			}
-			
-			
-			
 		}
-		
-		
-		
-		
-
 		
 	}
 
 
 	@Override
 	public void createDirToPartage(String urlFichierLocalOut) throws Exception {
-		
-		
-	if(environnement!=null) {
-			
+		if(environnement!=null) {
 			if(environnement.equals("LINUX")) {
-				
 				try {
-					
 					NtlmPasswordAuthentication npa = new NtlmPasswordAuthentication(
 							ipPartage, usernamePartage, pwdPartage);
-					SmbFile filesmb = new SmbFile(urlFichierLocalOut, npa);
-					
+					SmbFile filesmb = new SmbFile(urlFichierLocalOut,npa);
 					if(!filesmb.exists()) {
 						filesmb.mkdir();
 					}
-					// destination = filesmb.getOutputStream();
-
-					
+					// destination = filesmb.getOutputStream();					
 				} catch (Exception e) {
-					
 					throw new Exception(e.getMessage());
-					
-					
 				}
 			}
 			else if(environnement.equals("WINDOWS")) {
 		          Path pout = Paths.get(urlFichierLocalOut);
-		          
-		          Files.createDirectory(pout);   
-	           
-
+		          Files.createDirectory(pout);  
 			}
-			
-			
 		}
-		
-		
-	
-
 	}
+	
+	
 
 }

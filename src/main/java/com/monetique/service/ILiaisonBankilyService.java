@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.monetique.dto.AddLiaisonObject;
 import com.monetique.dto.Approbation;
 import com.monetique.dto.ApprobationResponse;
@@ -25,6 +23,7 @@ import com.monetique.um.dao.entities.Params;
 import com.monetique.um.dto.VerificationImalResponse;
 
 public interface ILiaisonBankilyService {
+	
 	public LiaisonBankily addLiaisonBankily(LiaisonBankily liaisonBankily) throws Exception;
 	public List<LiaisonBankily> getAllLiaisonBankily();
 	public ListLiaisonResponse getCompteByCif(LiaisonRequest liaisonRequest)  ;
@@ -49,12 +48,9 @@ public interface ILiaisonBankilyService {
 	public void updateDocLiaison(String doc,long id);
 	public void generationPdf(HttpServletResponse resonse,String fileName) throws IOException;
 	public void generateAllLiaisonQuotidient() throws Exception;
-	
 	public Set<String> generateAllLiaisonLocal() throws Exception;
-
 	public List<LiaisonBankily> getAllLiaisonBankilyApprove(Date debut,Date fin);
 	public Params updateParams(Params params) throws Exception ;
-
 	public void sendToPartage(String prefix,String filename) throws Exception;
 
 }
