@@ -70,7 +70,8 @@ public class ClearingAppApplication implements CommandLineRunner{
 	        factory.setReadTimeout(1200000);
 	 //       RestTemplate rest= new RestTemplate(factory);
 	 //       rest.setErrorHandler(new RestTemplateResponseErrorHandler());
-	        return new RestTemplate(factory);	}
+	        return new RestTemplate(factory);	
+	        }
 
 	@Autowired
 	TraitementClearingBatchService clearingBatchService;
@@ -97,7 +98,6 @@ public class ClearingAppApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 	
-		
 	//	liaisonBankilyService.generateAllLiaisonQuotidient();
 		
 	}
