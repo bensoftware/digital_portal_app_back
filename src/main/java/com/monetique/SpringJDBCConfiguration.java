@@ -1,11 +1,10 @@
 package com.monetique;
-import javax.sql.DataSource;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
 import secure.SecurityBD;
 import secure.SecurityFactory;
  
@@ -42,9 +41,7 @@ public class SpringJDBCConfiguration {
 	  
 	  
 	  private String decrypte(String encode) {
-			
 			return encryptor.decrypte(encode);
 	  }
-
-
+	  
 }
